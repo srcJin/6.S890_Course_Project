@@ -106,7 +106,7 @@ class SimCityEnv(AECEnv):
 
     def step(self, action):
         if not self.has_reset:
-            raise RuntimeError("Environment must be reset before calling step.")
+            raise RuntimeError("environment.py Environment must be reset before calling step.")
 
         agent = self.agent_selection
 
@@ -147,6 +147,8 @@ class SimCityEnv(AECEnv):
                 # Deduct initial costs
                 player_resources["money"] -= building_cost["money"]
                 player_resources["reputation"] -= building_cost["reputation"]
+                logger.debug(f"environment.py Player {agent} resources after action: {self.players[agent].resources}")
+                logger.debug(f"environment.py Player {agent} scores: {self.players[agent].self_score}, {self.players[agent].integrated_score}")
 
                 # Place the building
                 self.buildings[x][y] = {
