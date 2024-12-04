@@ -4,6 +4,7 @@ import sys
 from .multiagentenv import MultiAgentEnv
 from .gymma import GymmaWrapper
 from .smaclite_wrapper import SMACliteWrapper
+from .simcity_wrapper import SimCityWrapper  # Import your wrapper
 
 
 if sys.platform == "linux":
@@ -32,11 +33,13 @@ def gymma_fn(**kwargs) -> MultiAgentEnv:
     assert "common_reward" in kwargs and "reward_scalarisation" in kwargs
     return GymmaWrapper(**kwargs)
 
+def env_fn(env, **kwargs) -> MultiAgentEnv:
+    return env(**kwargs)
 
 REGISTRY = {}
 REGISTRY["smaclite"] = smaclite_fn
 REGISTRY["gymma"] = gymma_fn
-
+REGISTRY["simcity"] = lambda **kwargs: env_fn(SimCityWrapper, **kwargs)
 
 # registering both smac and smacv2 causes a pysc2 error
 # --> dynamically register the needed env

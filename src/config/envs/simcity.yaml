@@ -1,0 +1,16 @@
+env: simcity
+
+env_args:
+  key: "simcity"
+  map_name: "simcity"
+  seed: null
+  time_limit: 100
+  grid_size: 4
+
+test_greedy: True
+test_nepisode: 32
+test_interval: 10000
+log_interval: 10000
+runner_log_interval: 10000
+learner_log_interval: 10000
+t_max: 2000000

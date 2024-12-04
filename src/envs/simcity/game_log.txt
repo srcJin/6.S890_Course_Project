@@ -1,0 +1,1178 @@
+2024-11-24 20:46:48 - Current Turn: 0, Agent: P1
+2024-11-24 20:46:48 - Current Board State:
+[X|G:30|V:30|D:30|B:NA] , [X|G:30|V:30|D:30|B:NA] , [X|G:30|V:30|D:30|B:NA] , [X|G:30|V:30|D:30|B:NA] 
+[X|G:30|V:30|D:30|B:NA] , [X|G:30|V:30|D:30|B:NA] , [X|G:30|V:30|D:30|B:NA] , [X|G:30|V:30|D:30|B:NA] 
+[X|G:30|V:30|D:30|B:NA] , [X|G:30|V:30|D:30|B:NA] , [X|G:30|V:30|D:30|B:NA] , [X|G:30|V:30|D:30|B:NA] 
+[X|G:30|V:30|D:30|B:NA] , [X|G:30|V:30|D:30|B:NA] , [X|G:30|V:30|D:30|B:NA] , [X|G:30|V:30|D:30|B:NA] 
+
+
+2024-11-24 20:46:48 - Player Statistics:
+P1:
+  Self Score: 0
+  Integrated Score: 0
+  Resources:
+    Money       : 20
+    Reputation  : 20
+
+P2:
+  Self Score: 0
+  Integrated Score: 0
+  Resources:
+    Money       : 20
+    Reputation  : 20
+
+P3:
+  Self Score: 0
+  Integrated Score: 0
+  Resources:
+    Money       : 20
+    Reputation  : 20
+
+
+2024-11-24 20:46:48 - Environment Score 28.75
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Current Turn: 1, Agent: P1
+2024-11-24 20:46:48 - Current Board State:
+[X|G:20|V:40|D:20|B:NA] , [S|G:0|V:60|D:0|B:P2]   , [X|G:20|V:40|D:20|B:NA] , [X|G:30|V:30|D:30|B:NA] 
+[X|G:30|V:30|D:30|B:NA] , [X|G:20|V:40|D:20|B:NA] , [X|G:30|V:30|D:30|B:NA] , [X|G:30|V:30|D:30|B:NA] 
+[X|G:30|V:30|D:30|B:NA] , [X|G:30|V:30|D:30|B:NA] , [X|G:30|V:30|D:30|B:NA] , [X|G:30|V:30|D:30|B:NA] 
+[X|G:30|V:30|D:30|B:NA] , [X|G:30|V:30|D:30|B:NA] , [X|G:30|V:30|D:30|B:NA] , [X|G:30|V:30|D:30|B:NA] 
+
+
+2024-11-24 20:46:48 - Player Statistics:
+P1:
+  Self Score: 0
+  Integrated Score: 0
+  Resources:
+    Money       : 20
+    Reputation  : 20
+
+P2:
+  Self Score: 4
+  Integrated Score: 16.375
+  Resources:
+    Money       : 20
+    Reputation  : 18
+
+P3:
+  Self Score: 0
+  Integrated Score: 0
+  Resources:
+    Money       : 20
+    Reputation  : 20
+
+
+2024-11-24 20:46:48 - Environment Score {'G_avg': 26.25, 'V_avg': 33.75, 'D_avg': 26.25, 'env_score': 28.75}
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Environment Score 28.75
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Current Turn: 2, Agent: P2
+2024-11-24 20:46:48 - Current Board State:
+[X|G:20|V:40|D:20|B:NA] , [S|G:0|V:60|D:0|B:P2]   , [X|G:20|V:40|D:20|B:NA] , [X|G:30|V:30|D:30|B:NA] 
+[X|G:30|V:30|D:30|B:NA] , [X|G:20|V:40|D:20|B:NA] , [X|G:30|V:30|D:30|B:NA] , [X|G:30|V:30|D:30|B:NA] 
+[X|G:30|V:30|D:30|B:NA] , [X|G:30|V:30|D:30|B:NA] , [X|G:30|V:30|D:30|B:NA] , [X|G:30|V:30|D:30|B:NA] 
+[X|G:30|V:30|D:30|B:NA] , [X|G:30|V:30|D:30|B:NA] , [X|G:30|V:30|D:30|B:NA] , [X|G:30|V:30|D:30|B:NA] 
+
+
+2024-11-24 20:46:48 - Player Statistics:
+P1:
+  Self Score: 0
+  Integrated Score: 0
+  Resources:
+    Money       : 20
+    Reputation  : 20
+
+P2:
+  Self Score: 4
+  Integrated Score: 16.375
+  Resources:
+    Money       : 20
+    Reputation  : 18
+
+P3:
+  Self Score: -3
+  Integrated Score: 12.875
+  Resources:
+    Money       : 23
+    Reputation  : 19
+
+
+2024-11-24 20:46:48 - Environment Score {'G_avg': 26.25, 'V_avg': 33.75, 'D_avg': 26.25, 'env_score': 28.75}
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Environment Score 29.583333333333332
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Current Turn: 3, Agent: P3
+2024-11-24 20:46:48 - Current Board State:
+[X|G:20|V:40|D:20|B:NA] , [S|G:0|V:60|D:0|B:P2]   , [X|G:20|V:40|D:20|B:NA] , [X|G:30|V:30|D:30|B:NA] 
+[X|G:30|V:30|D:30|B:NA] , [X|G:10|V:50|D:30|B:NA] , [X|G:30|V:30|D:30|B:NA] , [X|G:30|V:30|D:30|B:NA] 
+[X|G:20|V:40|D:40|B:NA] , [H|G:0|V:30|D:60|B:P1]  , [X|G:20|V:40|D:40|B:NA] , [X|G:30|V:30|D:30|B:NA] 
+[X|G:30|V:30|D:30|B:NA] , [X|G:20|V:40|D:40|B:NA] , [X|G:30|V:30|D:30|B:NA] , [X|G:30|V:30|D:30|B:NA] 
+
+
+2024-11-24 20:46:48 - Player Statistics:
+P1:
+  Self Score: 6
+  Integrated Score: 17.791666666666664
+  Resources:
+    Money       : 23
+    Reputation  : 17
+
+P2:
+  Self Score: 4
+  Integrated Score: 16.375
+  Resources:
+    Money       : 20
+    Reputation  : 18
+
+P3:
+  Self Score: -3
+  Integrated Score: 12.875
+  Resources:
+    Money       : 23
+    Reputation  : 19
+
+
+2024-11-24 20:46:48 - Environment Score {'G_avg': 21.875, 'V_avg': 36.25, 'D_avg': 30.625, 'env_score': 29.583333333333332}
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Environment Score 28.333333333333332
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Current Turn: 4, Agent: P1
+2024-11-24 20:46:48 - Current Board State:
+[X|G:20|V:40|D:20|B:NA] , [S|G:0|V:60|D:0|B:P2]   , [X|G:20|V:40|D:20|B:NA] , [X|G:30|V:30|D:30|B:NA] 
+[X|G:30|V:30|D:30|B:NA] , [X|G:10|V:50|D:30|B:NA] , [X|G:30|V:30|D:30|B:NA] , [X|G:30|V:30|D:30|B:NA] 
+[X|G:20|V:40|D:40|B:NA] , [H|G:0|V:30|D:60|B:P1]  , [X|G:10|V:50|D:30|B:NA] , [X|G:30|V:30|D:30|B:NA] 
+[X|G:30|V:30|D:30|B:NA] , [X|G:10|V:50|D:30|B:NA] , [S|G:0|V:60|D:0|B:P2]   , [X|G:20|V:40|D:20|B:NA] 
+
+
+2024-11-24 20:46:48 - Player Statistics:
+P1:
+  Self Score: 6
+  Integrated Score: 17.791666666666664
+  Resources:
+    Money       : 23
+    Reputation  : 17
+
+P2:
+  Self Score: 12
+  Integrated Score: 20.166666666666664
+  Resources:
+    Money       : 25
+    Reputation  : 15
+
+P3:
+  Self Score: -3
+  Integrated Score: 12.875
+  Resources:
+    Money       : 23
+    Reputation  : 19
+
+
+2024-11-24 20:46:48 - Environment Score {'G_avg': 18.125, 'V_avg': 40.0, 'D_avg': 26.875, 'env_score': 28.333333333333332}
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Environment Score 28.75
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Current Turn: 5, Agent: P2
+2024-11-24 20:46:48 - Current Board State:
+[X|G:20|V:40|D:20|B:NA] , [S|G:0|V:60|D:0|B:P2]   , [X|G:20|V:40|D:20|B:NA] , [X|G:30|V:30|D:30|B:NA] 
+[X|G:30|V:30|D:30|B:NA] , [X|G:10|V:50|D:30|B:NA] , [X|G:30|V:30|D:30|B:NA] , [X|G:30|V:30|D:30|B:NA] 
+[X|G:10|V:50|D:50|B:NA] , [H|G:0|V:30|D:60|B:P1]  , [X|G:10|V:50|D:30|B:NA] , [X|G:30|V:30|D:30|B:NA] 
+[H|G:0|V:30|D:60|B:P3]  , [X|G:0|V:60|D:40|B:NA]  , [S|G:0|V:60|D:0|B:P2]   , [X|G:20|V:40|D:20|B:NA] 
+
+
+2024-11-24 20:46:48 - Player Statistics:
+P1:
+  Self Score: 6
+  Integrated Score: 17.791666666666664
+  Resources:
+    Money       : 23
+    Reputation  : 17
+
+P2:
+  Self Score: 12
+  Integrated Score: 20.166666666666664
+  Resources:
+    Money       : 25
+    Reputation  : 15
+
+P3:
+  Self Score: 7
+  Integrated Score: 17.875
+  Resources:
+    Money       : 31
+    Reputation  : 15
+
+
+2024-11-24 20:46:48 - Environment Score {'G_avg': 15.0, 'V_avg': 41.25, 'D_avg': 30.0, 'env_score': 28.75}
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Environment Score 27.708333333333332
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Current Turn: 6, Agent: P3
+2024-11-24 20:46:48 - Current Board State:
+[X|G:20|V:40|D:20|B:NA] , [S|G:0|V:60|D:0|B:P2]   , [X|G:10|V:50|D:10|B:NA] , [S|G:0|V:60|D:0|B:P1]   
+[X|G:30|V:30|D:30|B:NA] , [X|G:10|V:50|D:30|B:NA] , [X|G:30|V:30|D:30|B:NA] , [X|G:20|V:40|D:20|B:NA] 
+[X|G:10|V:50|D:50|B:NA] , [H|G:0|V:30|D:60|B:P1]  , [X|G:10|V:50|D:30|B:NA] , [X|G:30|V:30|D:30|B:NA] 
+[H|G:0|V:30|D:60|B:P3]  , [X|G:0|V:60|D:40|B:NA]  , [S|G:0|V:60|D:0|B:P2]   , [X|G:20|V:40|D:20|B:NA] 
+
+
+2024-11-24 20:46:48 - Player Statistics:
+P1:
+  Self Score: 18
+  Integrated Score: 22.854166666666664
+  Resources:
+    Money       : 33
+    Reputation  : 13
+
+P2:
+  Self Score: 12
+  Integrated Score: 20.166666666666664
+  Resources:
+    Money       : 25
+    Reputation  : 15
+
+P3:
+  Self Score: 7
+  Integrated Score: 17.875
+  Resources:
+    Money       : 31
+    Reputation  : 15
+
+
+2024-11-24 20:46:48 - Environment Score {'G_avg': 11.875, 'V_avg': 44.375, 'D_avg': 26.875, 'env_score': 27.708333333333332}
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Environment Score 28.333333333333332
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Current Turn: 7, Agent: P1
+2024-11-24 20:46:48 - Current Board State:
+[X|G:20|V:40|D:20|B:NA] , [S|G:0|V:60|D:0|B:P2]   , [X|G:10|V:50|D:10|B:NA] , [S|G:0|V:60|D:0|B:P1]   
+[X|G:30|V:30|D:30|B:NA] , [X|G:10|V:50|D:30|B:NA] , [X|G:30|V:30|D:30|B:NA] , [X|G:20|V:40|D:20|B:NA] 
+[X|G:10|V:50|D:50|B:NA] , [H|G:-10|V:40|D:70|B:P1], [X|G:10|V:50|D:30|B:NA] , [X|G:30|V:30|D:30|B:NA] 
+[H|G:-10|V:40|D:70|B:P3], [H|G:-30|V:60|D:70|B:P2], [S|G:-10|V:70|D:10|B:P2], [X|G:20|V:40|D:20|B:NA] 
+
+
+2024-11-24 20:46:48 - Player Statistics:
+P1:
+  Self Score: 18
+  Integrated Score: 22.854166666666664
+  Resources:
+    Money       : 33
+    Reputation  : 13
+
+P2:
+  Self Score: 26
+  Integrated Score: 27.166666666666664
+  Resources:
+    Money       : 38
+    Reputation  : 10
+
+P3:
+  Self Score: 7
+  Integrated Score: 17.875
+  Resources:
+    Money       : 31
+    Reputation  : 15
+
+
+2024-11-24 20:46:48 - Environment Score {'G_avg': 8.125, 'V_avg': 46.25, 'D_avg': 30.625, 'env_score': 28.333333333333332}
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Environment Score 28.333333333333332
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Current Turn: 8, Agent: P2
+2024-11-24 20:46:48 - Current Board State:
+[X|G:20|V:40|D:20|B:NA] , [S|G:10|V:50|D:0|B:P2]  , [X|G:10|V:50|D:10|B:NA] , [S|G:0|V:60|D:0|B:P1]   
+[X|G:40|V:20|D:30|B:NA] , [P|G:40|V:20|D:30|B:P3] , [X|G:40|V:20|D:30|B:NA] , [X|G:20|V:40|D:20|B:NA] 
+[X|G:10|V:50|D:50|B:NA] , [H|G:0|V:30|D:70|B:P1]  , [X|G:10|V:50|D:30|B:NA] , [X|G:30|V:30|D:30|B:NA] 
+[H|G:-10|V:40|D:70|B:P3], [H|G:-30|V:60|D:70|B:P2], [S|G:-10|V:70|D:10|B:P2], [X|G:20|V:40|D:20|B:NA] 
+
+
+2024-11-24 20:46:48 - Player Statistics:
+P1:
+  Self Score: 18
+  Integrated Score: 22.854166666666664
+  Resources:
+    Money       : 33
+    Reputation  : 13
+
+P2:
+  Self Score: 26
+  Integrated Score: 27.166666666666664
+  Resources:
+    Money       : 38
+    Reputation  : 10
+
+P3:
+  Self Score: 23
+  Integrated Score: 25.666666666666664
+  Resources:
+    Money       : 44
+    Reputation  : 12
+
+
+2024-11-24 20:46:48 - Environment Score {'G_avg': 12.5, 'V_avg': 41.875, 'D_avg': 30.625, 'env_score': 28.333333333333332}
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Environment Score 28.333333333333332
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Current Turn: 9, Agent: P3
+2024-11-24 20:46:48 - Current Board State:
+[X|G:30|V:30|D:20|B:NA] , [S|G:10|V:50|D:0|B:P2]  , [X|G:10|V:50|D:10|B:NA] , [S|G:0|V:60|D:0|B:P1]   
+[P|G:70|V:-10|D:30|B:P1], [P|G:50|V:10|D:30|B:P3] , [X|G:40|V:20|D:30|B:NA] , [X|G:20|V:40|D:20|B:NA] 
+[X|G:20|V:40|D:50|B:NA] , [H|G:0|V:30|D:70|B:P1]  , [X|G:10|V:50|D:30|B:NA] , [X|G:30|V:30|D:30|B:NA] 
+[H|G:-10|V:40|D:70|B:P3], [H|G:-30|V:60|D:70|B:P2], [S|G:-10|V:70|D:10|B:P2], [X|G:20|V:40|D:20|B:NA] 
+
+
+2024-11-24 20:46:48 - Player Statistics:
+P1:
+  Self Score: 36
+  Integrated Score: 32.166666666666664
+  Resources:
+    Money       : 45
+    Reputation  : 13
+
+P2:
+  Self Score: 26
+  Integrated Score: 27.166666666666664
+  Resources:
+    Money       : 38
+    Reputation  : 10
+
+P3:
+  Self Score: 23
+  Integrated Score: 25.666666666666664
+  Resources:
+    Money       : 44
+    Reputation  : 12
+
+
+2024-11-24 20:46:48 - Environment Score {'G_avg': 16.25, 'V_avg': 38.125, 'D_avg': 30.625, 'env_score': 28.333333333333332}
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Environment Score 28.75
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Current Turn: 10, Agent: P1
+2024-11-24 20:46:48 - Current Board State:
+[X|G:30|V:30|D:20|B:NA] , [S|G:10|V:50|D:0|B:P2]  , [X|G:10|V:50|D:10|B:NA] , [S|G:0|V:60|D:0|B:P1]   
+[P|G:70|V:-10|D:30|B:P1], [P|G:50|V:10|D:30|B:P3] , [X|G:40|V:20|D:30|B:NA] , [X|G:20|V:40|D:20|B:NA] 
+[X|G:20|V:40|D:50|B:NA] , [H|G:0|V:30|D:70|B:P1]  , [X|G:10|V:50|D:30|B:NA] , [X|G:20|V:40|D:40|B:NA] 
+[H|G:-10|V:40|D:70|B:P3], [H|G:-30|V:60|D:70|B:P2], [S|G:-20|V:80|D:20|B:P2], [H|G:-10|V:40|D:50|B:P2]
+
+
+2024-11-24 20:46:48 - Player Statistics:
+P1:
+  Self Score: 36
+  Integrated Score: 32.166666666666664
+  Resources:
+    Money       : 45
+    Reputation  : 13
+
+P2:
+  Self Score: 46
+  Integrated Score: 37.375
+  Resources:
+    Money       : 51
+    Reputation  : 11
+
+P3:
+  Self Score: 23
+  Integrated Score: 25.666666666666664
+  Resources:
+    Money       : 44
+    Reputation  : 12
+
+
+2024-11-24 20:46:48 - Environment Score {'G_avg': 13.125, 'V_avg': 39.375, 'D_avg': 33.75, 'env_score': 28.75}
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Environment Score 28.75
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Current Turn: 11, Agent: P2
+2024-11-24 20:46:48 - Current Board State:
+[X|G:30|V:30|D:20|B:NA] , [S|G:10|V:50|D:0|B:P2]  , [X|G:10|V:50|D:10|B:NA] , [S|G:0|V:60|D:0|B:P1]   
+[P|G:70|V:-10|D:30|B:P1], [P|G:50|V:10|D:30|B:P3] , [X|G:40|V:20|D:30|B:NA] , [X|G:20|V:40|D:20|B:NA] 
+[X|G:20|V:40|D:50|B:NA] , [H|G:0|V:30|D:70|B:P1]  , [X|G:10|V:50|D:30|B:NA] , [X|G:20|V:40|D:40|B:NA] 
+[H|G:-10|V:40|D:70|B:P3], [H|G:-30|V:60|D:70|B:P2], [S|G:-20|V:80|D:20|B:P2], [H|G:-10|V:40|D:50|B:P2]
+
+
+2024-11-24 20:46:48 - Player Statistics:
+P1:
+  Self Score: 36
+  Integrated Score: 32.166666666666664
+  Resources:
+    Money       : 45
+    Reputation  : 13
+
+P2:
+  Self Score: 46
+  Integrated Score: 37.375
+  Resources:
+    Money       : 51
+    Reputation  : 11
+
+P3:
+  Self Score: 36
+  Integrated Score: 32.375
+  Resources:
+    Money       : 59
+    Reputation  : 15
+
+
+2024-11-24 20:46:48 - Environment Score {'G_avg': 13.125, 'V_avg': 39.375, 'D_avg': 33.75, 'env_score': 28.75}
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Environment Score 28.75
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Current Turn: 12, Agent: P3
+2024-11-24 20:46:48 - Current Board State:
+[X|G:30|V:30|D:20|B:NA] , [S|G:10|V:50|D:0|B:P2]  , [X|G:10|V:50|D:10|B:NA] , [S|G:0|V:60|D:0|B:P1]   
+[P|G:70|V:-10|D:30|B:P1], [P|G:50|V:10|D:30|B:P3] , [X|G:40|V:20|D:30|B:NA] , [X|G:20|V:40|D:20|B:NA] 
+[X|G:20|V:40|D:50|B:NA] , [H|G:0|V:30|D:70|B:P1]  , [X|G:10|V:50|D:30|B:NA] , [X|G:20|V:40|D:40|B:NA] 
+[H|G:-10|V:40|D:70|B:P3], [H|G:-30|V:60|D:70|B:P2], [S|G:-20|V:80|D:20|B:P2], [H|G:-10|V:40|D:50|B:P2]
+
+
+2024-11-24 20:46:48 - Player Statistics:
+P1:
+  Self Score: 49
+  Integrated Score: 38.875
+  Resources:
+    Money       : 60
+    Reputation  : 16
+
+P2:
+  Self Score: 46
+  Integrated Score: 37.375
+  Resources:
+    Money       : 51
+    Reputation  : 11
+
+P3:
+  Self Score: 36
+  Integrated Score: 32.375
+  Resources:
+    Money       : 59
+    Reputation  : 15
+
+
+2024-11-24 20:46:48 - Environment Score {'G_avg': 13.125, 'V_avg': 39.375, 'D_avg': 33.75, 'env_score': 28.75}
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Environment Score 28.75
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Current Turn: 13, Agent: P1
+2024-11-24 20:46:48 - Current Board State:
+[X|G:30|V:30|D:20|B:NA] , [S|G:10|V:50|D:0|B:P2]  , [X|G:10|V:50|D:10|B:NA] , [S|G:0|V:60|D:0|B:P1]   
+[P|G:70|V:-10|D:30|B:P1], [P|G:50|V:10|D:30|B:P3] , [X|G:50|V:10|D:30|B:NA] , [X|G:20|V:40|D:20|B:NA] 
+[X|G:20|V:40|D:50|B:NA] , [H|G:10|V:20|D:70|B:P1] , [P|G:40|V:20|D:30|B:P2] , [X|G:30|V:30|D:40|B:NA] 
+[H|G:-10|V:40|D:70|B:P3], [H|G:-30|V:60|D:70|B:P2], [S|G:-10|V:70|D:20|B:P2], [H|G:-10|V:40|D:50|B:P2]
+
+
+2024-11-24 20:46:48 - Player Statistics:
+P1:
+  Self Score: 49
+  Integrated Score: 38.875
+  Resources:
+    Money       : 60
+    Reputation  : 16
+
+P2:
+  Self Score: 68
+  Integrated Score: 48.375
+  Resources:
+    Money       : 64
+    Reputation  : 14
+
+P3:
+  Self Score: 36
+  Integrated Score: 32.375
+  Resources:
+    Money       : 59
+    Reputation  : 15
+
+
+2024-11-24 20:46:48 - Environment Score {'G_avg': 17.5, 'V_avg': 35.0, 'D_avg': 33.75, 'env_score': 28.75}
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Environment Score 29.375
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Current Turn: 14, Agent: P2
+2024-11-24 20:46:48 - Current Board State:
+[X|G:30|V:30|D:20|B:NA] , [S|G:10|V:50|D:0|B:P2]  , [X|G:10|V:50|D:10|B:NA] , [S|G:-10|V:70|D:10|B:P1]
+[P|G:70|V:-10|D:30|B:P1], [P|G:50|V:10|D:30|B:P3] , [X|G:40|V:20|D:40|B:NA] , [H|G:-10|V:40|D:50|B:P3]
+[X|G:20|V:40|D:50|B:NA] , [H|G:10|V:20|D:70|B:P1] , [P|G:40|V:20|D:30|B:P2] , [X|G:20|V:40|D:50|B:NA] 
+[H|G:-10|V:40|D:70|B:P3], [H|G:-30|V:60|D:70|B:P2], [S|G:-10|V:70|D:20|B:P2], [H|G:-10|V:40|D:50|B:P2]
+
+
+2024-11-24 20:46:48 - Player Statistics:
+P1:
+  Self Score: 49
+  Integrated Score: 38.875
+  Resources:
+    Money       : 60
+    Reputation  : 16
+
+P2:
+  Self Score: 68
+  Integrated Score: 48.375
+  Resources:
+    Money       : 64
+    Reputation  : 14
+
+P3:
+  Self Score: 60
+  Integrated Score: 44.6875
+  Resources:
+    Money       : 73
+    Reputation  : 19
+
+
+2024-11-24 20:46:48 - Environment Score {'G_avg': 13.75, 'V_avg': 36.875, 'D_avg': 37.5, 'env_score': 29.375}
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Environment Score 29.375
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Current Turn: 15, Agent: P3
+2024-11-24 20:46:48 - Current Board State:
+[X|G:30|V:30|D:20|B:NA] , [S|G:10|V:50|D:0|B:P2]  , [X|G:10|V:50|D:10|B:NA] , [S|G:-10|V:70|D:10|B:P1]
+[P|G:70|V:-10|D:30|B:P1], [P|G:50|V:10|D:30|B:P3] , [X|G:40|V:20|D:40|B:NA] , [H|G:-10|V:40|D:50|B:P3]
+[X|G:20|V:40|D:50|B:NA] , [H|G:10|V:20|D:70|B:P1] , [P|G:40|V:20|D:30|B:P2] , [X|G:20|V:40|D:50|B:NA] 
+[H|G:-10|V:40|D:70|B:P3], [H|G:-30|V:60|D:70|B:P2], [S|G:-10|V:70|D:20|B:P2], [H|G:-10|V:40|D:50|B:P2]
+
+
+2024-11-24 20:46:48 - Player Statistics:
+P1:
+  Self Score: 66
+  Integrated Score: 47.6875
+  Resources:
+    Money       : 76
+    Reputation  : 22
+
+P2:
+  Self Score: 68
+  Integrated Score: 48.375
+  Resources:
+    Money       : 64
+    Reputation  : 14
+
+P3:
+  Self Score: 60
+  Integrated Score: 44.6875
+  Resources:
+    Money       : 73
+    Reputation  : 19
+
+
+2024-11-24 20:46:48 - Environment Score {'G_avg': 13.75, 'V_avg': 36.875, 'D_avg': 37.5, 'env_score': 29.375}
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Environment Score 27.916666666666664
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Current Turn: 16, Agent: P1
+2024-11-24 20:46:48 - Current Board State:
+[X|G:30|V:30|D:20|B:NA] , [S|G:10|V:50|D:0|B:P2]  , [X|G:0|V:60|D:0|B:NA]   , [S|G:-10|V:70|D:10|B:P1]
+[P|G:70|V:-10|D:30|B:P1], [P|G:40|V:20|D:20|B:P3] , [S|G:10|V:50|D:10|B:P2] , [H|G:-20|V:50|D:40|B:P3]
+[X|G:20|V:40|D:50|B:NA] , [H|G:10|V:20|D:70|B:P1] , [P|G:30|V:30|D:20|B:P2] , [X|G:20|V:40|D:50|B:NA] 
+[H|G:-10|V:40|D:70|B:P3], [H|G:-30|V:60|D:70|B:P2], [S|G:-10|V:70|D:20|B:P2], [H|G:-10|V:40|D:50|B:P2]
+
+
+2024-11-24 20:46:48 - Player Statistics:
+P1:
+  Self Score: 66
+  Integrated Score: 47.6875
+  Resources:
+    Money       : 76
+    Reputation  : 22
+
+P2:
+  Self Score: 94
+  Integrated Score: 60.95833333333333
+  Resources:
+    Money       : 80
+    Reputation  : 18
+
+P3:
+  Self Score: 60
+  Integrated Score: 44.6875
+  Resources:
+    Money       : 73
+    Reputation  : 19
+
+
+2024-11-24 20:46:48 - Environment Score {'G_avg': 9.375, 'V_avg': 41.25, 'D_avg': 33.125, 'env_score': 27.916666666666664}
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Environment Score 27.916666666666664
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Current Turn: 17, Agent: P2
+2024-11-24 20:46:48 - Current Board State:
+[X|G:30|V:30|D:20|B:NA] , [S|G:10|V:50|D:0|B:P2]  , [X|G:0|V:60|D:0|B:NA]   , [S|G:-10|V:70|D:10|B:P1]
+[P|G:70|V:-10|D:30|B:P1], [P|G:40|V:20|D:20|B:P3] , [S|G:10|V:50|D:10|B:P2] , [H|G:-20|V:50|D:40|B:P3]
+[X|G:20|V:40|D:50|B:NA] , [H|G:10|V:20|D:70|B:P1] , [P|G:30|V:30|D:20|B:P2] , [X|G:20|V:40|D:50|B:NA] 
+[H|G:-10|V:40|D:70|B:P3], [H|G:-30|V:60|D:70|B:P2], [S|G:-10|V:70|D:20|B:P2], [H|G:-10|V:40|D:50|B:P2]
+
+
+2024-11-24 20:46:48 - Player Statistics:
+P1:
+  Self Score: 66
+  Integrated Score: 47.6875
+  Resources:
+    Money       : 76
+    Reputation  : 22
+
+P2:
+  Self Score: 94
+  Integrated Score: 60.95833333333333
+  Resources:
+    Money       : 80
+    Reputation  : 18
+
+P3:
+  Self Score: 79
+  Integrated Score: 53.45833333333333
+  Resources:
+    Money       : 92
+    Reputation  : 24
+
+
+2024-11-24 20:46:48 - Environment Score {'G_avg': 9.375, 'V_avg': 41.25, 'D_avg': 33.125, 'env_score': 27.916666666666664}
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Environment Score 27.916666666666664
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Current Turn: 18, Agent: P3
+2024-11-24 20:46:48 - Current Board State:
+[X|G:30|V:30|D:20|B:NA] , [S|G:10|V:50|D:0|B:P2]  , [X|G:0|V:60|D:0|B:NA]   , [S|G:-10|V:70|D:10|B:P1]
+[P|G:70|V:-10|D:30|B:P1], [P|G:40|V:20|D:20|B:P3] , [S|G:10|V:50|D:10|B:P2] , [H|G:-20|V:50|D:40|B:P3]
+[X|G:20|V:40|D:50|B:NA] , [H|G:10|V:20|D:70|B:P1] , [P|G:30|V:30|D:20|B:P2] , [X|G:20|V:40|D:50|B:NA] 
+[H|G:-10|V:40|D:70|B:P3], [H|G:-30|V:60|D:70|B:P2], [S|G:-10|V:70|D:20|B:P2], [H|G:-10|V:40|D:50|B:P2]
+
+
+2024-11-24 20:46:48 - Player Statistics:
+P1:
+  Self Score: 85
+  Integrated Score: 56.45833333333333
+  Resources:
+    Money       : 95
+    Reputation  : 27
+
+P2:
+  Self Score: 94
+  Integrated Score: 60.95833333333333
+  Resources:
+    Money       : 80
+    Reputation  : 18
+
+P3:
+  Self Score: 79
+  Integrated Score: 53.45833333333333
+  Resources:
+    Money       : 92
+    Reputation  : 24
+
+
+2024-11-24 20:46:48 - Environment Score {'G_avg': 9.375, 'V_avg': 41.25, 'D_avg': 33.125, 'env_score': 27.916666666666664}
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Environment Score 27.916666666666664
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Current Turn: 19, Agent: P1
+2024-11-24 20:46:48 - Current Board State:
+[X|G:30|V:30|D:20|B:NA] , [S|G:10|V:50|D:0|B:P2]  , [X|G:0|V:60|D:0|B:NA]   , [S|G:-10|V:70|D:10|B:P1]
+[P|G:70|V:-10|D:30|B:P1], [P|G:40|V:20|D:20|B:P3] , [S|G:10|V:50|D:10|B:P2] , [H|G:-20|V:50|D:40|B:P3]
+[X|G:20|V:40|D:50|B:NA] , [H|G:10|V:20|D:70|B:P1] , [P|G:30|V:30|D:20|B:P2] , [X|G:20|V:40|D:50|B:NA] 
+[H|G:-10|V:40|D:70|B:P3], [H|G:-30|V:60|D:70|B:P2], [S|G:-10|V:70|D:20|B:P2], [H|G:-10|V:40|D:50|B:P2]
+
+
+2024-11-24 20:46:48 - Player Statistics:
+P1:
+  Self Score: 85
+  Integrated Score: 56.45833333333333
+  Resources:
+    Money       : 95
+    Reputation  : 27
+
+P2:
+  Self Score: 113
+  Integrated Score: 70.45833333333333
+  Resources:
+    Money       : 99
+    Reputation  : 23
+
+P3:
+  Self Score: 79
+  Integrated Score: 53.45833333333333
+  Resources:
+    Money       : 92
+    Reputation  : 24
+
+
+2024-11-24 20:46:48 - Environment Score {'G_avg': 9.375, 'V_avg': 41.25, 'D_avg': 33.125, 'env_score': 27.916666666666664}
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Environment Score 27.916666666666664
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Current Turn: 20, Agent: P2
+2024-11-24 20:46:48 - Current Board State:
+[X|G:30|V:30|D:20|B:NA] , [S|G:10|V:50|D:0|B:P2]  , [X|G:0|V:60|D:0|B:NA]   , [S|G:-10|V:70|D:10|B:P1]
+[P|G:70|V:-10|D:30|B:P1], [P|G:40|V:20|D:20|B:P3] , [S|G:10|V:50|D:10|B:P2] , [H|G:-20|V:50|D:40|B:P3]
+[X|G:20|V:40|D:50|B:NA] , [H|G:10|V:20|D:70|B:P1] , [P|G:30|V:30|D:20|B:P2] , [X|G:20|V:40|D:50|B:NA] 
+[H|G:-10|V:40|D:70|B:P3], [H|G:-30|V:60|D:70|B:P2], [S|G:-10|V:70|D:20|B:P2], [H|G:-10|V:40|D:50|B:P2]
+
+
+2024-11-24 20:46:48 - Player Statistics:
+P1:
+  Self Score: 85
+  Integrated Score: 56.45833333333333
+  Resources:
+    Money       : 95
+    Reputation  : 27
+
+P2:
+  Self Score: 113
+  Integrated Score: 70.45833333333333
+  Resources:
+    Money       : 99
+    Reputation  : 23
+
+P3:
+  Self Score: 98
+  Integrated Score: 62.95833333333333
+  Resources:
+    Money       : 111
+    Reputation  : 29
+
+
+2024-11-24 20:46:48 - Environment Score {'G_avg': 9.375, 'V_avg': 41.25, 'D_avg': 33.125, 'env_score': 27.916666666666664}
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Environment Score 27.916666666666664
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Current Turn: 21, Agent: P3
+2024-11-24 20:46:48 - Current Board State:
+[X|G:30|V:30|D:20|B:NA] , [S|G:10|V:50|D:0|B:P2]  , [X|G:0|V:60|D:0|B:NA]   , [S|G:-10|V:70|D:10|B:P1]
+[P|G:70|V:-10|D:30|B:P1], [P|G:40|V:20|D:20|B:P3] , [S|G:10|V:50|D:10|B:P2] , [H|G:-20|V:50|D:40|B:P3]
+[X|G:20|V:40|D:50|B:NA] , [H|G:10|V:20|D:70|B:P1] , [P|G:30|V:30|D:20|B:P2] , [X|G:20|V:40|D:50|B:NA] 
+[H|G:-10|V:40|D:70|B:P3], [H|G:-30|V:60|D:70|B:P2], [S|G:-10|V:70|D:20|B:P2], [H|G:-10|V:40|D:50|B:P2]
+
+
+2024-11-24 20:46:48 - Player Statistics:
+P1:
+  Self Score: 104
+  Integrated Score: 65.95833333333333
+  Resources:
+    Money       : 114
+    Reputation  : 32
+
+P2:
+  Self Score: 113
+  Integrated Score: 70.45833333333333
+  Resources:
+    Money       : 99
+    Reputation  : 23
+
+P3:
+  Self Score: 98
+  Integrated Score: 62.95833333333333
+  Resources:
+    Money       : 111
+    Reputation  : 29
+
+
+2024-11-24 20:46:48 - Environment Score {'G_avg': 9.375, 'V_avg': 41.25, 'D_avg': 33.125, 'env_score': 27.916666666666664}
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Environment Score 27.916666666666664
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Current Turn: 22, Agent: P1
+2024-11-24 20:46:48 - Current Board State:
+[X|G:30|V:30|D:20|B:NA] , [S|G:10|V:50|D:0|B:P2]  , [X|G:0|V:60|D:0|B:NA]   , [S|G:-10|V:70|D:10|B:P1]
+[P|G:70|V:-10|D:30|B:P1], [P|G:40|V:20|D:20|B:P3] , [S|G:10|V:50|D:10|B:P2] , [H|G:-20|V:50|D:40|B:P3]
+[X|G:20|V:40|D:50|B:NA] , [H|G:10|V:20|D:70|B:P1] , [P|G:30|V:30|D:20|B:P2] , [X|G:20|V:40|D:50|B:NA] 
+[H|G:-10|V:40|D:70|B:P3], [H|G:-30|V:60|D:70|B:P2], [S|G:-10|V:70|D:20|B:P2], [H|G:-10|V:40|D:50|B:P2]
+
+
+2024-11-24 20:46:48 - Player Statistics:
+P1:
+  Self Score: 104
+  Integrated Score: 65.95833333333333
+  Resources:
+    Money       : 114
+    Reputation  : 32
+
+P2:
+  Self Score: 132
+  Integrated Score: 79.95833333333333
+  Resources:
+    Money       : 118
+    Reputation  : 28
+
+P3:
+  Self Score: 98
+  Integrated Score: 62.95833333333333
+  Resources:
+    Money       : 111
+    Reputation  : 29
+
+
+2024-11-24 20:46:48 - Environment Score {'G_avg': 9.375, 'V_avg': 41.25, 'D_avg': 33.125, 'env_score': 27.916666666666664}
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Environment Score 26.666666666666664
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Current Turn: 23, Agent: P2
+2024-11-24 20:46:48 - Current Board State:
+[X|G:30|V:30|D:20|B:NA] , [S|G:10|V:50|D:0|B:P2]  , [X|G:0|V:60|D:0|B:NA]   , [S|G:-10|V:70|D:10|B:P1]
+[P|G:60|V:0|D:20|B:P1]  , [P|G:40|V:20|D:20|B:P3] , [S|G:10|V:50|D:10|B:P2] , [H|G:-20|V:50|D:40|B:P3]
+[S|G:-10|V:70|D:20|B:P3], [H|G:0|V:30|D:60|B:P1]  , [P|G:30|V:30|D:20|B:P2] , [X|G:20|V:40|D:50|B:NA] 
+[H|G:-20|V:50|D:60|B:P3], [H|G:-30|V:60|D:70|B:P2], [S|G:-10|V:70|D:20|B:P2], [H|G:-10|V:40|D:50|B:P2]
+
+
+2024-11-24 20:46:48 - Player Statistics:
+P1:
+  Self Score: 104
+  Integrated Score: 65.95833333333333
+  Resources:
+    Money       : 114
+    Reputation  : 32
+
+P2:
+  Self Score: 132
+  Integrated Score: 79.95833333333333
+  Resources:
+    Money       : 118
+    Reputation  : 28
+
+P3:
+  Self Score: 126
+  Integrated Score: 76.33333333333333
+  Resources:
+    Money       : 130
+    Reputation  : 32
+
+
+2024-11-24 20:46:48 - Environment Score {'G_avg': 5.625, 'V_avg': 45.0, 'D_avg': 29.375, 'env_score': 26.666666666666664}
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Environment Score 26.666666666666664
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Current Turn: 24, Agent: P3
+2024-11-24 20:46:48 - Current Board State:
+[X|G:30|V:30|D:20|B:NA] , [S|G:10|V:50|D:0|B:P2]  , [X|G:0|V:60|D:0|B:NA]   , [S|G:-10|V:70|D:10|B:P1]
+[P|G:60|V:0|D:20|B:P1]  , [P|G:40|V:20|D:20|B:P3] , [S|G:10|V:50|D:10|B:P2] , [H|G:-10|V:40|D:40|B:P3]
+[S|G:-10|V:70|D:20|B:P3], [H|G:0|V:30|D:60|B:P1]  , [P|G:40|V:20|D:20|B:P2] , [P|G:50|V:10|D:50|B:P1] 
+[H|G:-20|V:50|D:60|B:P3], [H|G:-30|V:60|D:70|B:P2], [S|G:-10|V:70|D:20|B:P2], [H|G:0|V:30|D:50|B:P2]  
+
+
+2024-11-24 20:46:48 - Player Statistics:
+P1:
+  Self Score: 134
+  Integrated Score: 80.33333333333333
+  Resources:
+    Money       : 134
+    Reputation  : 36
+
+P2:
+  Self Score: 132
+  Integrated Score: 79.95833333333333
+  Resources:
+    Money       : 118
+    Reputation  : 28
+
+P3:
+  Self Score: 126
+  Integrated Score: 76.33333333333333
+  Resources:
+    Money       : 130
+    Reputation  : 32
+
+
+2024-11-24 20:46:48 - Environment Score {'G_avg': 9.375, 'V_avg': 41.25, 'D_avg': 29.375, 'env_score': 26.666666666666664}
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Environment Score 26.666666666666664
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Current Turn: 25, Agent: P1
+2024-11-24 20:46:48 - Current Board State:
+[X|G:30|V:30|D:20|B:NA] , [S|G:20|V:40|D:0|B:P2]  , [P|G:30|V:30|D:0|B:P2]  , [S|G:0|V:60|D:10|B:P1]  
+[P|G:60|V:0|D:20|B:P1]  , [P|G:40|V:20|D:20|B:P3] , [S|G:20|V:40|D:10|B:P2] , [H|G:-10|V:40|D:40|B:P3]
+[S|G:-10|V:70|D:20|B:P3], [H|G:0|V:30|D:60|B:P1]  , [P|G:40|V:20|D:20|B:P2] , [P|G:50|V:10|D:50|B:P1] 
+[H|G:-20|V:50|D:60|B:P3], [H|G:-30|V:60|D:70|B:P2], [S|G:-10|V:70|D:20|B:P2], [H|G:0|V:30|D:50|B:P2]  
+
+
+2024-11-24 20:46:48 - Player Statistics:
+P1:
+  Self Score: 134
+  Integrated Score: 80.33333333333333
+  Resources:
+    Money       : 134
+    Reputation  : 36
+
+P2:
+  Self Score: 164
+  Integrated Score: 95.33333333333333
+  Resources:
+    Money       : 137
+    Reputation  : 35
+
+P3:
+  Self Score: 126
+  Integrated Score: 76.33333333333333
+  Resources:
+    Money       : 130
+    Reputation  : 32
+
+
+2024-11-24 20:46:48 - Environment Score {'G_avg': 13.125, 'V_avg': 37.5, 'D_avg': 29.375, 'env_score': 26.666666666666664}
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Environment Score 26.666666666666664
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Current Turn: 26, Agent: P2
+2024-11-24 20:46:48 - Current Board State:
+[X|G:30|V:30|D:20|B:NA] , [S|G:20|V:40|D:0|B:P2]  , [P|G:30|V:30|D:0|B:P2]  , [S|G:0|V:60|D:10|B:P1]  
+[P|G:60|V:0|D:20|B:P1]  , [P|G:40|V:20|D:20|B:P3] , [S|G:20|V:40|D:10|B:P2] , [H|G:-10|V:40|D:40|B:P3]
+[S|G:-10|V:70|D:20|B:P3], [H|G:0|V:30|D:60|B:P1]  , [P|G:40|V:20|D:20|B:P2] , [P|G:50|V:10|D:50|B:P1] 
+[H|G:-20|V:50|D:60|B:P3], [H|G:-30|V:60|D:70|B:P2], [S|G:-10|V:70|D:20|B:P2], [H|G:0|V:30|D:50|B:P2]  
+
+
+2024-11-24 20:46:48 - Player Statistics:
+P1:
+  Self Score: 134
+  Integrated Score: 80.33333333333333
+  Resources:
+    Money       : 134
+    Reputation  : 36
+
+P2:
+  Self Score: 164
+  Integrated Score: 95.33333333333333
+  Resources:
+    Money       : 137
+    Reputation  : 35
+
+P3:
+  Self Score: 151
+  Integrated Score: 88.83333333333333
+  Resources:
+    Money       : 150
+    Reputation  : 42
+
+
+2024-11-24 20:46:48 - Environment Score {'G_avg': 13.125, 'V_avg': 37.5, 'D_avg': 29.375, 'env_score': 26.666666666666664}
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Environment Score 26.666666666666664
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Current Turn: 27, Agent: P3
+2024-11-24 20:46:48 - Current Board State:
+[X|G:30|V:30|D:20|B:NA] , [S|G:20|V:40|D:0|B:P2]  , [P|G:30|V:30|D:0|B:P2]  , [S|G:0|V:60|D:10|B:P1]  
+[P|G:60|V:0|D:20|B:P1]  , [P|G:40|V:20|D:20|B:P3] , [S|G:20|V:40|D:10|B:P2] , [H|G:-10|V:40|D:40|B:P3]
+[S|G:-10|V:70|D:20|B:P3], [H|G:0|V:30|D:60|B:P1]  , [P|G:40|V:20|D:20|B:P2] , [P|G:50|V:10|D:50|B:P1] 
+[H|G:-20|V:50|D:60|B:P3], [H|G:-30|V:60|D:70|B:P2], [S|G:-10|V:70|D:20|B:P2], [H|G:0|V:30|D:50|B:P2]  
+
+
+2024-11-24 20:46:48 - Player Statistics:
+P1:
+  Self Score: 159
+  Integrated Score: 92.83333333333333
+  Resources:
+    Money       : 154
+    Reputation  : 46
+
+P2:
+  Self Score: 164
+  Integrated Score: 95.33333333333333
+  Resources:
+    Money       : 137
+    Reputation  : 35
+
+P3:
+  Self Score: 151
+  Integrated Score: 88.83333333333333
+  Resources:
+    Money       : 150
+    Reputation  : 42
+
+
+2024-11-24 20:46:48 - Environment Score {'G_avg': 13.125, 'V_avg': 37.5, 'D_avg': 29.375, 'env_score': 26.666666666666664}
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Environment Score 26.666666666666664
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Current Turn: 28, Agent: P1
+2024-11-24 20:46:48 - Current Board State:
+[X|G:30|V:30|D:20|B:NA] , [S|G:20|V:40|D:0|B:P2]  , [P|G:30|V:30|D:0|B:P2]  , [S|G:0|V:60|D:10|B:P1]  
+[P|G:60|V:0|D:20|B:P1]  , [P|G:40|V:20|D:20|B:P3] , [S|G:20|V:40|D:10|B:P2] , [H|G:-10|V:40|D:40|B:P3]
+[S|G:-10|V:70|D:20|B:P3], [H|G:0|V:30|D:60|B:P1]  , [P|G:40|V:20|D:20|B:P2] , [P|G:50|V:10|D:50|B:P1] 
+[H|G:-20|V:50|D:60|B:P3], [H|G:-30|V:60|D:70|B:P2], [S|G:-10|V:70|D:20|B:P2], [H|G:0|V:30|D:50|B:P2]  
+
+
+2024-11-24 20:46:48 - Player Statistics:
+P1:
+  Self Score: 159
+  Integrated Score: 92.83333333333333
+  Resources:
+    Money       : 154
+    Reputation  : 46
+
+P2:
+  Self Score: 189
+  Integrated Score: 107.83333333333333
+  Resources:
+    Money       : 157
+    Reputation  : 45
+
+P3:
+  Self Score: 151
+  Integrated Score: 88.83333333333333
+  Resources:
+    Money       : 150
+    Reputation  : 42
+
+
+2024-11-24 20:46:48 - Environment Score {'G_avg': 13.125, 'V_avg': 37.5, 'D_avg': 29.375, 'env_score': 26.666666666666664}
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Environment Score 26.666666666666664
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Current Turn: 29, Agent: P2
+2024-11-24 20:46:48 - Current Board State:
+[X|G:30|V:30|D:20|B:NA] , [S|G:20|V:40|D:0|B:P2]  , [P|G:30|V:30|D:0|B:P2]  , [S|G:0|V:60|D:10|B:P1]  
+[P|G:60|V:0|D:20|B:P1]  , [P|G:40|V:20|D:20|B:P3] , [S|G:20|V:40|D:10|B:P2] , [H|G:-10|V:40|D:40|B:P3]
+[S|G:-10|V:70|D:20|B:P3], [H|G:0|V:30|D:60|B:P1]  , [P|G:40|V:20|D:20|B:P2] , [P|G:50|V:10|D:50|B:P1] 
+[H|G:-20|V:50|D:60|B:P3], [H|G:-30|V:60|D:70|B:P2], [S|G:-10|V:70|D:20|B:P2], [H|G:0|V:30|D:50|B:P2]  
+
+
+2024-11-24 20:46:48 - Player Statistics:
+P1:
+  Self Score: 159
+  Integrated Score: 92.83333333333333
+  Resources:
+    Money       : 154
+    Reputation  : 46
+
+P2:
+  Self Score: 189
+  Integrated Score: 107.83333333333333
+  Resources:
+    Money       : 157
+    Reputation  : 45
+
+P3:
+  Self Score: 176
+  Integrated Score: 101.33333333333333
+  Resources:
+    Money       : 170
+    Reputation  : 52
+
+
+2024-11-24 20:46:48 - Environment Score {'G_avg': 13.125, 'V_avg': 37.5, 'D_avg': 29.375, 'env_score': 26.666666666666664}
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Environment Score 26.666666666666664
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Current Turn: 30, Agent: P3
+2024-11-24 20:46:48 - Current Board State:
+[X|G:30|V:30|D:20|B:NA] , [S|G:20|V:40|D:0|B:P2]  , [P|G:30|V:30|D:0|B:P2]  , [S|G:0|V:60|D:10|B:P1]  
+[P|G:60|V:0|D:20|B:P1]  , [P|G:40|V:20|D:20|B:P3] , [S|G:20|V:40|D:10|B:P2] , [H|G:-10|V:40|D:40|B:P3]
+[S|G:-10|V:70|D:20|B:P3], [H|G:0|V:30|D:60|B:P1]  , [P|G:40|V:20|D:20|B:P2] , [P|G:50|V:10|D:50|B:P1] 
+[H|G:-20|V:50|D:60|B:P3], [H|G:-30|V:60|D:70|B:P2], [S|G:-10|V:70|D:20|B:P2], [H|G:0|V:30|D:50|B:P2]  
+
+
+2024-11-24 20:46:48 - Player Statistics:
+P1:
+  Self Score: 184
+  Integrated Score: 105.33333333333333
+  Resources:
+    Money       : 174
+    Reputation  : 56
+
+P2:
+  Self Score: 189
+  Integrated Score: 107.83333333333333
+  Resources:
+    Money       : 157
+    Reputation  : 45
+
+P3:
+  Self Score: 176
+  Integrated Score: 101.33333333333333
+  Resources:
+    Money       : 170
+    Reputation  : 52
+
+
+2024-11-24 20:46:48 - Environment Score {'G_avg': 13.125, 'V_avg': 37.5, 'D_avg': 29.375, 'env_score': 26.666666666666664}
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Environment Score 27.083333333333332
+2024-11-24 20:46:48 - ----------------------------------------
+
+2024-11-24 20:46:48 - Current Turn: 31, Agent: P1
+2024-11-24 20:46:48 - Current Board State:
+[H|G:0|V:30|D:50|B:P2]  , [S|G:10|V:50|D:10|B:P2] , [P|G:30|V:30|D:0|B:P2]  , [S|G:0|V:60|D:10|B:P1]  
+[P|G:50|V:10|D:30|B:P1] , [P|G:40|V:20|D:20|B:P3] , [S|G:20|V:40|D:10|B:P2] , [H|G:-10|V:40|D:40|B:P3]
+[S|G:-10|V:70|D:20|B:P3], [H|G:0|V:30|D:60|B:P1]  , [P|G:40|V:20|D:20|B:P2] , [P|G:50|V:10|D:50|B:P1] 
+[H|G:-20|V:50|D:60|B:P3], [H|G:-30|V:60|D:70|B:P2], [S|G:-10|V:70|D:20|B:P2], [H|G:0|V:30|D:50|B:P2]  
+
+
+2024-11-24 20:46:48 - Player Statistics:
+P1:
+  Self Score: 184
+  Integrated Score: 105.33333333333333
+  Resources:
+    Money       : 174
+    Reputation  : 56
+
+P2:
+  Self Score: 223
+  Integrated Score: 125.04166666666667
+  Resources:
+    Money       : 177
+    Reputation  : 53
+
+P3:
+  Self Score: 176
+  Integrated Score: 101.33333333333333
+  Resources:
+    Money       : 170
+    Reputation  : 52
+
+
+2024-11-24 20:46:48 - Environment Score {'G_avg': 10.0, 'V_avg': 38.75, 'D_avg': 32.5, 'env_score': 27.083333333333332}
+2024-11-24 20:46:48 - ----------------------------------------
+
