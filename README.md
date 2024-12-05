@@ -62,8 +62,14 @@ python src/main.py --config=pac_ns --env-config=gymma with env_args.time_limit=1
 
 # Table of Contents
 - [Extended Python MARL framework - EPyMARL](#extended-python-marl-framework---epymarl)
+  - [Update as of *July 2024*!](#update-as-of-july-2024)
+    - [Update to Gymnasium](#update-to-gymnasium)
+    - [Support for training in environments with individual rewards for all agents](#support-for-training-in-environments-with-individual-rewards-for-all-agents)
+    - [Weights and Biases (W\&B) Logging](#weights-and-biases-wb-logging)
+    - [Plotting script](#plotting-script)
+  - [Update as of *15th July 2023*!](#update-as-of-15th-july-2023)
 - [Table of Contents](#table-of-contents)
-- [Installation & Run instructions](#installation--run-instructions)
+- [Installation \& Run instructions](#installation--run-instructions)
   - [Installing Dependencies](#installing-dependencies)
   - [Benchmark Paper Experiments](#benchmark-paper-experiments)
   - [Experiments in SMACv2 and SMAClite](#experiments-in-smacv2-and-smaclite)
@@ -77,7 +83,7 @@ python src/main.py --config=pac_ns --env-config=gymma with env_args.time_limit=1
   - [Saving models](#saving-models)
   - [Loading models](#loading-models)
 - [Plotting](#plotting)
-- [Citing PyMARL and EPyMARL](#citing-pymarl-and-epymarl)
+- [Citing EPyMARL and PyMARL](#citing-epymarl-and-pymarl)
 - [License](#license)
 
 # Installation & Run instructions
@@ -203,7 +209,12 @@ VMAS:
 python src/main.py --config=qmix --env-config=gymma with env_args.time_limit=150 env_args.key="vmas-balance"
 ```
 
+```sh
+python src/main.py --config=qmix --env-config=simcity_large
+```
+
 ## Registering and Running Experiments in Custom Environments
+
 
 EPyMARL supports environments that have been registered with Gymnasium. If you would like to use any other Gymnasium environment, you can do so by using the `gymma` environment with the `env_args.key` argument being provided with the registration ID of the environment. Environments can either provide a single scalar reward to run common reward experiments (`common_reward=True`), or should provide one environment per agent to run experiments with individual rewards (`common_reward=False`) or with common rewards using some reward scalarisation (see [documentation](#support-for-training-in-environments-with-individual-rewards-for-all-agents) for more details). 
 

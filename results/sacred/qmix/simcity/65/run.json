@@ -1,0 +1,91 @@
+{
+  "artifacts": [],
+  "command": "my_main",
+  "experiment": {
+    "base_dir": "D:\\github\\epymarl\\src",
+    "dependencies": [
+      "numpy==1.24.4",
+      "sacred==0.8.7",
+      "torch==2.4.1"
+    ],
+    "mainfile": "main.py",
+    "name": "pymarl",
+    "repositories": [
+      {
+        "commit": "38601c5087fbe0195f9e4c4e2f3962b4c0ff2a0a",
+        "dirty": true,
+        "url": "https://github.com/srcJin/epymarl.git"
+      },
+      {
+        "commit": "38601c5087fbe0195f9e4c4e2f3962b4c0ff2a0a",
+        "dirty": true,
+        "url": "https://github.com/srcJin/epymarl.git"
+      },
+      {
+        "commit": "38601c5087fbe0195f9e4c4e2f3962b4c0ff2a0a",
+        "dirty": true,
+        "url": "https://github.com/srcJin/epymarl.git"
+      }
+    ],
+    "sources": [
+      [
+        "main.py",
+        "_sources\\main_80d2780b213e1a0f1f3b49d89e348d55.py"
+      ],
+      [
+        "run.py",
+        "_sources\\run_bc227edcc365406afee228ce6743fc76.py"
+      ],
+      [
+        "utils\\logging.py",
+        "_sources\\logging_6227f2f408e90bb1ad31c27f736e07b1.py"
+      ]
+    ]
+  },
+  "heartbeat": "2024-12-05T07:03:14.977731",
+  "host": {
+    "ENV": {},
+    "cpu": "Intel(R) Core(TM) i9-10900K CPU @ 3.70GHz",
+    "hostname": "Administrator",
+    "os": [
+      "Windows",
+      "Windows-10-10.0.19045-SP0"
+    ],
+    "python_version": "3.8.20"
+  },
+  "meta": {
+    "command": "my_main",
+    "config_updates": {},
+    "named_configs": [],
+    "options": {
+      "--beat-interval": null,
+      "--capture": null,
+      "--comment": null,
+      "--debug": false,
+      "--enforce_clean": false,
+      "--file_storage": null,
+      "--force": false,
+      "--help": false,
+      "--id": null,
+      "--loglevel": null,
+      "--mongo_db": null,
+      "--name": null,
+      "--pdb": false,
+      "--print-config": false,
+      "--priority": null,
+      "--queue": false,
+      "--s3": null,
+      "--sql": null,
+      "--tiny_db": null,
+      "--unobserved": false,
+      "COMMAND": null,
+      "UPDATE": [],
+      "help": false,
+      "with": false
+    }
+  },
+  "resources": [],
+  "result": null,
+  "start_time": "2024-12-05T07:01:34.793055",
+  "status": "RUNNING"
+}
