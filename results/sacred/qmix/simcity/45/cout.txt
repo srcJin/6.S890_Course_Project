@@ -1,0 +1,224 @@
+[INFO 18:31:05] pymarl Running command 'my_main'
+[INFO 18:31:05] pymarl Started run with ID "45"
+[INFO 18:31:05] my_main Experiment Parameters:
+[INFO 18:31:05] my_main 
+
+{   'action_selector': 'epsilon_greedy',
+    'add_value_last_step': True,
+    'agent': 'rnn',
+    'agent_output_type': 'q',
+    'batch_size': 32,
+    'batch_size_run': 1,
+    'buffer_cpu_only': True,
+    'buffer_size': 5000,
+    'checkpoint_path': '',
+    'common_reward': True,
+    'double_q': True,
+    'env': 'simcity',
+    'env_args': {   'grid_size': 4,
+                    'key': 'simcity',
+                    'map_name': 'simcity',
+                    'seed': 808906906,
+                    'time_limit': 100},
+    'epsilon_anneal_time': 50000,
+    'epsilon_finish': 0.05,
+    'epsilon_start': 1.0,
+    'evaluate': False,
+    'evaluation_epsilon': 0.0,
+    'gamma': 0.99,
+    'grad_norm_clip': 10,
+    'hidden_dim': 64,
+    'hypergroup': None,
+    'hypernet_embed': 64,
+    'hypernet_layers': 2,
+    'label': 'default_label',
+    'learner': 'q_learner',
+    'learner_log_interval': 2,
+    'load_step': 0,
+    'local_results_path': 'results',
+    'log_interval': 2,
+    'lr': 0.0005,
+    'mac': 'basic_mac',
+    'mixer': 'qmix',
+    'mixing_embed_dim': 32,
+    'name': 'qmix',
+    'obs_agent_id': True,
+    'obs_individual_obs': False,
+    'obs_last_action': False,
+    'optim_alpha': 0.99,
+    'optim_eps': 1e-05,
+    'render': False,
+    'repeat_id': 1,
+    'reward_scalarisation': 'sum',
+    'runner': 'episode',
+    'runner_log_interval': 2,
+    'save_model': False,
+    'save_model_interval': 10,
+    'save_replay': False,
+    'seed': 808906906,
+    'standardise_returns': False,
+    'standardise_rewards': True,
+    't_max': 3,
+    'target_update_interval_or_tau': 200,
+    'test_greedy': True,
+    'test_interval': 2,
+    'test_nepisode': 20,
+    'use_cuda': True,
+    'use_rnn': False,
+    'use_tensorboard': False,
+    'use_wandb': False,
+    'wandb_mode': 'offline',
+    'wandb_project': None,
+    'wandb_save_model': False,
+    'wandb_team': None}
+
+[INFO 18:31:05] my_main Beginning training for 3 timesteps
+[INFO 18:31:05] root Turn 0, Environment Score 21.666666666666664
+[INFO 18:31:05] root Turn 1, Environment Score 20.416666666666664
+[INFO 18:31:05] root Turn 2, Environment Score 21.25
+[INFO 18:31:05] my_main t_env: 1 / 3
+[INFO 18:31:05] my_main Estimated time left: 0 seconds. Time passed: 0 seconds
+[INFO 18:31:05] root Turn 0, Environment Score 22.5
+[INFO 18:31:05] root Turn 1, Environment Score 22.5
+[INFO 18:31:05] root Turn 2, Environment Score 22.5
+[INFO 18:31:05] root Turn 0, Environment Score 22.5
+[INFO 18:31:05] root Turn 1, Environment Score 22.5
+[INFO 18:31:05] root Turn 2, Environment Score 22.5
+[INFO 18:31:05] root Turn 0, Environment Score 22.5
+[INFO 18:31:05] root Turn 1, Environment Score 22.5
+[INFO 18:31:05] root Turn 2, Environment Score 22.5
+[INFO 18:31:05] root Turn 0, Environment Score 22.5
+[INFO 18:31:05] root Turn 1, Environment Score 22.5
+[INFO 18:31:05] root Turn 2, Environment Score 22.5
+[INFO 18:31:06] root Turn 0, Environment Score 22.5
+[INFO 18:31:06] root Turn 1, Environment Score 22.5
+[INFO 18:31:06] root Turn 2, Environment Score 22.5
+[INFO 18:31:06] root Turn 0, Environment Score 22.5
+[INFO 18:31:06] root Turn 1, Environment Score 22.5
+[INFO 18:31:06] root Turn 2, Environment Score 22.5
+[INFO 18:31:06] root Turn 0, Environment Score 22.5
+[INFO 18:31:06] root Turn 1, Environment Score 22.5
+[INFO 18:31:06] root Turn 2, Environment Score 22.5
+[INFO 18:31:06] root Turn 0, Environment Score 22.5
+[INFO 18:31:06] root Turn 1, Environment Score 22.5
+[INFO 18:31:06] root Turn 2, Environment Score 22.5
+[INFO 18:31:06] root Turn 0, Environment Score 22.5
+[INFO 18:31:06] root Turn 1, Environment Score 22.5
+[INFO 18:31:06] root Turn 2, Environment Score 22.5
+[INFO 18:31:06] root Turn 0, Environment Score 22.5
+[INFO 18:31:06] root Turn 1, Environment Score 22.5
+[INFO 18:31:06] root Turn 2, Environment Score 22.5
+[INFO 18:31:06] root Turn 0, Environment Score 22.5
+[INFO 18:31:06] root Turn 1, Environment Score 22.5
+[INFO 18:31:06] root Turn 2, Environment Score 22.5
+[INFO 18:31:06] root Turn 0, Environment Score 22.5
+[INFO 18:31:06] root Turn 1, Environment Score 22.5
+[INFO 18:31:06] root Turn 2, Environment Score 22.5
+[INFO 18:31:06] root Turn 0, Environment Score 22.5
+[INFO 18:31:06] root Turn 1, Environment Score 22.5
+[INFO 18:31:06] root Turn 2, Environment Score 22.5
+[INFO 18:31:06] root Turn 0, Environment Score 22.5
+[INFO 18:31:06] root Turn 1, Environment Score 22.5
+[INFO 18:31:06] root Turn 2, Environment Score 22.5
+[INFO 18:31:06] root Turn 0, Environment Score 22.5
+[INFO 18:31:06] root Turn 1, Environment Score 22.5
+[INFO 18:31:06] root Turn 2, Environment Score 22.5
+[INFO 18:31:06] root Turn 0, Environment Score 22.5
+[INFO 18:31:06] root Turn 1, Environment Score 22.5
+[INFO 18:31:06] root Turn 2, Environment Score 22.5
+[INFO 18:31:06] root Turn 0, Environment Score 22.5
+[INFO 18:31:06] root Turn 1, Environment Score 22.5
+[INFO 18:31:06] root Turn 2, Environment Score 22.5
+[INFO 18:31:06] root Turn 0, Environment Score 22.5
+[INFO 18:31:06] root Turn 1, Environment Score 22.5
+[INFO 18:31:06] root Turn 2, Environment Score 22.5
+[INFO 18:31:06] root Turn 0, Environment Score 22.5
+[INFO 18:31:06] root Turn 1, Environment Score 22.5
+[INFO 18:31:06] root Turn 2, Environment Score 22.5
+[INFO 18:31:06] root Turn 0, Environment Score 22.5
+[INFO 18:31:06] root Turn 1, Environment Score 22.5
+[INFO 18:31:06] root Turn 2, Environment Score 22.5
+[INFO 18:31:06] root Turn 0, Environment Score 22.5
+[INFO 18:31:06] root Turn 1, Environment Score 21.25
+[INFO 18:31:06] root Turn 2, Environment Score 20.208333333333332
+[INFO 18:31:06] my_main Recent Stats | t_env:          2 | Episode:        2
+ep_length_mean:            1.0000	epsilon:                   1.0000	return_mean:              10.0000	return_std:                0.0000
+test_ep_length_mean:       1.0000	test_return_mean:          1.0000	test_return_std:           0.0000	
+[INFO 18:31:06] root Turn 0, Environment Score 22.291666666666664
+[INFO 18:31:06] root Turn 1, Environment Score 21.041666666666664
+[INFO 18:31:06] root Turn 2, Environment Score 21.666666666666664
+[INFO 18:31:06] my_main t_env: 3 / 3
+[INFO 18:31:06] my_main Estimated time left: -. Time passed: 0 seconds
+[INFO 18:31:06] root Turn 0, Environment Score 22.5
+[INFO 18:31:06] root Turn 1, Environment Score 22.5
+[INFO 18:31:06] root Turn 2, Environment Score 22.5
+[INFO 18:31:06] root Turn 0, Environment Score 22.5
+[INFO 18:31:06] root Turn 1, Environment Score 22.5
+[INFO 18:31:06] root Turn 2, Environment Score 22.5
+[INFO 18:31:06] root Turn 0, Environment Score 22.5
+[INFO 18:31:06] root Turn 1, Environment Score 22.5
+[INFO 18:31:06] root Turn 2, Environment Score 22.5
+[INFO 18:31:06] root Turn 0, Environment Score 22.5
+[INFO 18:31:06] root Turn 1, Environment Score 22.5
+[INFO 18:31:06] root Turn 2, Environment Score 22.5
+[INFO 18:31:06] root Turn 0, Environment Score 22.5
+[INFO 18:31:06] root Turn 1, Environment Score 22.5
+[INFO 18:31:06] root Turn 2, Environment Score 22.5
+[INFO 18:31:06] root Turn 0, Environment Score 22.5
+[INFO 18:31:06] root Turn 1, Environment Score 22.5
+[INFO 18:31:06] root Turn 2, Environment Score 22.5
+[INFO 18:31:06] root Turn 0, Environment Score 22.5
+[INFO 18:31:06] root Turn 1, Environment Score 22.5
+[INFO 18:31:06] root Turn 2, Environment Score 22.5
+[INFO 18:31:06] root Turn 0, Environment Score 22.5
+[INFO 18:31:06] root Turn 1, Environment Score 22.5
+[INFO 18:31:06] root Turn 2, Environment Score 22.5
+[INFO 18:31:06] root Turn 0, Environment Score 22.5
+[INFO 18:31:06] root Turn 1, Environment Score 22.5
+[INFO 18:31:06] root Turn 2, Environment Score 22.5
+[INFO 18:31:06] root Turn 0, Environment Score 22.5
+[INFO 18:31:06] root Turn 1, Environment Score 22.5
+[INFO 18:31:06] root Turn 2, Environment Score 22.5
+[INFO 18:31:06] root Turn 0, Environment Score 22.5
+[INFO 18:31:06] root Turn 1, Environment Score 22.5
+[INFO 18:31:06] root Turn 2, Environment Score 22.5
+[INFO 18:31:06] root Turn 0, Environment Score 22.5
+[INFO 18:31:06] root Turn 1, Environment Score 22.5
+[INFO 18:31:06] root Turn 2, Environment Score 22.5
+[INFO 18:31:06] root Turn 0, Environment Score 22.5
+[INFO 18:31:06] root Turn 1, Environment Score 22.5
+[INFO 18:31:06] root Turn 2, Environment Score 22.5
+[INFO 18:31:06] root Turn 0, Environment Score 22.5
+[INFO 18:31:06] root Turn 1, Environment Score 22.5
+[INFO 18:31:06] root Turn 2, Environment Score 22.5
+[INFO 18:31:06] root Turn 0, Environment Score 22.5
+[INFO 18:31:06] root Turn 1, Environment Score 22.5
+[INFO 18:31:06] root Turn 2, Environment Score 22.5
+[INFO 18:31:06] root Turn 0, Environment Score 22.5
+[INFO 18:31:06] root Turn 1, Environment Score 22.5
+[INFO 18:31:06] root Turn 2, Environment Score 22.5
+[INFO 18:31:06] root Turn 0, Environment Score 22.5
+[INFO 18:31:06] root Turn 1, Environment Score 22.5
+[INFO 18:31:06] root Turn 2, Environment Score 22.5
+[INFO 18:31:06] root Turn 0, Environment Score 22.5
+[INFO 18:31:06] root Turn 1, Environment Score 22.5
+[INFO 18:31:06] root Turn 2, Environment Score 22.5
+[INFO 18:31:06] root Turn 0, Environment Score 22.5
+[INFO 18:31:06] root Turn 1, Environment Score 22.5
+[INFO 18:31:06] root Turn 2, Environment Score 22.5
+[INFO 18:31:06] root Turn 0, Environment Score 22.5
+[INFO 18:31:06] root Turn 1, Environment Score 22.5
+[INFO 18:31:06] root Turn 2, Environment Score 22.5
+[INFO 18:31:06] root Turn 0, Environment Score 20.416666666666664
+[INFO 18:31:06] root Turn 1, Environment Score 20.83333333333333
+[INFO 18:31:06] root Turn 2, Environment Score 19.791666666666664
+[INFO 18:31:06] my_main Recent Stats | t_env:          4 | Episode:        4
+ep_length_mean:            1.0000	epsilon:                   1.0000	return_mean:              10.0000	return_std:                0.0000
+test_ep_length_mean:       1.0000	test_return_mean:          1.0000	test_return_std:           0.0000	
+[INFO 18:31:06] my_main Finished Training
+Exiting Main
+Stopping all threads
+Thread Thread-1 is alive! Is daemon: False
+Thread joined
+Exiting script
+[INFO 18:31:07] pymarl Completed after 0:00:02

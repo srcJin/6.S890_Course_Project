@@ -98,7 +98,11 @@ class EpisodeRunner:
             _, reward, terminated, truncated, env_info = self.env.step(actions[0])
             terminated = terminated or truncated
             logger.debug(f"Step result - Reward: {reward}, Terminated: {terminated}, Truncated: {truncated}")
-    
+            #
+            if terminated or truncated:
+                logger.debug(f"Episode ended due to termination: {terminated}, truncation: {truncated}")
+            # Reset logic
+
             if test_mode and self.args.render:
                 self.env.render()
             episode_return += reward

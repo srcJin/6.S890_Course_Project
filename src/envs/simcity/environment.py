@@ -257,12 +257,11 @@ class SimCityEnv(AECEnv):
         return {"G_avg": G_avg, "V_avg": V_avg, "D_avg": D_avg, "env_score": env_score}
 
     def is_game_over(self):
-        # Game ends when the board is filled or environment score < 10
         board_filled = np.all(self.buildings != None)
         env_score = self.calculate_environment_score()["env_score"]
-        if board_filled or env_score < 10:
-            return True
-        return False
+        logger.debug(f"is_game_over = {board_filled}, env_score={env_score}")
+        # return board_filled or env_score < 10
+        return board_filled
 
     def observe(self, agent):
         # Return the observation for the agent
