@@ -167,20 +167,25 @@ class SimCityWrapper(MultiAgentEnv):
         if self.env.common_reward:
             total_reward = sum(rewards.values())
             logger.debug(f"Aggregated total reward (common_reward=True): {total_reward}")
+            reward = total_reward
         else:
             # Convert rewards to list in agent order
-            total_reward = [rewards[agent] for agent in self.env.agents]
-            logger.debug(f"Individual rewards: {total_reward}")
+            reward = [rewards[agent] for agent in self.env.agents]
+            logger.debug(f"Individual rewards: {reward}")
         
-        # Determine termination flags
+        # Determine termination flags per agent
         if done:
-            terminated = [True for _ in range(self.n_agents)]
-            truncated = [False for _ in range(self.n_agents)]
+            terminated_flags = [True for _ in range(self.n_agents)]
+            truncated_flags = [False for _ in range(self.n_agents)]
         else:
-            terminated = [False for _ in range(self.n_agents)]
-            truncated = [self.current_step >= self.episode_limit for _ in range(self.n_agents)]
+            terminated_flags = [False for _ in range(self.n_agents)]
+            truncated_flags = [self.current_step >= self.episode_limit for _ in range(self.n_agents)]
         
-        logger.debug(f"Termination status - Terminated: {terminated}, Truncated: {truncated}")
+        logger.debug(f"Termination status - Terminated: {terminated_flags}, Truncated: {truncated_flags}")
+        
+        # **Aggregate termination flags to scalar booleans**
+        terminated = any(terminated_flags)
+        truncated = any(truncated_flags)
         
         # Increment step counter
         self.current_step += 1
@@ -189,8 +194,8 @@ class SimCityWrapper(MultiAgentEnv):
         # Check if episode limit reached
         if self.current_step >= self.episode_limit:
             done = True
-            terminated = [True for _ in range(self.n_agents)]
-            truncated = [True for _ in range(self.n_agents)]
+            terminated = True
+            truncated = True
             logger.debug("Episode limit reached. Terminating episode.")
         
         # Generate next observations
@@ -200,8 +205,8 @@ class SimCityWrapper(MultiAgentEnv):
         current_agents = len(self.env.agents)
         logger.debug(f"Number of active agents after step: {current_agents}")
         
-        return obs, total_reward, terminated, truncated, {}
-    
+        return obs, reward, terminated, truncated, {}
+        
     def reset(self, seed=None, options=None):
         """Returns initial observations and info"""
         logger.debug("Resetting the underlying SimCityEnv.")
