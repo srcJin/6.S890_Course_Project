@@ -1,0 +1,103 @@
+{
+  "artifacts": [],
+  "command": "my_main",
+  "experiment": {
+    "base_dir": "/home/jin/Documents/GitHub/epymarl/src",
+    "dependencies": [
+      "numpy==1.24.4",
+      "PyYAML==5.3.1",
+      "sacred==0.8.7",
+      "torch==2.4.1"
+    ],
+    "mainfile": "main.py",
+    "name": "pymarl",
+    "repositories": [
+      {
+        "commit": "3082b44e620cff338eab6bacd720374ba40e11f4",
+        "dirty": false,
+        "url": "https://github.com/srcJin/epymarl.git"
+      },
+      {
+        "commit": "3082b44e620cff338eab6bacd720374ba40e11f4",
+        "dirty": false,
+        "url": "https://github.com/srcJin/epymarl.git"
+      },
+      {
+        "commit": "3082b44e620cff338eab6bacd720374ba40e11f4",
+        "dirty": false,
+        "url": "https://github.com/srcJin/epymarl.git"
+      }
+    ],
+    "sources": [
+      [
+        "main.py",
+        "_sources/main_80d2780b213e1a0f1f3b49d89e348d55.py"
+      ],
+      [
+        "run.py",
+        "_sources/run_bc227edcc365406afee228ce6743fc76.py"
+      ],
+      [
+        "utils/logging.py",
+        "_sources/logging_6227f2f408e90bb1ad31c27f736e07b1.py"
+      ]
+    ]
+  },
+  "heartbeat": "2024-12-05T07:04:32.932034",
+  "host": {
+    "ENV": {},
+    "cpu": "AMD Ryzen 9 7940HS w/ Radeon 780M Graphics",
+    "gpus": {
+      "driver_version": "550.120",
+      "gpus": [
+        {
+          "model": "NVIDIA GeForce RTX 4060 Laptop GPU",
+          "persistence_mode": false,
+          "total_memory": 8188
+        }
+      ]
+    },
+    "hostname": "jin-laptop",
+    "os": [
+      "Linux",
+      "Linux-6.8.0-49-generic-x86_64-with-glibc2.17"
+    ],
+    "python_version": "3.8.20"
+  },
+  "meta": {
+    "command": "my_main",
+    "config_updates": {},
+    "named_configs": [],
+    "options": {
+      "--beat-interval": null,
+      "--capture": null,
+      "--comment": null,
+      "--debug": false,
+      "--enforce_clean": false,
+      "--file_storage": null,
+      "--force": false,
+      "--help": false,
+      "--id": null,
+      "--loglevel": null,
+      "--mongo_db": null,
+      "--name": null,
+      "--pdb": false,
+      "--print-config": false,
+      "--priority": null,
+      "--queue": false,
+      "--s3": null,
+      "--sql": null,
+      "--tiny_db": null,
+      "--unobserved": false,
+      "COMMAND": null,
+      "UPDATE": [],
+      "help": false,
+      "with": false
+    }
+  },
+  "resources": [],
+  "result": null,
+  "start_time": "2024-12-05T07:04:25.065194",
+  "status": "INTERRUPTED",
+  "stop_time": "2024-12-05T07:04:32.933029"
+}
