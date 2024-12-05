@@ -13,17 +13,17 @@
     "name": "pymarl",
     "repositories": [
       {
-        "commit": "cd3c43871b54f0a48146d78a46d98e4d3964964a",
+        "commit": "2c67708e9ff7a9f2896275fe6c894db9ef1d65f8",
         "dirty": true,
         "url": "https://github.com/srcJin/epymarl.git"
       },
       {
-        "commit": "cd3c43871b54f0a48146d78a46d98e4d3964964a",
+        "commit": "2c67708e9ff7a9f2896275fe6c894db9ef1d65f8",
         "dirty": true,
         "url": "https://github.com/srcJin/epymarl.git"
       },
       {
-        "commit": "cd3c43871b54f0a48146d78a46d98e4d3964964a",
+        "commit": "2c67708e9ff7a9f2896275fe6c894db9ef1d65f8",
         "dirty": true,
         "url": "https://github.com/srcJin/epymarl.git"
       }
@@ -43,7 +43,7 @@
       ]
     ]
   },
-  "heartbeat": "2024-12-05T04:35:22.478299",
+  "heartbeat": "2024-12-05T06:15:35.851344",
   "host": {
     "ENV": {},
     "cpu": "AMD Ryzen 9 7940HS w/ Radeon 780M Graphics",
@@ -97,6 +97,7 @@
   },
   "resources": [],
   "result": null,
-  "start_time": "2024-12-05T04:18:52.213290",
-  "status": "RUNNING"
+  "start_time": "2024-12-05T04:38:20.250575",
+  "status": "COMPLETED",
+  "stop_time": "2024-12-05T06:15:35.842263"
 }
