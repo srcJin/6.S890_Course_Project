@@ -76,5 +76,6 @@ def log_environment_score(moves, env_score):
     """
     Log the current environment score.
     """
-    logging.info(f"Turn {moves}, Environment Score {env_score}")
+    # logging.info(f"Turn {moves}, Environment Score {env_score}")
     # logging.info(f"----------------------------------------\n")
+    pass

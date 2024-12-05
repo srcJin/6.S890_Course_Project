@@ -1,0 +1,182 @@
+[INFO 23:18:52] pymarl Running command 'my_main'
+[INFO 23:18:52] pymarl Started run with ID "1"
+[INFO 23:18:52] my_main Experiment Parameters:
+[INFO 23:18:52] my_main 
+
+{   'action_selector': 'soft_policies',
+    'add_value_last_step': True,
+    'agent': 'rnn',
+    'agent_output_type': 'pi_logits',
+    'batch_size': 10,
+    'batch_size_run': 10,
+    'buffer_cpu_only': True,
+    'buffer_size': 10,
+    'checkpoint_path': '',
+    'common_reward': True,
+    'critic_type': 'cv_critic',
+    'entropy_coef': 0.001,
+    'env': 'simcity',
+    'env_args': {   'grid_size': 4,
+                    'key': 'simcity',
+                    'map_name': 'simcity',
+                    'seed': 832231818,
+                    'time_limit': 100},
+    'epochs': 4,
+    'eps_clip': 0.2,
+    'evaluate': False,
+    'gamma': 0.99,
+    'grad_norm_clip': 10,
+    'hidden_dim': 128,
+    'hypergroup': None,
+    'label': 'default_label',
+    'learner': 'ppo_learner',
+    'learner_log_interval': 10000,
+    'load_step': 0,
+    'local_results_path': 'results',
+    'log_interval': 10000,
+    'lr': 0.0003,
+    'mac': 'basic_mac',
+    'mask_before_softmax': True,
+    'name': 'mappo',
+    'obs_agent_id': True,
+    'obs_individual_obs': False,
+    'obs_last_action': False,
+    'optim_alpha': 0.99,
+    'optim_eps': 1e-05,
+    'q_nstep': 5,
+    'render': False,
+    'repeat_id': 1,
+    'reward_scalarisation': 'sum',
+    'runner': 'parallel',
+    'runner_log_interval': 10000,
+    'save_model': False,
+    'save_model_interval': 10,
+    'save_replay': False,
+    'seed': 832231818,
+    'standardise_returns': False,
+    'standardise_rewards': True,
+    't_max': 20050000,
+    'target_update_interval_or_tau': 0.01,
+    'test_greedy': True,
+    'test_interval': 10000,
+    'test_nepisode': 30,
+    'use_cuda': True,
+    'use_rnn': True,
+    'use_tensorboard': False,
+    'use_wandb': False,
+    'wandb_mode': 'offline',
+    'wandb_project': None,
+    'wandb_save_model': False,
+    'wandb_team': None}
+
+[INFO 23:18:52] my_main Beginning training for 20050000 timesteps
+Process Process-10:
+Process Process-1:
+Process Process-2:
+Process Process-4:
+Process Process-8:
+Process Process-6:
+Process Process-5:
+Process Process-7:
+Process Process-3:
+Process Process-9:
+Traceback (most recent call last):
+  File "/home/jin/anaconda3/envs/epymarl/lib/python3.8/multiprocessing/process.py", line 315, in _bootstrap
+    self.run()
+  File "/home/jin/anaconda3/envs/epymarl/lib/python3.8/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/jin/Documents/GitHub/epymarl/src/runners/parallel_runner.py", line 296, in env_worker
+    _, reward, terminated, truncated, env_info = env.step(actions)
+  File "/home/jin/Documents/GitHub/epymarl/src/envs/simcity_wrapper.py", line 143, in step
+    actions_list = actions.squeeze(0).cpu().numpy().tolist()  # Shape: [n_agents]
+ValueError: cannot select an axis to squeeze out which has size not equal to one
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "/home/jin/anaconda3/envs/epymarl/lib/python3.8/multiprocessing/process.py", line 315, in _bootstrap
+    self.run()
+  File "/home/jin/anaconda3/envs/epymarl/lib/python3.8/multiprocessing/process.py", line 315, in _bootstrap
+    self.run()
+  File "/home/jin/anaconda3/envs/epymarl/lib/python3.8/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/jin/anaconda3/envs/epymarl/lib/python3.8/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/jin/Documents/GitHub/epymarl/src/runners/parallel_runner.py", line 296, in env_worker
+    _, reward, terminated, truncated, env_info = env.step(actions)
+  File "/home/jin/Documents/GitHub/epymarl/src/runners/parallel_runner.py", line 296, in env_worker
+    _, reward, terminated, truncated, env_info = env.step(actions)
+Traceback (most recent call last):
+  File "/home/jin/Documents/GitHub/epymarl/src/envs/simcity_wrapper.py", line 143, in step
+    actions_list = actions.squeeze(0).cpu().numpy().tolist()  # Shape: [n_agents]
+  File "/home/jin/Documents/GitHub/epymarl/src/envs/simcity_wrapper.py", line 143, in step
+    actions_list = actions.squeeze(0).cpu().numpy().tolist()  # Shape: [n_agents]
+Traceback (most recent call last):
+ValueError: cannot select an axis to squeeze out which has size not equal to one
+ValueError: cannot select an axis to squeeze out which has size not equal to one
+  File "/home/jin/anaconda3/envs/epymarl/lib/python3.8/multiprocessing/process.py", line 315, in _bootstrap
+    self.run()
+  File "/home/jin/anaconda3/envs/epymarl/lib/python3.8/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/jin/Documents/GitHub/epymarl/src/runners/parallel_runner.py", line 296, in env_worker
+    _, reward, terminated, truncated, env_info = env.step(actions)
+  File "/home/jin/Documents/GitHub/epymarl/src/envs/simcity_wrapper.py", line 143, in step
+    actions_list = actions.squeeze(0).cpu().numpy().tolist()  # Shape: [n_agents]
+  File "/home/jin/anaconda3/envs/epymarl/lib/python3.8/multiprocessing/process.py", line 315, in _bootstrap
+    self.run()
+  File "/home/jin/anaconda3/envs/epymarl/lib/python3.8/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/jin/Documents/GitHub/epymarl/src/runners/parallel_runner.py", line 296, in env_worker
+    _, reward, terminated, truncated, env_info = env.step(actions)
+  File "/home/jin/Documents/GitHub/epymarl/src/envs/simcity_wrapper.py", line 143, in step
+    actions_list = actions.squeeze(0).cpu().numpy().tolist()  # Shape: [n_agents]
+ValueError: cannot select an axis to squeeze out which has size not equal to one
+Traceback (most recent call last):
+ValueError: cannot select an axis to squeeze out which has size not equal to one
+  File "/home/jin/anaconda3/envs/epymarl/lib/python3.8/multiprocessing/process.py", line 315, in _bootstrap
+    self.run()
+  File "/home/jin/anaconda3/envs/epymarl/lib/python3.8/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/jin/Documents/GitHub/epymarl/src/runners/parallel_runner.py", line 296, in env_worker
+    _, reward, terminated, truncated, env_info = env.step(actions)
+  File "/home/jin/Documents/GitHub/epymarl/src/envs/simcity_wrapper.py", line 143, in step
+    actions_list = actions.squeeze(0).cpu().numpy().tolist()  # Shape: [n_agents]
+ValueError: cannot select an axis to squeeze out which has size not equal to one
+Traceback (most recent call last):
+Traceback (most recent call last):
+Traceback (most recent call last):
+  File "/home/jin/anaconda3/envs/epymarl/lib/python3.8/multiprocessing/process.py", line 315, in _bootstrap
+    self.run()
+  File "/home/jin/anaconda3/envs/epymarl/lib/python3.8/multiprocessing/process.py", line 315, in _bootstrap
+    self.run()
+  File "/home/jin/anaconda3/envs/epymarl/lib/python3.8/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/jin/anaconda3/envs/epymarl/lib/python3.8/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+Traceback (most recent call last):
+  File "/home/jin/Documents/GitHub/epymarl/src/runners/parallel_runner.py", line 296, in env_worker
+    _, reward, terminated, truncated, env_info = env.step(actions)
+  File "/home/jin/Documents/GitHub/epymarl/src/runners/parallel_runner.py", line 296, in env_worker
+    _, reward, terminated, truncated, env_info = env.step(actions)
+  File "/home/jin/Documents/GitHub/epymarl/src/envs/simcity_wrapper.py", line 143, in step
+    actions_list = actions.squeeze(0).cpu().numpy().tolist()  # Shape: [n_agents]
+  File "/home/jin/Documents/GitHub/epymarl/src/envs/simcity_wrapper.py", line 143, in step
+    actions_list = actions.squeeze(0).cpu().numpy().tolist()  # Shape: [n_agents]
+ValueError: cannot select an axis to squeeze out which has size not equal to one
+  File "/home/jin/anaconda3/envs/epymarl/lib/python3.8/multiprocessing/process.py", line 315, in _bootstrap
+    self.run()
+ValueError: cannot select an axis to squeeze out which has size not equal to one
+  File "/home/jin/anaconda3/envs/epymarl/lib/python3.8/multiprocessing/process.py", line 315, in _bootstrap
+    self.run()
+  File "/home/jin/anaconda3/envs/epymarl/lib/python3.8/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/jin/anaconda3/envs/epymarl/lib/python3.8/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/jin/Documents/GitHub/epymarl/src/runners/parallel_runner.py", line 296, in env_worker
+    _, reward, terminated, truncated, env_info = env.step(actions)
+  File "/home/jin/Documents/GitHub/epymarl/src/envs/simcity_wrapper.py", line 143, in step
+    actions_list = actions.squeeze(0).cpu().numpy().tolist()  # Shape: [n_agents]
+  File "/home/jin/Documents/GitHub/epymarl/src/runners/parallel_runner.py", line 296, in env_worker
+    _, reward, terminated, truncated, env_info = env.step(actions)
+  File "/home/jin/Documents/GitHub/epymarl/src/envs/simcity_wrapper.py", line 143, in step
+    actions_list = actions.squeeze(0).cpu().numpy().tolist()  # Shape: [n_agents]
+ValueError: cannot select an axis to squeeze out which has size not equal to one
+ValueError: cannot select an axis to squeeze out which has size not equal to one

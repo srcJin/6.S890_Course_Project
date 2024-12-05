@@ -205,7 +205,13 @@ class SimCityWrapper(MultiAgentEnv):
         current_agents = len(self.env.agents)
         logger.debug(f"Number of active agents after step: {current_agents}")
         
-        return obs, reward, terminated, truncated, {}
+        info = {
+        "env_score": self.env.env_score,
+        # "agent_score": self.env._cumulative_rewards
+            # 可以添加其他相关信息
+        }
+
+        return obs, reward, terminated, truncated, info
         
     def reset(self, seed=None, options=None):
         """Returns initial observations and info"""
