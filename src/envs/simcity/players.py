@@ -1,4 +1,5 @@
-# players.py
+# src/envs/simcity/players.py
+
 import random
 from .config import BUILDING_TYPES, BUILDING_COSTS
 from utils.logging import get_logger
@@ -20,6 +21,10 @@ class BasePlayer:
         pass
 
     def update_state(self, reward, info):
+        """
+        Updates the player's self_score and resources. This method can be
+        further customized in subclasses to reflect player-specific behaviors.
+        """
         self.self_score += reward
 
         if "resources" in info:
@@ -29,20 +34,38 @@ class BasePlayer:
                 else:
                     self.resources[resource] = change
 
+        # Log the updated resources
+        logger.debug(f"players: Player {self.name} updated resources: {self.resources}")
+
+
+class InterestDrivenPlayer(BasePlayer):
+    def update_state(self, reward, info):
+        super().update_state(reward, info)
+
+        # Update integrated score using a player-specific formula
+        self.self_score = (
+            0.5 * self.resources["money"] + 0.5 * self.resources["reputation"]
+        )
+        logger.debug(f"players: Interest-Driven Player {self.name} self_score: {self.self_score}")
+
+
+class AltruisticPlayer(BasePlayer):
+    def update_state(self, reward, info):
+        super().update_state(reward, info)
+
+        # Update integrated score using a player-specific formula
+        self.self_score = (
+            0.5 * self.resources["money"] + 0.5 * self.resources["reputation"]
+        )
+        logger.debug(f"players: Altruistic Player {self.name} self_score: {self.self_score}")
+
 
 class BalancedPlayer(BasePlayer):
-    def select_action(self, observation):
-        resources = observation["resources"]
-        available_actions = []
-        for action_id in range(len(BUILDING_TYPES) * observation["grid"].shape[0] ** 2):
-            building_type_idx = action_id // (observation["grid"].shape[0] ** 2)
-            building_type = BUILDING_TYPES[building_type_idx]
-            if (
-                resources["money"] >= BUILDING_COSTS[building_type]["money"]
-                and resources["reputation"]
-                >= BUILDING_COSTS[building_type]["reputation"]
-            ):
-                available_actions.append(action_id)
-        if available_actions:
-            return random.choice(available_actions)
-        return -1
+    def update_state(self, reward, info):
+        super().update_state(reward, info)
+
+        # Update integrated score using a player-specific formula
+        self.self_score = (
+            0.5 * self.resources["money"] + 0.5 * self.resources["reputation"]
+        )
+        logger.debug(f"players: Balanced Player {self.name} self_score: {self.self_score}")

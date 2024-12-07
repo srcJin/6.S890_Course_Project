@@ -1,4 +1,4 @@
-# config.py
+# src/envs/simcity/config.py
 
 # Define building types
 BUILDING_TYPES = ["Park", "House", "Shop"]

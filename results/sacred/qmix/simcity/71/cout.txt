@@ -1,0 +1,89 @@
+[INFO 16:54:21] pymarl Running command 'my_main'
+[INFO 16:54:21] pymarl Started run with ID "71"
+[WARNING 16:54:21] my_main CUDA flag use_cuda was switched OFF automatically because no CUDA devices are available!
+[INFO 16:54:21] my_main Experiment Parameters:
+[INFO 16:54:21] my_main 
+
+{   'action_selector': 'epsilon_greedy',
+    'add_value_last_step': True,
+    'agent': 'rnn',
+    'agent_output_type': 'q',
+    'batch_size': 32,
+    'batch_size_run': 1,
+    'buffer_cpu_only': True,
+    'buffer_size': 5000,
+    'checkpoint_path': '',
+    'common_reward': True,
+    'double_q': True,
+    'env': 'simcity',
+    'env_args': {   'grid_size': 4,
+                    'key': 'simcity',
+                    'map_name': 'simcity',
+                    'seed': 598522140,
+                    'time_limit': 100},
+    'epsilon_anneal_time': 50000,
+    'epsilon_finish': 0.05,
+    'epsilon_start': 1.0,
+    'evaluate': False,
+    'evaluation_epsilon': 0.0,
+    'gamma': 0.99,
+    'grad_norm_clip': 10,
+    'hidden_dim': 64,
+    'hypergroup': None,
+    'hypernet_embed': 64,
+    'hypernet_layers': 2,
+    'label': 'default_label',
+    'learner': 'q_learner',
+    'learner_log_interval': 100,
+    'load_step': 0,
+    'local_results_path': 'results',
+    'log_interval': 100,
+    'lr': 0.0005,
+    'mac': 'basic_mac',
+    'mixer': 'qmix',
+    'mixing_embed_dim': 32,
+    'name': 'qmix',
+    'obs_agent_id': True,
+    'obs_individual_obs': False,
+    'obs_last_action': False,
+    'optim_alpha': 0.99,
+    'optim_eps': 1e-05,
+    'render': False,
+    'repeat_id': 1,
+    'reward_scalarisation': 'sum',
+    'runner': 'episode',
+    'runner_log_interval': 100,
+    'save_model': False,
+    'save_model_interval': 10,
+    'save_replay': False,
+    'seed': 598522140,
+    'standardise_returns': False,
+    'standardise_rewards': True,
+    't_max': 3,
+    'target_update_interval_or_tau': 200,
+    'test_greedy': True,
+    'test_interval': 100,
+    'test_nepisode': 20,
+    'use_cuda': False,
+    'use_rnn': False,
+    'use_tensorboard': False,
+    'use_wandb': False,
+    'wandb_mode': 'offline',
+    'wandb_project': None,
+    'wandb_save_model': False,
+    'wandb_team': None}
+
+[INFO 16:54:22] my_main Beginning training for 3 timesteps
+[INFO 16:54:22] my_main t_env: 100 / 3
+[INFO 16:54:22] my_main Estimated time left: -. Time passed: 0 seconds
+[INFO 16:54:28] my_main Recent Stats | t_env:        100 | Episode:        1
+env_score_mean:           15.8333	ep_length_mean:          100.0000	epsilon:                   1.0000	return_mean:             6071.0000
+return_std:                0.0000	test_env_score_mean:      21.6667	test_ep_length_mean:     100.0000	test_return_mean:        -893.0000
+test_return_std:           0.0000	
+[INFO 16:54:28] my_main Finished Training
+Exiting Main
+Stopping all threads
+Thread Thread-1 is alive! Is daemon: False
+Thread joined
+Exiting script
+[INFO 16:54:30] pymarl Completed after 0:00:08

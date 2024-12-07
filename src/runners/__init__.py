@@ -1,3 +1,5 @@
+# src/runners/__init__.py
+
 REGISTRY = {}
 
 from .episode_runner import EpisodeRunner
