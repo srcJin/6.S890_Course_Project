@@ -12,8 +12,8 @@ class BasePlayer:
         self.integrated_score = 0
         self.final_score = 0
         self.resources = {
-            "money": 20,
-            "reputation": 20,
+            "money": 50,
+            "reputation": 50,
         }
 
     def select_action(self, observation):

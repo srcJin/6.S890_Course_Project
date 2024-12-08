@@ -16,32 +16,37 @@ from utils.logging import get_logger
 logger = get_logger(log_file_path="simulation.log")
 
 NO_OP = 0
-NUM_CELLS = 16  # 4x4 grid
 BUILDING_TYPES = ["Park", "House", "Shop"]
 NUM_BUILDING_TYPES = len(BUILDING_TYPES)
-ACTIONS_PER_BUILDING = NUM_CELLS
-TOTAL_ACTIONS = 1 + (NUM_BUILDING_TYPES * ACTIONS_PER_BUILDING)  # 49
 
 class SimCityEnv(AECEnv):
     metadata = {"render_modes": ["human"], "name": "SimCityEnv"}
 
-    def __init__(self, common_reward=False):
+    def __init__(self, grid_x=4, grid_y=4, common_reward=False):
         super().__init__()
+        self.BUILDING_COSTS = BUILDING_COSTS
+        self.BUILDING_TYPES = BUILDING_TYPES
+        self.BUILDING_UTILITIES = BUILDING_UTILITIES
+        self.BUILDING_EFFECTS = BUILDING_EFFECTS
         self.common_reward = common_reward
-        self.grid_size = 4
+        self.grid_x = grid_x
+        self.grid_y = grid_y
+        self.num_cells = grid_x * grid_y
         self.agents = ["P1", "P2", "P3"]
         self.possible_agents = self.agents[:]
         self._agent_selector = agent_selector(self.agents)
         self.agent_selection = self._agent_selector.next()
         
-        self.action_spaces = {agent: spaces.Discrete(TOTAL_ACTIONS) for agent in self.agents}
+        self.total_actions = 1 + (NUM_BUILDING_TYPES * self.num_cells)  # no_op + (NUM_BUILDING_TYPES * self.num_cells)
+
+        self.action_spaces = {agent: spaces.Discrete(self.total_actions) for agent in self.agents}
         self.observation_spaces = {
             agent: spaces.Dict(
                 {
                     "grid": spaces.Box(
                         low=0,
                         high=100,
-                        shape=(self.grid_size, self.grid_size, 3),
+                        shape=(self.grid_x, self.grid_y, 3),
                         dtype=np.int32,
                     ),
                     "resources": spaces.Dict(
@@ -53,7 +58,13 @@ class SimCityEnv(AECEnv):
                     "builders": spaces.Box(
                         low=-1,
                         high=len(self.agents) - 1,
-                        shape=(self.grid_size, self.grid_size),
+                        shape=(self.grid_x, self.grid_y),
+                        dtype=np.int32,
+                    ),
+                    "building_types": spaces.Box(
+                        low=0,
+                        high=NUM_BUILDING_TYPES - 1,
+                        shape=(self.grid_x, self.grid_y),
                         dtype=np.int32,
                     ),
                 }
@@ -79,20 +90,22 @@ class SimCityEnv(AECEnv):
         if seed is not None:
             np.random.seed(seed)
         
-        self.grid = np.empty((self.grid_size, self.grid_size, 3), dtype=np.int32)
+        self.grid = np.empty((self.grid_x, self.grid_y, 3), dtype=np.int32)
         self.grid[:, :, 0] = 15  # G
         self.grid[:, :, 1] = 20  # V
         self.grid[:, :, 2] = 30  # D
 
-        self.buildings = np.full((self.grid_size, self.grid_size), None)
-        self.builders = np.full((self.grid_size, self.grid_size), -1, dtype=np.int32)
+        self.buildings = np.full((self.grid_x, self.grid_y), None)
+        self.builders = np.full((self.grid_x, self.grid_y), -1, dtype=np.int32)
+        self.building_types = np.full((self.grid_x, self.grid_y), -1, dtype=np.int32)  # -1 for no building
+
         self.rewards = {agent: 0 for agent in self.agents}
         self.infos = {agent: {} for agent in self.agents}
         self.terminations = {agent: False for agent in self.agents}
         self.truncations = {agent: False for agent in self.agents}
         
         for player in self.players.values():
-            player.resources = {"money": 20, "reputation": 20}
+            player.resources = {"money": 50, "reputation": 50}
             player.self_score = 0
             player.integrated_score = 0
 
@@ -132,21 +145,27 @@ class SimCityEnv(AECEnv):
         else:
             if self.buildings[x][y] is not None:
                 build_on_occupied_penalty = 999999999999999999
-                reward -= 999999999999999999
+                reward -= build_on_occupied_penalty
                 logger.debug(f"environment: Agent {agent} tried to build on an occupied cell ({x},{y}). Penalty: {build_on_occupied_penalty}.")
             else:
                 building_cost = BUILDING_COSTS[building_type]
                 player_resources = self.players[agent].resources
                 if player_resources["money"] < building_cost["money"] or player_resources["reputation"] < building_cost["reputation"]:
-                    reward -= 999999999999999999
-                    logger.debug(f"environment: Agent {agent} does not have enough resources to build {building_type} at ({x},{y}). Penalty: -5.")
+                    # Penalty for not having enough resources
+                    not_enough_resource_penalty = 999999999999999999
+                    reward -= not_enough_resource_penalty
+                    logger.debug(f"environment: Agent {agent} does not have enough resources to build {building_type} at ({x},{y}). Penalty: {not_enough_resource_penalty}.")
                 else:
+                    # Deduct resources
                     player_resources["money"] -= building_cost["money"]
                     player_resources["reputation"] -= building_cost["reputation"]
                     logger.debug(f"environment: Agent {agent} resources after building: {player_resources}")
 
+                    # Update buildings and builders
                     self.buildings[x][y] = {"type": building_type, "turn_built": self.num_moves}
-                    self.builders[x][y] = self.agents.index(agent)
+                    self.builders[x][y] = self.agents.index(agent)  # 0 for P1, 1 for P2, 2 for P3
+                    self.building_types[x][y] = BUILDING_TYPES.index(building_type)  # 0 for Park, 1 for House, 2 for Shop
+
 
                     # Update self grid score
                     building_effect = BUILDING_EFFECTS[building_type]
@@ -157,7 +176,7 @@ class SimCityEnv(AECEnv):
                     # Update neighbors score
                     for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1), (1, 1), (-1, -1), (1, -1), (-1, 1)]:
                         nx, ny = x + dx, y + dy
-                        if 0 <= nx < self.grid_size and 0 <= ny < self.grid_size:
+                        if 0 <= nx < self.grid_x and 0 <= ny < self.grid_y:
                             self.grid[nx][ny][0] += building_effect["neighbors"]["G"]
                             self.grid[nx][ny][1] += building_effect["neighbors"]["V"]
                             self.grid[nx][ny][2] += building_effect["neighbors"]["D"]
@@ -172,8 +191,9 @@ class SimCityEnv(AECEnv):
                         "reputation": -building_cost["reputation"] + building_utility["reputation"],
                     }
 
-        for gx in range(self.grid_size):
-            for gy in range(self.grid_size):
+        # Update utilities based on buildings
+        for gx in range(self.grid_x):
+            for gy in range(self.grid_y):
                 if self.buildings[gx][gy] is not None:
                     b_type = self.buildings[gx][gy]["type"]
                     b_utility = BUILDING_UTILITIES[b_type]
@@ -192,10 +212,9 @@ class SimCityEnv(AECEnv):
         # alpha, beta = 0.5, 0.5
         # self.players[agent].integrated_score = alpha * self.players[agent].self_score + beta * self.env_score
 
-        # Calculate integrated score with player-specific alpha and beta
-        if isinstance(self.players[agent], InterestDrivenPlayer):
-            alpha, beta = 0.8, 0.2
-            logger.debug(f"environment: Player {agent} is InterestDrivenPlayer, using alpha={alpha}, beta={beta}")
+        self.agent_selection = self._agent_selector.next()
+        logger.debug(f"environment: Agent selection after step: {self.agent_selection}")
+        self.has_reset = Truenvironment: Player {agent} is InterestDrivenPlayer, using alpha={alpha}, beta={beta}")
         elif isinstance(self.players[agent], AltruisticPlayer):
             alpha, beta = 0.2, 0.8
             logger.debug(f"environment: Player {agent} is AltruisticPlayer, using alpha={alpha}, beta={beta}")
@@ -225,29 +244,19 @@ class SimCityEnv(AECEnv):
         self.has_reset = True
 
     def decode_action(self, action):
-        if not isinstance(action, int) or action < 0 or action >= TOTAL_ACTIONS:
+        if not isinstance(action, int) or action < 0 or action >= 1 + NUM_BUILDING_TYPES * self.num_cells:
             logger.warning(f"environment: Received invalid action: {action}, defaulting to No-op.")
             return "Park", 0, 0
 
         if action == NO_OP:
             return "Park", 0, 0
-        if 1 <= action <= 16:
-            building_type = "Park"
-            cell_id = action - 1
-        elif 17 <= action <= 32:
-            building_type = "House"
-            cell_id = action - 17
-        elif 33 <= action <= 48:
-            building_type = "Shop"
-            cell_id = action - 33
-        else:
-            logger.error(f"environment: Action {action} out of defined range.")
-            return "Park", 0, 0
 
-        x = cell_id // self.grid_size
-        y = cell_id % self.grid_size
+        cell_id = (action - 1) % self.num_cells
+        building_type_index = (action - 1) // self.num_cells
+        building_type = BUILDING_TYPES[building_type_index]
 
-        logger.debug(f"environment: Decoded action: Building={building_type}, Cell=({x},{y})")
+        x = cell_id // self.grid_y
+        y = cell_id % self.grid_y
 
         return building_type, x, y
 
@@ -270,15 +279,16 @@ class SimCityEnv(AECEnv):
             "grid": self.grid.copy(),
             "resources": self.players[agent].resources.copy(),
             "builders": self.builders.copy(),
+            "building_types": self.building_types.copy(),
         }
         logger.debug(f"environment: observe Observation for {agent}: {observation}")
         return observation
 
     def render(self, mode="human"):
         display_grid = ""
-        for x in range(self.grid_size):
+        for x in range(self.grid_x):
             row = ""
-            for y in range(self.grid_size):
+            for y in range(self.grid_y):
                 b = self.buildings[x][y]
                 if b is None:
                     row += "[ ]"

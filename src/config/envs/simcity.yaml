@@ -5,7 +5,8 @@ env_args:
   map_name: "simcity"
   seed: null
   time_limit: 100
-  grid_size: 4
+  grid_x: 2
+  grid_y: 2
 
 test_greedy: True
 test_nepisode: 20

@@ -1,0 +1,76 @@
+{
+  "env_score_mean": [
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 24.166666666666668
+    }
+  ],
+  "env_score_mean_T": [
+    7
+  ],
+  "ep_length_mean": [
+    7.0
+  ],
+  "ep_length_mean_T": [
+    7
+  ],
+  "epsilon": [
+    1.0
+  ],
+  "epsilon_T": [
+    7
+  ],
+  "return_mean": [
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": -2.9999999999999995e+18
+    }
+  ],
+  "return_mean_T": [
+    7
+  ],
+  "return_std": [
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 0.0
+    }
+  ],
+  "return_std_T": [
+    7
+  ],
+  "test_env_score_mean": [
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 20.0
+    }
+  ],
+  "test_env_score_mean_T": [
+    7
+  ],
+  "test_ep_length_mean": [
+    16.0
+  ],
+  "test_ep_length_mean_T": [
+    7
+  ],
+  "test_return_mean": [
+    -3e+19
+  ],
+  "test_return_mean_T": [
+    7
+  ],
+  "test_return_std": [
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 0.0
+    }
+  ],
+  "test_return_std_T": [
+    7
+  ]
+}
