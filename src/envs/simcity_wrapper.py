@@ -159,15 +159,18 @@ class SimCityWrapper(MultiAgentEnv):
 
         obs = self.get_obs()
         if self.env.common_reward:
+            # If using a common reward, sum all individual rewards
             total_reward = sum(self.env._cumulative_rewards.values())
             reward = total_reward
             logger.debug(f"simcity_wrapper: Total reward (common_reward): {total_reward}")
         else:
-            reward = [self.env._cumulative_rewards[agent] for agent in self.env.agents]
+            # Otherwise, provide individual rewards as a list
+            reward = [self.env.rewards[agent] for agent in self.env.agents]
             logger.debug(f"simcity_wrapper: Individual rewards: {reward}")
 
         self.env._cumulative_rewards = {agent: 0 for agent in self.env.agents}
 
+        # Determine termination flags
         done = all(self.env.terminations.values()) or all(self.env.truncations.values())
         terminated_flags = [self.env.terminations[agent] for agent in self.env.agents]
         truncated_flags = [self.env.truncations[agent] for agent in self.env.agents]

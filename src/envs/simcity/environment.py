@@ -22,7 +22,7 @@ NUM_BUILDING_TYPES = len(BUILDING_TYPES)
 class SimCityEnv(AECEnv):
     metadata = {"render_modes": ["human"], "name": "SimCityEnv"}
 
-    def __init__(self, grid_x=4, grid_y=4, common_reward=False):
+    def __init__(self, grid_x=4, grid_y=4, common_reward=False, reward_alpha=0.5, reward_beta=0.5):
         super().__init__()
         self.BUILDING_COSTS = BUILDING_COSTS
         self.BUILDING_TYPES = BUILDING_TYPES
@@ -32,6 +32,8 @@ class SimCityEnv(AECEnv):
         self.grid_x = grid_x
         self.grid_y = grid_y
         self.num_cells = grid_x * grid_y
+        self.reward_alpha = reward_alpha
+        self.reward_beta = reward_beta
         self.agents = ["P1", "P2", "P3"]
         self.possible_agents = self.agents[:]
         self._agent_selector = agent_selector(self.agents)
@@ -71,6 +73,7 @@ class SimCityEnv(AECEnv):
             )
             for agent in self.agents
         }
+
         # Mode 1: all players are balanced player
         # self.players = {agent: BalancedPlayer(agent) for agent in self.agents}
 
@@ -83,6 +86,9 @@ class SimCityEnv(AECEnv):
                 self.players[agent] = BalancedPlayer(agent)
             else:
                 self.players[agent] = InterestDrivenPlayer(agent)
+
+        # Initialize previous integrated scores for reward calculation
+        self.previous_integrated_score = {agent: 0 for agent in self.agents}
 
         self.reset()
 
@@ -116,6 +122,9 @@ class SimCityEnv(AECEnv):
         self.num_moves = 0
         self.has_reset = True
         self.agent_index = 0
+
+        # Reset previous integrated scores
+        self.previous_integrated_score = {agent: 0 for agent in self.agents}
 
         logger.debug("environment: Environment reset completed.")
         return self.observe(self.agent_selection), {}
@@ -199,22 +208,21 @@ class SimCityEnv(AECEnv):
                     b_utility = BUILDING_UTILITIES[b_type]
                     self.players[agent].resources["money"] += b_utility["money"]
                     self.players[agent].resources["reputation"] += b_utility["reputation"]
-                    reward += (b_utility["money"] + b_utility["reputation"])
+                    self.players[agent].self_score += (b_utility["money"] + b_utility["reputation"])
 
-        self.players[agent].self_score += reward
-        self._cumulative_rewards[agent] += reward
-
+        # Calculate environment score
         self.env_score = self.calculate_environment_score()["env_score"]
-        
         logger.debug(f"environment: env_score after step: {self.env_score}")
+
 
         # Mode 1: all players intergrated score is the same
         # alpha, beta = 0.5, 0.5
         # self.players[agent].integrated_score = alpha * self.players[agent].self_score + beta * self.env_score
 
-        self.agent_selection = self._agent_selector.next()
-        logger.debug(f"environment: Agent selection after step: {self.agent_selection}")
-        self.has_reset = Truenvironment: Player {agent} is InterestDrivenPlayer, using alpha={alpha}, beta={beta}")
+        # Mode 2: assign different alpha and beta for different player types
+        if isinstance(self.players[agent], InterestDrivenPlayer):
+            alpha, beta = 0.8, 0.2
+            logger.debug(f"environment: Player {agent} is InterestDrivenPlayer, using alpha={alpha}, beta={beta}")
         elif isinstance(self.players[agent], AltruisticPlayer):
             alpha, beta = 0.2, 0.8
             logger.debug(f"environment: Player {agent} is AltruisticPlayer, using alpha={alpha}, beta={beta}")
@@ -234,14 +242,22 @@ class SimCityEnv(AECEnv):
         log_environment_score(self.num_moves, self.env_score)
         self.infos[agent]["resources"] = info_resources
 
+        # Compute and assign reward based on integrated_score and delta
+        reward = self.compute_reward(agent, self.reward_alpha, self.reward_beta)
+
+        # Increment move count and check for termination
         self.num_moves += 1
         if self.is_game_over():
             for ag in self.agents:
                 self.terminations[ag] = True
 
+        # Select next agent
         self.agent_selection = self._agent_selector.next()
         logger.debug(f"environment: Agent selection after step: {self.agent_selection}")
         self.has_reset = True
+
+        # Assign the computed reward
+        self.rewards[agent] = reward
 
     def decode_action(self, action):
         if not isinstance(action, int) or action < 0 or action >= 1 + NUM_BUILDING_TYPES * self.num_cells:
@@ -268,6 +284,24 @@ class SimCityEnv(AECEnv):
         logger.debug(f"environment: calculate_environment_score G_avg={G_avg}, V_avg={V_avg}, D_avg={D_avg}, env_score={env_score}")
 
         return {"G_avg": G_avg, "V_avg": V_avg, "D_avg": D_avg, "env_score": env_score}
+
+    def compute_reward(self, agent, reward_alpha, reward_beta):
+        """
+        Compute the reward for an agent based on the change in integrated_score and the current integrated_score.
+        Formula: reward = alpha * delta + beta * integrated_score
+        """
+        current_score = self.players[agent].integrated_score
+        previous_score = self.previous_integrated_score[agent]
+        delta = current_score - previous_score
+        self.previous_integrated_score[agent] = current_score
+
+        reward = reward_alpha * delta + reward_beta * current_score
+        logger.debug(
+            f"environment: Compute reward for {agent} - Delta: {delta}, "
+            f"Integrated Score: {current_score}, Reward: {reward} (alpha={reward_alpha}, beta={reward_beta}"
+        )
+        return reward
+
 
     def is_game_over(self):
         board_filled = np.all(self.buildings != None)
