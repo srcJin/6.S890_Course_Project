@@ -1,2 +1,2 @@
 from .environment import SimCityEnv
-from .players import BalancedPlayer
+from .players import BalancedPlayer, InterestDrivenPlayer, AltruisticPlayer

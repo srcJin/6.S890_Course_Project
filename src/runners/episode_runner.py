@@ -85,7 +85,7 @@ class EpisodeRunner:
                 "obs": [self.env.get_obs()],
             }
     
-            logger.debug(f"Pre-transition data at time step {self.t}: {pre_transition_data}")
+            logger.debug(f"episode_runner: Pre-transition data at time step {self.t}: {pre_transition_data}")
     
             self.batch.update(pre_transition_data, ts=self.t)
     
@@ -93,20 +93,20 @@ class EpisodeRunner:
             actions = self.mac.select_actions(
                 self.batch, t_ep=self.t, t_env=self.t_env, test_mode=test_mode
             )
-            logger.debug(f"Selected actions: {actions}")
+            logger.debug(f"episode_runner: Selected actions: {actions}")
     
             _, reward, terminated, truncated, env_info = self.env.step(actions[0])
             terminated = terminated or truncated
-            logger.debug(f"Step result - Reward: {reward}, Terminated: {terminated}, Truncated: {truncated}")
+            logger.debug(f"episode_runner: Step result - Reward: {reward}, Terminated: {terminated}, Truncated: {truncated}")
             #
             if terminated or truncated:
-                logger.debug(f"Episode ended due to termination: {terminated}, truncation: {truncated}")
+                logger.debug(f"episode_runner: Episode ended due to termination: {terminated}, truncation: {truncated}")
             # Reset logic
 
             if test_mode and self.args.render:
                 self.env.render()
             episode_return += reward
-            logger.debug(f"Episode return so far: {episode_return}")
+            logger.debug(f"episode_runner: Episode return so far: {episode_return}")
     
             post_transition_data = {
                 "actions": actions,
@@ -117,7 +117,7 @@ class EpisodeRunner:
             else:
                 post_transition_data["reward"] = [tuple(reward)]
     
-            logger.debug(f"Post-transition data at time step {self.t}: {post_transition_data}")
+            logger.debug(f"episode_runner: Post-transition data at time step {self.t}: {post_transition_data}")
     
             self.batch.update(post_transition_data, ts=self.t)
     
@@ -128,7 +128,7 @@ class EpisodeRunner:
             "avail_actions": [self.env.get_avail_actions()],
             "obs": [self.env.get_obs()],
         }
-        logger.debug(f"Last data before episode ends: {last_data}")
+        logger.debug(f"episode_runner: Last data before episode ends: {last_data}")
     
         if test_mode and self.args.render:
             print(f"Episode return: {episode_return}")
@@ -138,7 +138,7 @@ class EpisodeRunner:
         actions = self.mac.select_actions(
             self.batch, t_ep=self.t, t_env=self.t_env, test_mode=test_mode
         )
-        logger.debug(f"Selected actions for last state: {actions}")
+        logger.debug(f"episode_runner: Selected actions for last state: {actions}")
     
         self.batch.update({"actions": actions}, ts=self.t)
     

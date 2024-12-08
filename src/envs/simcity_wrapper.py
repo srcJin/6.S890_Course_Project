@@ -3,7 +3,7 @@
 import numpy as np
 import torch as th
 from envs.multiagentenv import MultiAgentEnv
-from envs.simcity import SimCityEnv, BalancedPlayer
+from envs.simcity import SimCityEnv, BalancedPlayer, InterestDrivenPlayer, AltruisticPlayer
 from utils.logging import get_logger
 
 logger = get_logger(log_file_path="simulation.log")
@@ -12,11 +12,6 @@ class SimCityWrapper(MultiAgentEnv):
     def __init__(self, **kwargs):
         logger.debug("simcity_wrapper: Initializing SimCityWrapper")
         self.env = SimCityEnv(common_reward=kwargs.get("common_reward", False))
-        self.env.players = {
-            "P1": BalancedPlayer("P1"),
-            "P2": BalancedPlayer("P2"),
-            "P3": BalancedPlayer("P3"),
-        }
         self.n_agents = len(self.env.agents)
         self.episode_limit = kwargs.get("time_limit", self.env.grid_size * self.env.grid_size)
         self.current_step = 0

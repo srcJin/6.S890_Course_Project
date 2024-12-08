@@ -67,11 +67,11 @@ class SimCityEnv(AECEnv):
         self.players = {}
         for i, agent in enumerate(self.agents):
             if i % 3 == 0:
-                self.players[agent] = BasePlayer(agent)
+                self.players[agent] = AltruisticPlayer(agent)
             elif i % 3 == 1:
                 self.players[agent] = BalancedPlayer(agent)
             else:
-                self.players[agent] = BalancedPlayer(agent)
+                self.players[agent] = InterestDrivenPlayer(agent)
 
         self.reset()
 
@@ -148,12 +148,14 @@ class SimCityEnv(AECEnv):
                     self.buildings[x][y] = {"type": building_type, "turn_built": self.num_moves}
                     self.builders[x][y] = self.agents.index(agent)
 
+                    # Update self grid score
                     building_effect = BUILDING_EFFECTS[building_type]
                     self.grid[x][y][0] += building_effect["G"]
                     self.grid[x][y][1] += building_effect["V"]
                     self.grid[x][y][2] += building_effect["D"]
 
-                    for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
+                    # Update neighbors score
+                    for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1), (1, 1), (-1, -1), (1, -1), (-1, 1)]:
                         nx, ny = x + dx, y + dy
                         if 0 <= nx < self.grid_size and 0 <= ny < self.grid_size:
                             self.grid[nx][ny][0] += building_effect["neighbors"]["G"]
@@ -210,9 +212,6 @@ class SimCityEnv(AECEnv):
             f"Integrated score: {self.players[agent].integrated_score} (alpha={alpha}, beta={beta})"
         )
 
-        for player in self.players.values():
-            logger.debug(f"environment: Player {player.name} - Self score: {player.self_score}, Integrated score: {player.integrated_score}")
-
         log_environment_score(self.num_moves, self.env_score)
         self.infos[agent]["resources"] = info_resources
 
@@ -232,7 +231,6 @@ class SimCityEnv(AECEnv):
 
         if action == NO_OP:
             return "Park", 0, 0
-
         if 1 <= action <= 16:
             building_type = "Park"
             cell_id = action - 1
@@ -248,6 +246,9 @@ class SimCityEnv(AECEnv):
 
         x = cell_id // self.grid_size
         y = cell_id % self.grid_size
+
+        logger.debug(f"environment: Decoded action: Building={building_type}, Cell=({x},{y})")
+
         return building_type, x, y
 
     def calculate_environment_score(self):
@@ -255,10 +256,13 @@ class SimCityEnv(AECEnv):
         V_avg = np.mean(self.grid[:, :, 1])
         D_avg = np.mean(self.grid[:, :, 2])
         env_score = (G_avg + V_avg + D_avg) / 3
+        logger.debug(f"environment: calculate_environment_score G_avg={G_avg}, V_avg={V_avg}, D_avg={D_avg}, env_score={env_score}")
+
         return {"G_avg": G_avg, "V_avg": V_avg, "D_avg": D_avg, "env_score": env_score}
 
     def is_game_over(self):
         board_filled = np.all(self.buildings != None)
+        logger.debug(f"environment: Game over check - board_filled={board_filled}")
         return board_filled
 
     def observe(self, agent):
@@ -267,6 +271,7 @@ class SimCityEnv(AECEnv):
             "resources": self.players[agent].resources.copy(),
             "builders": self.builders.copy(),
         }
+        logger.debug(f"environment: observe Observation for {agent}: {observation}")
         return observation
 
     def render(self, mode="human"):
