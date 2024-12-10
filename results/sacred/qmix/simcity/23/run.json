@@ -13,17 +13,17 @@
     "name": "pymarl",
     "repositories": [
       {
-        "commit": "a9f124d5b5afcec3f04beea171cc28738aa77283",
+        "commit": "55d0e065d47056c2eced5ef5530ac0f6fa7f702b",
         "dirty": true,
         "url": "https://github.com/srcJin/epymarl.git"
       },
       {
-        "commit": "a9f124d5b5afcec3f04beea171cc28738aa77283",
+        "commit": "55d0e065d47056c2eced5ef5530ac0f6fa7f702b",
         "dirty": true,
         "url": "https://github.com/srcJin/epymarl.git"
       },
       {
-        "commit": "a9f124d5b5afcec3f04beea171cc28738aa77283",
+        "commit": "55d0e065d47056c2eced5ef5530ac0f6fa7f702b",
         "dirty": true,
         "url": "https://github.com/srcJin/epymarl.git"
       }
@@ -35,15 +35,25 @@
       ],
       [
         "run.py",
-        "_sources/run_793b623e50174df7749e0eae5ea241e7.py"
+        "_sources/run_37af68a6c476f3926c51dabc55a02503.py"
       ],
       [
         "utils/logging.py",
-        "_sources/logging_0c80aa74e1af3974593aca2476e9060e.py"
+        "_sources/logging_12e207012fc2324f8d68b4e8ed7cb140.py"
       ]
     ]
   },
-  "heartbeat": "2024-12-08T12:38:13.756046",
+  "fail_trace": [
+    "Traceback (most recent call last):\n",
+    "  File \"/home/jin/anaconda3/envs/epymarl/lib/python3.8/site-packages/sacred/config/captured_function.py\", line 42, in captured_function\n    result = wrapped(*args, **kwargs)\n",
+    "  File \"src/main.py\", line 45, in my_main\n    run(_run, config, _log)\n",
+    "  File \"/home/jin/Documents/GitHub/epymarl/src/run.py\", line 74, in run\n    run_sequential(args=args, logger=logger)\n",
+    "  File \"/home/jin/Documents/GitHub/epymarl/src/run.py\", line 211, in run_sequential\n    episode_batch = runner.run(test_mode=False)\n",
+    "  File \"/home/jin/Documents/GitHub/epymarl/src/runners/episode_runner.py\", line 100, in run\n    obs, reward, terminated, truncated, env_info = self.env.step(actions[0])\n",
+    "  File \"/home/jin/Documents/GitHub/epymarl/src/envs/simcity_wrapper.py\", line 187, in step\n    info = {\"env_score\": self.env.env_score, \"agent_rewards\": self.env.individual_reward_list, \"common_reward_value\": self.env.common_reward_value}\n",
+    "AttributeError: 'SimCityEnv' object has no attribute 'individual_reward_list'\n"
+  ],
+  "heartbeat": "2024-12-08T16:05:23.403600",
   "host": {
     "ENV": {},
     "cpu": "Intel(R) Core(TM) i9-10900K CPU @ 3.70GHz",
@@ -87,7 +97,7 @@
   },
   "resources": [],
   "result": null,
-  "start_time": "2024-12-08T12:38:11.947651",
-  "status": "COMPLETED",
-  "stop_time": "2024-12-08T12:38:13.749961"
+  "start_time": "2024-12-08T16:05:22.689988",
+  "status": "FAILED",
+  "stop_time": "2024-12-08T16:05:23.404397"
 }

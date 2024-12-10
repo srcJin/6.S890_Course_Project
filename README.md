@@ -8,6 +8,7 @@ pip install -r requirements.txt
 python src/main.py --config=qmix --env-config=simcity
 
 # Plotting
+
 python plot_results.py --path results
 
 # API Access

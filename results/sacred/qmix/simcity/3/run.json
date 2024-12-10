@@ -13,17 +13,17 @@
     "name": "pymarl",
     "repositories": [
       {
-        "commit": "a9f124d5b5afcec3f04beea171cc28738aa77283",
+        "commit": "55d0e065d47056c2eced5ef5530ac0f6fa7f702b",
         "dirty": true,
         "url": "https://github.com/srcJin/epymarl.git"
       },
       {
-        "commit": "a9f124d5b5afcec3f04beea171cc28738aa77283",
+        "commit": "55d0e065d47056c2eced5ef5530ac0f6fa7f702b",
         "dirty": true,
         "url": "https://github.com/srcJin/epymarl.git"
       },
       {
-        "commit": "a9f124d5b5afcec3f04beea171cc28738aa77283",
+        "commit": "55d0e065d47056c2eced5ef5530ac0f6fa7f702b",
         "dirty": true,
         "url": "https://github.com/srcJin/epymarl.git"
       }
@@ -39,11 +39,22 @@
       ],
       [
         "utils/logging.py",
-        "_sources/logging_0c80aa74e1af3974593aca2476e9060e.py"
+        "_sources/logging_12e207012fc2324f8d68b4e8ed7cb140.py"
       ]
     ]
   },
-  "heartbeat": "2024-12-08T11:04:08.640790",
+  "fail_trace": [
+    "Traceback (most recent call last):\n",
+    "  File \"/home/jin/anaconda3/envs/epymarl/lib/python3.8/site-packages/sacred/config/captured_function.py\", line 42, in captured_function\n    result = wrapped(*args, **kwargs)\n",
+    "  File \"src/main.py\", line 45, in my_main\n    run(_run, config, _log)\n",
+    "  File \"/home/jin/Documents/GitHub/epymarl/src/run.py\", line 74, in run\n    run_sequential(args=args, logger=logger)\n",
+    "  File \"/home/jin/Documents/GitHub/epymarl/src/run.py\", line 208, in run_sequential\n    episode_batch = runner.run(test_mode=False)\n",
+    "  File \"/home/jin/Documents/GitHub/epymarl/src/runners/episode_runner.py\", line 99, in run\n    obs, reward, terminated, truncated, env_info = self.env.step(actions[0])\n",
+    "  File \"/home/jin/Documents/GitHub/epymarl/src/envs/simcity_wrapper.py\", line 157, in step\n    self.env.step(action)\n",
+    "  File \"/home/jin/Documents/GitHub/epymarl/src/envs/simcity/environment.py\", line 248, in step\n    individual_reward = compute_individual_reward(agent, self.reward_alpha, self.reward_beta)\n",
+    "NameError: name 'compute_individual_reward' is not defined\n"
+  ],
+  "heartbeat": "2024-12-08T15:21:09.267337",
   "host": {
     "ENV": {},
     "cpu": "Intel(R) Core(TM) i9-10900K CPU @ 3.70GHz",
@@ -87,7 +98,7 @@
   },
   "resources": [],
   "result": null,
-  "start_time": "2024-12-08T11:03:53.243816",
-  "status": "COMPLETED",
-  "stop_time": "2024-12-08T11:04:08.638615"
+  "start_time": "2024-12-08T15:21:08.561904",
+  "status": "FAILED",
+  "stop_time": "2024-12-08T15:21:09.267990"
 }

@@ -72,10 +72,12 @@ class EpisodeRunner:
         self.reset()
     
         terminated = False
+
         if self.args.common_reward:
             episode_return = 0
         else:
-            episode_return = np.zeros(self.args.n_agents)
+            episode_return = np.zeros(self.args.n_agents) # Array for individual rewards
+
         self.mac.init_hidden(batch_size=self.batch_size)
     
         while not terminated:
@@ -95,7 +97,7 @@ class EpisodeRunner:
             )
             logger.debug(f"episode_runner: Selected actions: {actions}")
     
-            _, reward, terminated, truncated, env_info = self.env.step(actions[0])
+            obs, reward, terminated, truncated, env_info = self.env.step(actions[0])
             terminated = terminated or truncated
             logger.debug(f"episode_runner: Step result - Reward: {reward}, Terminated: {terminated}, Truncated: {truncated}")
             #
@@ -105,6 +107,7 @@ class EpisodeRunner:
 
             if test_mode and self.args.render:
                 self.env.render()
+
             episode_return += reward
             logger.debug(f"episode_runner: Episode return so far: {episode_return}")
     

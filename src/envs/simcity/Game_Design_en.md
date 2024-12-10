@@ -13,11 +13,11 @@
 
 Each grid cell is associated with the following three core indices, all represented as relative values in the range [0, 100], with an initial value of 30. These indices are dynamically updated each round based on interactions between cells:
 
-1. **Greenery Index ($G$):**
+1. **Greenery Index ($G$)**
 
-2. **Vitality Index ($V$):**
+2. **Vitality Index ($V$)**
 
-3. **Density Index ($D$):**
+3. **Density Index ($D$)**
 
 ---
 
@@ -28,7 +28,7 @@ Each grid cell is associated with the following three core indices, all represen
 ---
 
 ### **Resource Constraints**
-- Each player starts with 20 money and 20 reputation.
+- Each player starts with 50 money and 50 reputation.
 - When a player's resources are depleted, they must skip their turn.
 
 ---
@@ -87,48 +87,38 @@ Building are designed to affect both current cells and their surrounding cells.x
 
 ---
 
-
-
 ### **Player Actions**
 Players take turns, and during their turn, they can perform the following actions:
+0. **No-op:** No action performed.
 1. **Construct:** Spend money and reputation to place a building on an empty grid cell.
 
 ---
 
 ## **Player Strategies**
 
-### **Player A: Economic Player**
-- **Traits:** Focuses on monetary rewards, pursuing short-term benefits through shop construction and high-vitality areas.
-- **Reward Function:**
-  $$
-  \text{self\_score}_A = 0.8 \cdot \text{money\_earned} + 0.2 \cdot \text{reputation\_earned}
-  $$
-
----
-
-### **Player B: Reputation Player**
+### **Player A: Altrustic Player**
 - **Traits:** Focuses on reputation by building houses and collaborating with parks to create high-reputation neighborhoods.
-- **Reward Function:**
-  $$
-  \text{self\_score}_B = 0.2 \cdot \text{money\_earned} + 0.8 \cdot \text{reputation\_earned}
-  $$
+- **Reward Parameters:** alpha = 0.2, beta = 0.8
 
----
-
-### **Player C: Balanced Player**
+### **Player B: Balanced Player**
 - **Traits:** Balances between monetary and reputation rewards, aiming to optimize both economic and environmental outcomes.
-- **Reward Function:**
-  $$
-  \text{self\_score}_C = 0.5 \cdot \text{money\_earned} + 0.5 \cdot \text{reputation\_earned}
-  $$
+- **Reward Parameters:** alpha = 0.5, beta = 0.5
 
----
+### **Player C: Interest-driven Player**
+- **Traits:** Focuses on monetary rewards, pursuing short-term benefits through shop construction and high-vitality areas.
+- **Reward Parameters:** alpha = 0.8, beta = 0.2
 
 ## **Scoring Mechanism**
 
-The environment score ($\text{Global Environment Score}$) is calculated based on the weighted averages of all grid cells:
+Each player has their own self score. Now we assign all player have the same self-score calculation machanism.
+
 $$
-\text{Global Environment Score} = w_G \cdot \bar{G} + w_V \cdot \bar{V} + w_D \cdot \bar{D}
+\text{self\_score}_i = 0.5 \cdot \text{current\_money}_i + 0.5 \cdot \text{current\_reputation}_i
+$$
+
+The environment score ($\text{Environment Score}$) is calculated based on the weighted averages of all grid cells:
+$$
+\text{Environment Score} = w_G \cdot \bar{G} + w_V \cdot \bar{V} + w_D \cdot \bar{D}
 $$
 
 - $\bar{G}, \bar{V}, \bar{D}$: Average indices of greenery, vitality, and density across the board.
@@ -136,9 +126,9 @@ $$
 
 The final score for each player is:
 $$
-\text{Final Score}_i = \alpha \cdot \text{self\_score}_i + \beta \cdot \text{environment\_score}
+\text{Intergrated Score}_i = \alpha \cdot \text{self\_score}_i + \beta \cdot \text{environment\_score}
 $$
-Where $\alpha = 0.5$, $\beta = 0.5$.
+Where $\alpha$ and $\beta$ is based on the player's type 
 
 ---
 
@@ -163,14 +153,3 @@ After the game ends, each player’s contribution to their objectives and the ov
 
 ## **Game Dynamics and Experimental Directions**
 We aim to calculate each player’s optimal strategy and find the Course Correlated Equilibrium.
-
-### **Evaluation Metrics**
-1. **Cumulative Score for each player**
-2. **Cooperation Degree:** Proportion of actions that benefit the environment.
-
----
-
-## **Game Visualization**
-   - Display the global environment score in each step.
-   - Show each player's current resources, earnings, selected action, self\_score, and final\_score in a structured format.
-   - Display the game board in text

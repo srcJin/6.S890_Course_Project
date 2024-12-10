@@ -136,6 +136,41 @@ class Logger:
                 self.wandb.log(self.wandb_current_data, step=self.wandb_current_t)
             self.wandb.finish()
 
+    def log_reward(self, individual_rewards, common_reward, t):
+        """
+        新增方法，用于记录 individual_reward 和 common_reward
+        """
+        for idx, reward in enumerate(individual_rewards):
+            self.reward_stats[f"agent_{idx}_reward"]["individual"].append((t, reward))
+            if self.use_tb:
+                self.tb_logger(f"agent_{idx}_reward_individual", reward, t)
+            if self.use_wandb:
+                self.wandb_current_data[f"agent_{idx}_reward_individual"] = reward
+            if self.use_sacred:
+                key = f"agent_{idx}_reward_individual"
+                if key in self.sacred_info:
+                    self.sacred_info["{}_T".format(key)].append(t)
+                    self.sacred_info[key].append(reward)
+                else:
+                    self.sacred_info["{}_T".format(key)] = [t]
+                    self.sacred_info[key] = [reward]
+                self._run_obj.log_scalar(key, reward, t)
+
+        # 记录 common_reward
+        self.reward_stats["common_reward"]["common"].append((t, common_reward))
+        if self.use_tb:
+            self.tb_logger("common_reward", common_reward, t)
+        if self.use_wandb:
+            self.wandb_current_data["common_reward"] = common_reward
+        if self.use_sacred:
+            key = "common_reward"
+            if key in self.sacred_info:
+                self.sacred_info["{}_T".format(key)].append(t)
+                self.sacred_info[key].append(common_reward)
+            else:
+                self.sacred_info["{}_T".format(key)] = [t]
+                self.sacred_info[key] = [common_reward]
+            self._run_obj.log_scalar(key, common_reward, t)
 
 # set up a custom logger
 def get_logger(log_file_path="simulation.log", disable_file = False):
@@ -149,11 +184,11 @@ def get_logger(log_file_path="simulation.log", disable_file = False):
     ch.setFormatter(logging.Formatter("[%(levelname)s %(asctime)s] %(name)s %(message)s", "%H:%M:%S"))
     logger.addHandler(ch)
 
-    # if not disable_file:
-    #     # File handler (DEBUG level)
-    #     fh = logging.FileHandler(log_file_path)
-    #     fh.setLevel(logging.DEBUG)  # Log DEBUG and above to the file
-    #     fh.setFormatter(logging.Formatter("[%(levelname)s %(asctime)s] %(name)s %(message)s", "%H:%M:%S"))
-    #     logger.addHandler(fh)
+    if not disable_file:
+        # File handler (DEBUG level)
+        fh = logging.FileHandler(log_file_path)
+        fh.setLevel(logging.DEBUG)  # Log DEBUG and above to the file
+        fh.setFormatter(logging.Formatter("[%(levelname)s %(asctime)s] %(name)s %(message)s", "%H:%M:%S"))
+        logger.addHandler(fh)
         
     return logger

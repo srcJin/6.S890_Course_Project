@@ -13,17 +13,17 @@
     "name": "pymarl",
     "repositories": [
       {
-        "commit": "a9f124d5b5afcec3f04beea171cc28738aa77283",
+        "commit": "55d0e065d47056c2eced5ef5530ac0f6fa7f702b",
         "dirty": true,
         "url": "https://github.com/srcJin/epymarl.git"
       },
       {
-        "commit": "a9f124d5b5afcec3f04beea171cc28738aa77283",
+        "commit": "55d0e065d47056c2eced5ef5530ac0f6fa7f702b",
         "dirty": true,
         "url": "https://github.com/srcJin/epymarl.git"
       },
       {
-        "commit": "a9f124d5b5afcec3f04beea171cc28738aa77283",
+        "commit": "55d0e065d47056c2eced5ef5530ac0f6fa7f702b",
         "dirty": true,
         "url": "https://github.com/srcJin/epymarl.git"
       }
@@ -39,11 +39,11 @@
       ],
       [
         "utils/logging.py",
-        "_sources/logging_f9c4ca47500df68435230fd5bea1a9f9.py"
+        "_sources/logging_0c80aa74e1af3974593aca2476e9060e.py"
       ]
     ]
   },
-  "heartbeat": "2024-12-08T02:24:35.191629",
+  "heartbeat": "2024-12-08T14:30:28.437185",
   "host": {
     "ENV": {},
     "cpu": "Intel(R) Core(TM) i9-10900K CPU @ 3.70GHz",
@@ -87,7 +87,7 @@
   },
   "resources": [],
   "result": null,
-  "start_time": "2024-12-08T01:22:34.978125",
+  "start_time": "2024-12-08T14:29:26.380421",
   "status": "COMPLETED",
-  "stop_time": "2024-12-08T02:24:35.179365"
+  "stop_time": "2024-12-08T14:30:28.434111"
 }

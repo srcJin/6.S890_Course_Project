@@ -38,7 +38,8 @@ class SimCityEnv(AECEnv):
         self.possible_agents = self.agents[:]
         self._agent_selector = agent_selector(self.agents)
         self.agent_selection = self._agent_selector.next()
-        
+    
+
         self.total_actions = 1 + (NUM_BUILDING_TYPES * self.num_cells)  # no_op + (NUM_BUILDING_TYPES * self.num_cells)
 
         self.action_spaces = {agent: spaces.Discrete(self.total_actions) for agent in self.agents}
@@ -105,7 +106,8 @@ class SimCityEnv(AECEnv):
         self.builders = np.full((self.grid_x, self.grid_y), -1, dtype=np.int32)
         self.building_types = np.full((self.grid_x, self.grid_y), -1, dtype=np.int32)  # -1 for no building
 
-        self.rewards = {agent: 0 for agent in self.agents}
+        self.individual_rewards_list = {agent: 0 for agent in self.agents}
+        self.common_reward_value = 0
         self.infos = {agent: {} for agent in self.agents}
         self.terminations = {agent: False for agent in self.agents}
         self.truncations = {agent: False for agent in self.agents}
@@ -116,7 +118,6 @@ class SimCityEnv(AECEnv):
             player.integrated_score = 0
 
         self.env_score = self.calculate_environment_score()["env_score"]
-        self._cumulative_rewards = {agent: 0 for agent in self.agents}
         self._agent_selector.reset()
         self.agent_selection = self._agent_selector.next()
         self.num_moves = 0
@@ -139,7 +140,6 @@ class SimCityEnv(AECEnv):
             self._was_done_step(action)
             return
 
-        self._cumulative_rewards[agent] = 0
         self.infos[agent] = {}
         reward = 0
         info_resources = {}
@@ -153,16 +153,16 @@ class SimCityEnv(AECEnv):
             logger.debug(f"environment: Agent {agent} performed No-op.")
         else:
             if self.buildings[x][y] is not None:
-                build_on_occupied_penalty = 999999999999999999
-                reward -= build_on_occupied_penalty
+                build_on_occupied_penalty = -999999999999999999
+                reward += build_on_occupied_penalty
                 logger.debug(f"environment: Agent {agent} tried to build on an occupied cell ({x},{y}). Penalty: {build_on_occupied_penalty}.")
             else:
                 building_cost = BUILDING_COSTS[building_type]
                 player_resources = self.players[agent].resources
                 if player_resources["money"] < building_cost["money"] or player_resources["reputation"] < building_cost["reputation"]:
                     # Penalty for not having enough resources
-                    not_enough_resource_penalty = 999999999999999999
-                    reward -= not_enough_resource_penalty
+                    not_enough_resource_penalty = -999999999999999999
+                    reward += not_enough_resource_penalty
                     logger.debug(f"environment: Agent {agent} does not have enough resources to build {building_type} at ({x},{y}). Penalty: {not_enough_resource_penalty}.")
                 else:
                     # Deduct resources
@@ -233,6 +233,7 @@ class SimCityEnv(AECEnv):
             alpha, beta = 0.5, 0.5  # Default for unknown player types
             logger.debug(f"environment: Player {agent} is unknown type, using alpha={alpha}, beta={beta}")
 
+        # Update player's integrated score
         self.players[agent].integrated_score = (alpha * self.players[agent].self_score + beta * self.env_score)
         logger.debug(
             f"environment: Player {agent} - Self score: {self.players[agent].self_score}, "
@@ -243,7 +244,8 @@ class SimCityEnv(AECEnv):
         self.infos[agent]["resources"] = info_resources
 
         # Compute and assign reward based on integrated_score and delta
-        reward = self.compute_reward(agent, self.reward_alpha, self.reward_beta)
+        self.individual_rewards_list[agent] = self.compute_individual_reward(agent, self.reward_alpha, self.reward_beta)
+        self.common_reward_value = self.compute_common_reward_value(self.reward_alpha, self.reward_beta)
 
         # Increment move count and check for termination
         self.num_moves += 1
@@ -256,8 +258,6 @@ class SimCityEnv(AECEnv):
         logger.debug(f"environment: Agent selection after step: {self.agent_selection}")
         self.has_reset = True
 
-        # Assign the computed reward
-        self.rewards[agent] = reward
 
     def decode_action(self, action):
         if not isinstance(action, int) or action < 0 or action >= 1 + NUM_BUILDING_TYPES * self.num_cells:
@@ -285,7 +285,7 @@ class SimCityEnv(AECEnv):
 
         return {"G_avg": G_avg, "V_avg": V_avg, "D_avg": D_avg, "env_score": env_score}
 
-    def compute_reward(self, agent, reward_alpha, reward_beta):
+    def compute_individual_reward(self, agent, reward_alpha, reward_beta):
         """
         Compute the reward for an agent based on the change in integrated_score and the current integrated_score.
         Formula: reward = alpha * delta + beta * integrated_score
@@ -297,11 +297,16 @@ class SimCityEnv(AECEnv):
 
         reward = reward_alpha * delta + reward_beta * current_score
         logger.debug(
-            f"environment: Compute reward for {agent} - Delta: {delta}, "
-            f"Integrated Score: {current_score}, Reward: {reward} (alpha={reward_alpha}, beta={reward_beta}"
+            f"environment: Compute individual reward for {agent} - Delta: {delta}, "
+            f"Integrated Score: {current_score}, Reward: {reward} (alpha={reward_alpha}, beta={reward_beta})"
         )
         return reward
 
+    def compute_common_reward_value(self, reward_alpha, reward_beta):
+        # sum of all players' integrated scores
+        common_reward_value = sum([player.integrated_score for player in self.players.values()])
+        logger.debug(f"environment: Compute common reward - Common Reward: {common_reward_value}")
+        return common_reward_value
 
     def is_game_over(self):
         board_filled = np.all(self.buildings != None)

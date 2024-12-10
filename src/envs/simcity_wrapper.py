@@ -139,6 +139,8 @@ class SimCityWrapper(MultiAgentEnv):
         actions_list = actions.squeeze(0).cpu().numpy().tolist()
         logger.debug(f"simcity_wrapper: Actions list: {actions_list}")
 
+
+
         for idx, agent in enumerate(self.env.agents):
             if self.env.terminations[agent] or self.env.truncations[agent]:
                 self.env.step(None)
@@ -158,17 +160,14 @@ class SimCityWrapper(MultiAgentEnv):
                 break
 
         obs = self.get_obs()
-        if self.env.common_reward:
-            # If using a common reward, sum all individual rewards
-            total_reward = sum(self.env._cumulative_rewards.values())
-            reward = total_reward
-            logger.debug(f"simcity_wrapper: Total reward (common_reward): {total_reward}")
-        else:
-            # Otherwise, provide individual rewards as a list
-            reward = [self.env.rewards[agent] for agent in self.env.agents]
-            logger.debug(f"simcity_wrapper: Individual rewards: {reward}")
 
-        self.env._cumulative_rewards = {agent: 0 for agent in self.env.agents}
+
+        if self.env.common_reward:
+            logger.debug(f"simcity_wrapper, common reward mode, rewards = {self.env.common_reward_value}")
+            rewards = self.env.common_reward_value
+        else:
+            logger.debug(f"simcity_wrapper, individual reward mode, rewards = {self.env.individual_reward_list}")
+            rewards = self.env.individual_reward_list
 
         # Determine termination flags
         done = all(self.env.terminations.values()) or all(self.env.truncations.values())
@@ -184,10 +183,12 @@ class SimCityWrapper(MultiAgentEnv):
             truncated = True
             logger.debug("simcity_wrapper: Episode limit reached, terminating.")
 
-        info = {"env_score": self.env.env_score}
+        # info should record the environment score, each agent's reward, and common reward
+        info = {"env_score": self.env.env_score, "agent_rewards": self.env.individual_rewards_list, "common_reward_value": self.env.common_reward_value}
 
-        logger.debug(f"simcity_wrapper: Step result: obs shape={obs.shape}, reward={reward}, terminated={terminated}, truncated={truncated}, info={info}")
-        return obs, reward, terminated, truncated, info
+        logger.debug(f"simcity_wrapper: Step result: obs shape={obs.shape}, rewards={rewards}, terminated={terminated}, truncated={truncated}, info={info}")
+
+        return obs, rewards, terminated, truncated, info
 
     def reset(self, seed=None, options=None):
         logger.debug("simcity_wrapper: Reset called.")
