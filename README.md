@@ -1,7 +1,34 @@
+# Linux
+git config --global user.name "srcJin"
+git config --global user.email "gao-jin@outlook.com"
+
+chmod +x cursor.AppImage
+./cursor.AppImage --no-sandbox
+
+mkdir -p ~/miniconda3
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda3/miniconda.sh
+bash ~/miniconda3/miniconda.sh -b -u -p ~/miniconda3
+rm ~/miniconda3/miniconda.sh
+
+
+source ~/miniconda3/bin/activate
+conda init --all
+
+
 # Environment
+
+conda create -n epymarl python=3.8
+
 conda activate epymarl
 
 pip install -r requirements.txt
+pip install -r pac_requirements.txt
+pip install -r env_requirements.txt
+
+chmod +x simcity_experiments.sh simcity_large_experiments.sh
+
+./simcity_experiments.sh
+./simcity_large_experiments.sh
 
 # Training
 
