@@ -9,8 +9,8 @@ class MLP(nn.Module):
         self.fc2 = nn.Linear(hidden_dim, hidden_dim)
         self.fc3 = nn.Linear(hidden_dim, output_dim)
 
-    def forward(self, inputs):
-        x = F.relu(self.fc1(inputs))
-        x = F.relu(self.fc2(x))
-        q = self.fc3(x)
-        return q
+    # def forward(self, inputs):
+    #     x = F.relu(self.fc1(inputs))
+    #     x = F.relu(self.fc2(x))
+    #     q = self.fc3(x)
+    #     return q
