@@ -1,0 +1,103 @@
+{
+  "artifacts": [],
+  "command": "my_main",
+  "experiment": {
+    "base_dir": "/home/jin/Documents/GitHub/epymarl/src",
+    "dependencies": [
+      "numpy==1.24.4",
+      "PyYAML==5.3.1",
+      "sacred==0.8.7",
+      "torch==2.4.1"
+    ],
+    "mainfile": "main.py",
+    "name": "pymarl",
+    "repositories": [
+      {
+        "commit": "80e472e63e6132f84dfdc280bd15cdbc3ff2ff4a",
+        "dirty": true,
+        "url": "https://github.com/srcJin/epymarl.git"
+      },
+      {
+        "commit": "80e472e63e6132f84dfdc280bd15cdbc3ff2ff4a",
+        "dirty": true,
+        "url": "https://github.com/srcJin/epymarl.git"
+      },
+      {
+        "commit": "80e472e63e6132f84dfdc280bd15cdbc3ff2ff4a",
+        "dirty": true,
+        "url": "https://github.com/srcJin/epymarl.git"
+      }
+    ],
+    "sources": [
+      [
+        "main.py",
+        "_sources/main_10071cd35b239d4d9d6b06262697f6b3.py"
+      ],
+      [
+        "run.py",
+        "_sources/run_a43a3fb51892adaf1e49450e021b8717.py"
+      ],
+      [
+        "utils/logging.py",
+        "_sources/logging_12e207012fc2324f8d68b4e8ed7cb140.py"
+      ]
+    ]
+  },
+  "fail_trace": [
+    "Traceback (most recent call last):\n",
+    "  File \"/home/jin/anaconda3/envs/epymarl/lib/python3.8/site-packages/sacred/config/captured_function.py\", line 42, in captured_function\n    result = wrapped(*args, **kwargs)\n",
+    "  File \"src/main.py\", line 45, in my_main\n    run(_run, config, _log)\n",
+    "  File \"/home/jin/Documents/GitHub/epymarl/src/run.py\", line 74, in run\n    run_sequential(args=args, logger=logger)\n",
+    "  File \"/home/jin/Documents/GitHub/epymarl/src/run.py\", line 211, in run_sequential\n    episode_batch = runner.run(test_mode=False)\n",
+    "  File \"/home/jin/Documents/GitHub/epymarl/src/runners/episode_runner.py\", line 100, in run\n    obs, reward, terminated, truncated, env_info = self.env.step(actions[0])\n",
+    "  File \"/home/jin/Documents/GitHub/epymarl/src/envs/simcity_wrapper.py\", line 188, in step\n    info = {\"env_score\": self.env.env_score, \"agent_1_individual_reward\":self.env.individual_rewards_list[0], \"agent_2_individual_reward\":self.env.individual_rewards_list[1], \"agent_1_individual_reward\":self.env.individual_rewards_list[2], \"common_reward_value\": self.env.common_reward_value}\n",
+    "KeyError: 0\n"
+  ],
+  "heartbeat": "2024-12-11T00:00:26.465668",
+  "host": {
+    "ENV": {},
+    "cpu": "Intel(R) Core(TM) i9-10900K CPU @ 3.70GHz",
+    "hostname": "jin-ubuntu",
+    "os": [
+      "Linux",
+      "Linux-5.15.0-125-generic-x86_64-with-glibc2.17"
+    ],
+    "python_version": "3.8.20"
+  },
+  "meta": {
+    "command": "my_main",
+    "config_updates": {},
+    "named_configs": [],
+    "options": {
+      "--beat-interval": null,
+      "--capture": null,
+      "--comment": null,
+      "--debug": false,
+      "--enforce_clean": false,
+      "--file_storage": null,
+      "--force": false,
+      "--help": false,
+      "--id": null,
+      "--loglevel": null,
+      "--mongo_db": null,
+      "--name": null,
+      "--pdb": false,
+      "--print-config": false,
+      "--priority": null,
+      "--queue": false,
+      "--s3": null,
+      "--sql": null,
+      "--tiny_db": null,
+      "--unobserved": false,
+      "COMMAND": null,
+      "UPDATE": [],
+      "help": false,
+      "with": false
+    }
+  },
+  "resources": [],
+  "result": null,
+  "start_time": "2024-12-11T00:00:25.740093",
+  "status": "FAILED",
+  "stop_time": "2024-12-11T00:00:26.466293"
+}

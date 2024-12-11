@@ -184,7 +184,7 @@ class SimCityWrapper(MultiAgentEnv):
             logger.debug("simcity_wrapper: Episode limit reached, terminating.")
 
         # info should record the environment score, each agent's reward, and common reward
-        info = {"env_score": self.env.env_score, "agent_rewards": self.env.individual_rewards_list, "common_reward_value": self.env.common_reward_value}
+        info = {"env_score": self.env.env_score, "agent_1_individual_reward":self.env.individual_rewards_list["P1"], "agent_2_individual_reward":self.env.individual_rewards_list["P2"], "agent_1_individual_reward":self.env.individual_rewards_list["P3"], "common_reward_value": self.env.common_reward_value}
 
         logger.debug(f"simcity_wrapper: Step result: obs shape={obs.shape}, rewards={rewards}, terminated={terminated}, truncated={truncated}, info={info}")
 

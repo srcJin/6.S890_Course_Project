@@ -1,4 +1,4 @@
-# episode_runner.py
+# src/runners/episode_runner.py
 import logging
 from functools import partial
 import numpy as np
