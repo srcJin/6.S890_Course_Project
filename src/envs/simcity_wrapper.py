@@ -163,13 +163,20 @@ class SimCityWrapper(MultiAgentEnv):
         obs = self.get_obs()
 
 
-        if self.env.common_reward:
-            logger.debug(f"simcity_wrapper, common reward mode, rewards = {self.env.common_reward_value}")
-            rewards = self.env.common_reward_value
-        else:
-            logger.debug(f"simcity_wrapper, individual reward mode, rewards = {self.env.individual_reward_list}")
-            rewards = self.env.individual_reward_list
+        # if self.env.common_reward:
+        #     logger.debug(f"simcity_wrapper, common reward mode, rewards = {self.env.common_reward_value}")
+        #     rewards = self.env.common_reward_value
+        # else:
+        #     logger.debug(f"simcity_wrapper, individual reward mode, rewards = {self.env.individual_rewards_list}")
+        #     rewards = self.env.individual_rewards_list
 
+        if self.env.common_reward:
+            # Common reward mode: give each agent the same scalar reward
+            rewards = np.full((self.n_agents,), self.env.common_reward_value, dtype=np.float32)
+        else:
+            # Individual reward mode: convert the dictionary into an array in agent order
+            rewards = np.array([self.env.individual_rewards_list[agent] for agent in self.env.agents], dtype=np.float32)
+            
         # Determine termination flags
         done = all(self.env.terminations.values()) or all(self.env.truncations.values())
         terminated_flags = [self.env.terminations[agent] for agent in self.env.agents]

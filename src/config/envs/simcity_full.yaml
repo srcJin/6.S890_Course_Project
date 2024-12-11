@@ -14,3 +14,4 @@ log_interval: 10000
 runner_log_interval: 10000
 learner_log_interval: 10000
 t_max: 1000000
+common_reward: True

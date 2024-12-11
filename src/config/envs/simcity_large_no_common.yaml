@@ -19,4 +19,4 @@ save_model: True # Save the models to disk
 save_model_interval: 1000 # Save models after this many timesteps
 # batch_size_run: 10
 use_cuda: True
-common_reward: True
+common_reward: False
