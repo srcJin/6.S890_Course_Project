@@ -14,6 +14,8 @@ rm ~/miniconda3/miniconda.sh
 source ~/miniconda3/bin/activate
 conda init --all
 
+git clone https://github.com/srcJin/6.S890_Course_Project.git
+cd 6.S890_Course_Project
 
 # Environment
 
