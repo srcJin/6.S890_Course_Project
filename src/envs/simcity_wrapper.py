@@ -171,12 +171,12 @@ class SimCityWrapper(MultiAgentEnv):
         #     rewards = self.env.individual_rewards_list
 
         if self.env.common_reward:
-            # Common reward mode: give each agent the same scalar reward
-            rewards = np.full((self.n_agents,), self.env.common_reward_value, dtype=np.float32)
+            # Return a single scalar reward
+            rewards = float(self.env.common_reward_value)
         else:
-            # Individual reward mode: convert the dictionary into an array in agent order
+            # Return a vector of length n_agents
             rewards = np.array([self.env.individual_rewards_list[agent] for agent in self.env.agents], dtype=np.float32)
-            
+
         # Determine termination flags
         done = all(self.env.terminations.values()) or all(self.env.truncations.values())
         terminated_flags = [self.env.terminations[agent] for agent in self.env.agents]

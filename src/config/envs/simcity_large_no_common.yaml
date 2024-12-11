@@ -1,8 +1,8 @@
 env: simcity
 
 env_args:
-  key: "simcity"
-  map_name: "simcity"
+  key: "simcity_no_common"
+  map_name: "simcity_no_common"
   seed: null
   time_limit: 100
   grid_size: 4
