@@ -286,6 +286,8 @@ def args_sanity_check(config, _log):
         _log.warning(
             "CUDA flag use_cuda was switched OFF automatically because no CUDA devices are available!"
         )
+    else:
+        _log.warning("!!!!!!!!!!!CUDA Avaliable!!!!!!!!!!!!")
 
     if config["test_nepisode"] < config["batch_size_run"]:
         config["test_nepisode"] = config["batch_size_run"]

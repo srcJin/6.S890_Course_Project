@@ -17,3 +17,6 @@ learner_log_interval: 100
 t_max: 1000
 common_reward: True
 use_tensorboard: True
+use_cuda: True
+save_model: True # Save the models to disk
+save_model_interval: 1000 # Save models after this many timesteps

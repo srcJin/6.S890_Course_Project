@@ -8,20 +8,6 @@ commands=(
     "python src/main.py --config=ia2c_ns --env-config=simcity_large"
     "python src/main.py --config=iql --env-config=simcity_large"
     "python src/main.py --config=iql_ns --env-config=simcity_large"
-    "python src/main.py --config=maa2c --env-config=simcity_large"
-    "python src/main.py --config=maa2c_ns --env-config=simcity_large"
-    "python src/main.py --config=mappo --env-config=simcity_large"
-    "python src/main.py --config=mappo_ns --env-config=simcity_large"
-    "python src/main.py --config=pac --env-config=simcity_large"
-    "python src/main.py --config=pac_ns --env-config=simcity_large"
-    "python src/main.py --config=qmix --env-config=simcity_large"
-    "python src/main.py --config=qmix_ns --env-config=simcity_large"
-    "python src/main.py --config=vdn --env-config=simcity_large"
-    "python src/main.py --config=vdn_ns --env-config=simcity_large"
-    "python src/main.py --config=ippo --env-config=simcity_large"
-    "python src/main.py --config=ippo_ns --env-config=simcity_large"
-    "python src/main.py --config=maddpg --env-config=simcity_large"
-    "python src/main.py --config=maddpg_ns --env-config=simcity_large"
 )
 
 # Function to run commands in 4 terminals

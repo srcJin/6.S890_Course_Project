@@ -23,14 +23,18 @@ conda create -n epymarl python=3.8
 
 conda activate epymarl
 
+cd ~/Documents/Github/6.S890_Course_Project
+
 pip install -r requirements.txt
 pip install -r pac_requirements.txt
 pip install -r env_requirements.txt
 
-chmod +x simcity_experiments.sh simcity_large_experiments.sh
+chmod +x simcity_experiments_1.sh simcity_experiments_2.sh simcity_experiments_3.sh simcity_large_experiments_1.sh simcity_large_experiments_2.sh simcity_large_experiments_3.sh
 
-./simcity_experiments.sh
-./simcity_large_experiments.sh
+
+
+./simcity_experiments_1.sh
+./simcity_large_experiments_1.sh
 
 # Training
 
