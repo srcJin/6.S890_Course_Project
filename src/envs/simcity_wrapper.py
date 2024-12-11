@@ -136,7 +136,8 @@ class SimCityWrapper(MultiAgentEnv):
 
     def step(self, actions):
         logger.debug(f"simcity_wrapper: Step called with actions: {actions}")
-        actions_list = actions.squeeze(0).cpu().numpy().tolist()
+        # actions_list = actions.squeeze(0).cpu().numpy().tolist()
+        actions_list = actions.tolist()
         logger.debug(f"simcity_wrapper: Actions list: {actions_list}")
 
 
@@ -183,8 +184,11 @@ class SimCityWrapper(MultiAgentEnv):
             truncated = True
             logger.debug("simcity_wrapper: Episode limit reached, terminating.")
 
+        # print("self.env.individual_rewards_list=", self.env.individual_rewards_list)
         # info should record the environment score, each agent's reward, and common reward
-        info = {"env_score": self.env.env_score, "agent_1_individual_reward":self.env.individual_rewards_list["P1"], "agent_2_individual_reward":self.env.individual_rewards_list["P2"], "agent_1_individual_reward":self.env.individual_rewards_list["P3"], "common_reward_value": self.env.common_reward_value}
+        info = {"env_score": self.env.env_score, "common_reward_value": self.env.common_reward_value}
+        for agent, reward in self.env.individual_rewards_list.items():
+            info[f"{agent}_reward"] = reward
 
         logger.debug(f"simcity_wrapper: Step result: obs shape={obs.shape}, rewards={rewards}, terminated={terminated}, truncated={truncated}, info={info}")
 

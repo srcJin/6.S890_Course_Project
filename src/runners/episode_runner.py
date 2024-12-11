@@ -163,6 +163,30 @@ class EpisodeRunner:
     
         cur_returns.append(episode_return)
     
+
+        # If we have a common reward scenario:
+        if self.args.common_reward:
+            # Log the common reward (episode_return is scalar if common_reward=True)
+            self.logger.log_stat("common_reward", float(episode_return), self.t_env)
+            # If env_info provides a separate common_reward_value and they differ, log that too
+            if "common_reward_value" in env_info:
+                self.logger.log_stat("common_reward_value", env_info["common_reward_value"], self.t_env)
+        else:
+            # Individual rewards scenario (episode_return is an array)
+            for i in range(self.args.n_agents):
+                self.logger.log_stat(f"agent_{i}_individual_reward", episode_return[i], self.t_env)
+
+            # If we still have a common_reward_value in env_info and want to log it:
+            if "common_reward_value" in env_info:
+                self.logger.log_stat("common_reward_value", env_info["common_reward_value"], self.t_env)
+
+        # Additionally, if env_info includes agent-specific rewards from the environment:
+        for key in env_info:
+            if "agent_" in key and "individual_reward" in key:
+                self.logger.log_stat(key, env_info[key], self.t_env)
+
+
+
         if test_mode and (len(self.test_returns) == self.args.test_nepisode):
             self._log(cur_returns, cur_stats, log_prefix)
         elif self.t_env - self.log_train_stats_t >= self.args.runner_log_interval:

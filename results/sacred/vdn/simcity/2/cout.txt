@@ -1,0 +1,131 @@
+[INFO 20:27:55] pymarl Running command 'my_main'
+[INFO 20:27:55] pymarl Started run with ID "2"
+[WARNING 20:27:55] my_main CUDA flag use_cuda was switched OFF automatically because no CUDA devices are available!
+[INFO 20:27:55] my_main Runner specified in config: episode
+[INFO 20:27:55] my_main Runner resolved in args: episode
+[INFO 20:27:55] my_main Experiment Parameters:
+[INFO 20:27:55] my_main 
+
+{   'action_selector': 'epsilon_greedy',
+    'add_value_last_step': True,
+    'agent': 'rnn',
+    'agent_output_type': 'q',
+    'batch_size': 32,
+    'batch_size_run': 1,
+    'buffer_cpu_only': True,
+    'buffer_size': 5000,
+    'checkpoint_path': '',
+    'common_reward': True,
+    'double_q': True,
+    'env': 'simcity',
+    'env_args': {   'grid_size': 4,
+                    'key': 'simcity',
+                    'map_name': 'simcity',
+                    'seed': 986455198,
+                    'time_limit': 100},
+    'epsilon_anneal_time': 50000,
+    'epsilon_finish': 0.05,
+    'epsilon_start': 1.0,
+    'evaluate': False,
+    'evaluation_epsilon': 0.0,
+    'gamma': 0.99,
+    'grad_norm_clip': 10,
+    'hidden_dim': 64,
+    'hypergroup': None,
+    'label': 'default_label',
+    'learner': 'q_learner',
+    'learner_log_interval': 100,
+    'load_step': 0,
+    'local_results_path': 'results',
+    'log_interval': 100,
+    'lr': 0.0005,
+    'mac': 'basic_mac',
+    'mixer': 'vdn',
+    'name': 'vdn',
+    'obs_agent_id': True,
+    'obs_individual_obs': False,
+    'obs_last_action': False,
+    'optim_alpha': 0.99,
+    'optim_eps': 1e-05,
+    'render': False,
+    'repeat_id': 1,
+    'reward_scalarisation': 'sum',
+    'runner': 'episode',
+    'runner_log_interval': 100,
+    'save_model': True,
+    'save_model_interval': 10000,
+    'save_replay': False,
+    'seed': 986455198,
+    'standardise_returns': False,
+    'standardise_rewards': True,
+    't_max': 10000,
+    'target_update_interval_or_tau': 200,
+    'test_greedy': True,
+    'test_interval': 100,
+    'test_nepisode': 100,
+    'use_cuda': False,
+    'use_rnn': False,
+    'use_tensorboard': True,
+    'use_wandb': False,
+    'wandb_mode': 'offline',
+    'wandb_project': None,
+    'wandb_save_model': False,
+    'wandb_team': None}
+
+[INFO 20:27:55] my_main *******************
+[INFO 20:27:55] my_main Tensorboard logging dir:
+[INFO 20:27:55] my_main /home/jin/Documents/GitHub/epymarl/results/tb_logs/vdn_seed986455198_simcity_2024-12-10 20:27:55.428374
+[INFO 20:27:55] my_main *******************
+[INFO 20:27:55] my_main Final parsed config: {'runner': 'episode', 'mac': 'basic_mac', 'env': 'simcity', 'common_reward': True, 'reward_scalarisation': 'sum', 'env_args': {'key': 'simcity', 'map_name': 'simcity', 'seed': 986455198, 'time_limit': 100, 'grid_size': 4}, 'batch_size_run': 1, 'test_nepisode': 100, 'test_interval': 100, 'test_greedy': True, 'log_interval': 100, 'runner_log_interval': 100, 'learner_log_interval': 100, 't_max': 10000, 'use_cuda': False, 'buffer_cpu_only': True, 'use_tensorboard': True, 'use_wandb': False, 'wandb_team': None, 'wandb_project': None, 'wandb_mode': 'offline', 'wandb_save_model': False, 'save_model': True, 'save_model_interval': 10000, 'checkpoint_path': '', 'evaluate': False, 'render': False, 'load_step': 0, 'save_replay': False, 'local_results_path': 'results', 'gamma': 0.99, 'batch_size': 32, 'buffer_size': 5000, 'lr': 0.0005, 'optim_alpha': 0.99, 'optim_eps': 1e-05, 'grad_norm_clip': 10, 'add_value_last_step': True, 'agent': 'rnn', 'hidden_dim': 64, 'obs_agent_id': True, 'obs_last_action': False, 'repeat_id': 1, 'label': 'default_label', 'hypergroup': None, 'action_selector': 'epsilon_greedy', 'epsilon_start': 1.0, 'epsilon_finish': 0.05, 'epsilon_anneal_time': 50000, 'evaluation_epsilon': 0.0, 'target_update_interval_or_tau': 200, 'obs_individual_obs': False, 'use_rnn': False, 'standardise_returns': False, 'standardise_rewards': True, 'agent_output_type': 'q', 'learner': 'q_learner', 'double_q': True, 'mixer': 'vdn', 'name': 'vdn', 'seed': 986455198}
+[INFO 20:27:55] my_main run.py Using runner: episode
+[INFO 20:27:55] my_main Initialized runner: EpisodeRunner
+[INFO 20:27:56] my_main Beginning training for 10000 timesteps
+[INFO 20:27:56] my_main t_env: 6 / 10000
+[INFO 20:27:56] my_main Estimated time left: 4 seconds. Time passed: 0 seconds
+[INFO 20:29:10] my_main Saving models to results/models/vdn_seed986455198_simcity_2024-12-10 20:27:55.428374/6
+[INFO 20:29:11] my_main Recent Stats | t_env:        100 | Episode:       15
+P1_reward_mean:           26.0667	P2_reward_mean:           54.1667	P3_reward_mean:           88.5667	common_reward:           968.7600
+common_reward_value:     281.5600	common_reward_value_mean:268.3000	env_score_mean:           21.6667	ep_length_mean:            6.0000
+epsilon:                   1.0000	return_mean:             821.7000	return_std:                0.0000	test_P1_reward_mean:     356.6667
+test_P2_reward_mean:     870.1667	test_P3_reward_mean:     1391.7667	test_common_reward_value_mean:5183.2000	test_env_score_mean:      21.6667
+test_ep_length_mean:     100.0000	test_return_mean:        251656.3000	test_return_std:           0.0000	
+[INFO 20:29:11] my_main t_env: 108 / 10000
+[INFO 20:29:11] my_main Estimated time left: 2 hours, 58 seconds. Time passed: 1 minutes, 14 seconds
+[INFO 20:30:21] my_main Recent Stats | t_env:        205 | Episode:       30
+P1_reward_mean:           27.9867	P2_reward_mean:           57.1417	P3_reward_mean:           89.7267	common_reward:           1076.2600
+common_reward_value:     294.5200	common_reward_value_mean:280.7100	env_score_mean:           21.6667	ep_length_mean:            6.4000
+epsilon:                   0.9981	return_mean:             921.9500	return_std:              117.0718	test_P1_reward_mean:     356.6667
+test_P2_reward_mean:     870.1667	test_P3_reward_mean:     1391.7667	test_common_reward_value_mean:5183.2000	test_env_score_mean:      21.6667
+test_ep_length_mean:     100.0000	test_return_mean:        251656.3000	test_return_std:           0.0000	
+[INFO 20:30:22] my_main t_env: 212 / 10000
+[INFO 20:30:22] my_main Estimated time left: 1 hours, 51 minutes, 12 seconds. Time passed: 2 minutes, 25 seconds
+[INFO 20:31:34] my_main Recent Stats | t_env:        308 | Episode:       45
+P1_reward_mean:           28.6000	P2_reward_mean:           59.0000	P3_reward_mean:           90.2200	common_reward:           993.0800
+common_reward_value:     272.0800	common_reward_value_mean:286.7333	env_score_mean:           21.6667	ep_length_mean:            6.5778
+epsilon:                   0.9961	grad_norm:               604.7026	loss:                    216.3704	q_taken_mean:              0.0765
+return_mean:             977.0378	return_std:              178.2062	target_mean:               4.1567	td_error_abs:             12.9721
+test_P1_reward_mean:     356.6667	test_P2_reward_mean:     870.1667	test_P3_reward_mean:     1391.7667	test_common_reward_value_mean:5183.2000
+test_env_score_mean:      21.6667	test_ep_length_mean:     100.0000	test_return_mean:        251656.3000	test_return_std:           0.0000
+
+[INFO 20:31:34] my_main t_env: 315 / 10000
+[INFO 20:31:34] my_main Estimated time left: 1 hours, 53 minutes, 29 seconds. Time passed: 3 minutes, 38 seconds
+[INFO 20:32:44] my_main Recent Stats | t_env:        409 | Episode:       60
+P1_reward_mean:           28.9117	P2_reward_mean:           59.4917	P3_reward_mean:           89.7467	common_reward:           968.5200
+common_reward_value:     276.7000	common_reward_value_mean:287.5200	env_score_mean:           21.6667	ep_length_mean:            6.6500
+epsilon:                   0.9941	grad_norm:               398.8677	loss:                    139.2086	q_taken_mean:              1.6562
+return_mean:             991.5500	return_std:              187.7871	target_mean:               3.8272	td_error_abs:              9.7600
+test_P1_reward_mean:     335.8167	test_P2_reward_mean:     818.7917	test_P3_reward_mean:     1308.9667	test_common_reward_value_mean:4876.5250
+test_env_score_mean:      21.6667	test_ep_length_mean:     100.0000	test_return_mean:        237587.7250	test_return_std:           0.0000
+
+[INFO 20:32:44] my_main t_env: 415 / 10000
+[INFO 20:32:44] my_main Estimated time left: 1 hours, 52 minutes, 17 seconds. Time passed: 4 minutes, 48 seconds
+[INFO 20:32:54] my_main Recent Stats | t_env:        509 | Episode:       75
+P1_reward_mean:           28.9947	P2_reward_mean:           59.5367	P3_reward_mean:           88.7587	common_reward:           985.1600
+common_reward_value:     271.4800	common_reward_value_mean:285.9680	env_score_mean:           21.6667	ep_length_mean:            6.6533
+epsilon:                   0.9922	grad_norm:               305.1044	loss:                    106.6309	q_taken_mean:              2.0066
+return_mean:             988.9453	return_std:              174.7180	target_mean:               3.3641	td_error_abs:              8.2434
+test_P1_reward_mean:     275.7867	test_P2_reward_mean:     671.4167	test_P3_reward_mean:     1073.5267	test_common_reward_value_mean:3987.1000
+test_env_score_mean:      21.6667	test_ep_length_mean:      82.4000	test_return_mean:        190505.6600	test_return_std:           0.0000
+
+[INFO 20:32:54] my_main t_env: 516 / 10000
+[INFO 20:32:54] my_main Estimated time left: 14 minutes, 58 seconds. Time passed: 4 minutes, 58 seconds

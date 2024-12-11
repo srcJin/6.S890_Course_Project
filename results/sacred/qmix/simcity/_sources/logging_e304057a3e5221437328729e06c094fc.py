@@ -148,11 +148,11 @@ def get_logger(log_file_path="simulation.log", disable_file = False):
     ch.setFormatter(logging.Formatter("[%(levelname)s %(asctime)s] %(name)s %(message)s", "%H:%M:%S"))
     logger.addHandler(ch)
 
-    # if not disable_file:
-    #     # File handler (DEBUG level)
-    #     fh = logging.FileHandler(log_file_path)
-    #     fh.setLevel(logging.DEBUG)  # Log DEBUG and above to the file
-    #     fh.setFormatter(logging.Formatter("[%(levelname)s %(asctime)s] %(name)s %(message)s", "%H:%M:%S"))
-    #     logger.addHandler(fh)
+    if not disable_file:
+        # File handler (DEBUG level)
+        fh = logging.FileHandler(log_file_path)
+        fh.setLevel(logging.DEBUG)  # Log DEBUG and above to the file
+        fh.setFormatter(logging.Formatter("[%(levelname)s %(asctime)s] %(name)s %(message)s", "%H:%M:%S"))
+        logger.addHandler(fh)
         
     return logger

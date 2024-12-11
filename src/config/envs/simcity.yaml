@@ -16,3 +16,4 @@ runner_log_interval: 100
 learner_log_interval: 100
 t_max: 1000
 common_reward: True
+use_tensorboard: True
