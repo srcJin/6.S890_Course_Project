@@ -2,16 +2,30 @@
 
 # All simcity commands
 commands=(
+    "python src/main.py --config=coma --env-config=simcity"
+    "python src/main.py --config=coma_ns --env-config=simcity"
+    "python src/main.py --config=ia2c --env-config=simcity"
+    "python src/main.py --config=ia2c_ns --env-config=simcity"
+    "python src/main.py --config=iql --env-config=simcity"
+    "python src/main.py --config=iql_ns --env-config=simcity"
     "python src/main.py --config=maa2c --env-config=simcity"
     "python src/main.py --config=maa2c_ns --env-config=simcity"
     "python src/main.py --config=mappo --env-config=simcity"
     "python src/main.py --config=mappo_ns --env-config=simcity"
     "python src/main.py --config=pac_dcg_ns --env-config=simcity"
     "python src/main.py --config=pac_ns --env-config=simcity"
+    "python src/main.py --config=qmix --env-config=simcity"
+    "python src/main.py --config=qmix_ns --env-config=simcity"
+    "python src/main.py --config=vdn --env-config=simcity"
+    "python src/main.py --config=vdn_ns --env-config=simcity"
+    "python src/main.py --config=ippo --env-config=simcity"
+    "python src/main.py --config=ippo_ns --env-config=simcity"
+    # "python src/main.py --config=maddpg --env-config=simcity"
+    # "python src/main.py --config=maddpg_ns --env-config=simcity"
 )
 
 running_jobs=()
-num_parallel=6
+num_parallel=20
 
 # Function to clean up completed jobs
 cleanup_jobs() {

@@ -31,9 +31,9 @@ for cmd in "${commands[@]}"; do
         sleep 1
     done
 
-    # Run the command in the background
+    # Run the command in a new terminal
     echo "Running: $cmd"
-    eval "$cmd" &
+    xterm -hold -e "$cmd" &
     job_pid=$!
 
     # Check if the PID is valid

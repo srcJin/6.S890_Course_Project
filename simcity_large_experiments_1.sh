@@ -10,31 +10,40 @@ commands=(
     "python src/main.py --config=iql_ns --env-config=simcity_large"
 )
 
-# Function to run commands in 4 terminals
-run_in_parallel() {
-    num_parallel=4
-    running_jobs=()
+running_jobs=()
+num_parallel=6
 
-    for cmd in "${commands[@]}"; do
-        # Wait for any terminal to free up
-        while [ "${#running_jobs[@]}" -ge "$num_parallel" ]; do
-            for i in "${!running_jobs[@]}"; do
-                # Check if process has ended
-                if ! kill -0 "${running_jobs[$i]}" 2>/dev/null; then
-                    unset 'running_jobs[i]' # Remove finished process
-                fi
-            done
-            running_jobs=("${running_jobs[@]}") # Re-index array
-            sleep 1
-        done
-
-        # Run next command in a new terminal
-        gnome-terminal -- bash -c "$cmd; exec bash" &
-        running_jobs+=("$!") # Store process ID
+# Function to clean up completed jobs
+cleanup_jobs() {
+    for i in "${!running_jobs[@]}"; do
+        if ! kill -0 "${running_jobs[$i]}" 2>/dev/null; then
+            unset 'running_jobs[i]' # Remove completed process
+        fi
     done
-
-    # Wait for all jobs to complete
-    wait
+    running_jobs=("${running_jobs[@]}") # Re-index array
 }
 
-run_in_parallel
+# Run commands in parallel
+for cmd in "${commands[@]}"; do
+    # Wait for available slots
+    while [ "${#running_jobs[@]}" -ge "$num_parallel" ]; do
+        cleanup_jobs
+        sleep 1
+    done
+
+    # Run the command in a new terminal
+    echo "Running: $cmd"
+    xterm -hold -e "$cmd" &
+    job_pid=$!
+
+    # Check if the PID is valid
+    if [[ "$job_pid" =~ ^[0-9]+$ ]]; then
+        running_jobs+=("$job_pid") # Track the process ID
+    else
+        echo "Failed to start job: $cmd"
+    fi
+done
+
+# Wait for all remaining jobs to finish
+wait
+echo "All experiments completed."

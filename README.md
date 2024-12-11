@@ -25,20 +25,30 @@ conda activate epymarl
 
 cd ~/Documents/Github/6.S890_Course_Project
 
+sudo apt update
+sudo apt install -y nvidia-cuda-toolkit
+pip instlal einops
 pip install -r requirements.txt
-pip install -r pac_requirements.txt
 pip install -r env_requirements.txt
+pip install -r pac_requirements.txt
 
-chmod +x simcity_experiments_1.sh simcity_experiments_2.sh simcity_experiments_3.sh simcity_large_experiments_1.sh simcity_large_experiments_2.sh simcity_large_experiments_3.sh
+chmod +x simcity_experiments_all.sh simcity_experiments_1.sh simcity_experiments_2.sh simcity_experiments_3.sh simcity_large_experiments_1.sh simcity_large_experiments_2.sh simcity_large_experiments_3.sh simcity_large_experiments_all.sh
 
-
+xterm -hold -e "$cmd" &
 
 ./simcity_experiments_1.sh
 ./simcity_large_experiments_1.sh
 
+./simcity_experiments_all.sh
+./simcity_large_experiments_all.sh
+
 # Training
 
 python src/main.py --config=qmix --env-config=simcity
+
+
+pip install gpustat
+watch -n 0.5 -c gpustat -cp --color
 
 # Plotting
 
