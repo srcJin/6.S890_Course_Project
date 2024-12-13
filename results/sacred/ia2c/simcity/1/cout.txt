@@ -11988,3 +11988,12 @@ test_common_reward_value_mean:5556.3472	test_env_score_mean:      21.6667	test_e
 test_return_std:         35724.6825	
 [INFO 02:33:03] my_main t_env: 786357 / 20050000
 [INFO 02:33:03] my_main Estimated time left: 37 days, 1 hours, 12 minutes, 9 seconds. Time passed: 1 days, 19 hours, 26 minutes, 52 seconds
+[INFO 02:35:41] my_main Saving models to results/models/ia2c_seed536481152_simcity_2024-12-11 07:06:06.194452/786357
+[INFO 02:35:41] my_main Recent Stats | t_env:     786357 | Episode:    11820
+P1_reward_mean:          386.4837	P2_reward_mean:          944.2067	P3_reward_mean:          1509.3907	advantage_mean:           -0.1555
+agent_grad_norm:           0.0718	common_reward_value_mean:5622.2740	critic_grad_norm:        932.1622	critic_loss:               1.5027
+env_score_mean:           21.6667	ep_length_mean:           99.0700	pg_loss:                   0.0945	pi_max:                    0.9586
+q_taken_mean:             58.8268	return_mean:             278981.7520	return_std:              28642.4305	target_mean:              58.6713
+td_error_abs:              0.8273	test_P1_reward_mean:     382.0743	test_P2_reward_mean:     933.1487	test_P3_reward_mean:     1491.5443
+test_common_reward_value_mean:5556.2236	test_env_score_mean:      21.6667	test_ep_length_mean:      98.8820	test_return_mean:        275778.7496
+test_return_std:         35741.6161	

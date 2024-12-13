@@ -14676,3 +14676,12 @@ test_common_reward_value_mean:4648.3702	test_env_score_mean:      21.6667	test_e
 test_return_std:         26841.7493	
 [INFO 02:33:04] my_main t_env: 872412 / 20050000
 [INFO 02:33:04] my_main Estimated time left: 38 days, 3 hours, 10 minutes, 16 seconds. Time passed: 1 days, 19 hours, 26 minutes, 55 seconds
+[INFO 02:35:42] my_main Saving models to results/models/coma_seed808131679_simcity_2024-12-11 07:06:06.141088/872412
+[INFO 02:35:42] my_main Recent Stats | t_env:     872412 | Episode:    18220
+P1_reward_mean:          332.5947	P2_reward_mean:          810.2867	P3_reward_mean:          1294.4227	advantage_mean:           -0.0041
+agent_grad_norm:           0.4634	coma_loss:                -0.1451	common_reward_value_mean:4825.2880	critic_grad_norm:        12391.4534
+critic_loss:              39.7396	env_score_mean:           21.6667	ep_length_mean:          100.0000	pi_max:                    0.9683
+q_taken_mean:            298.1442	return_mean:             239302.8640	return_std:              25673.8905	target_mean:             293.6384
+td_error_abs:              8.7596	test_P1_reward_mean:     313.8255	test_P2_reward_mean:     763.5842	test_P3_reward_mean:     1219.4875
+test_common_reward_value_mean:4547.2672	test_env_score_mean:      21.6667	test_ep_length_mean:     100.0000	test_return_mean:        225700.4464
+test_return_std:         26294.5004	
