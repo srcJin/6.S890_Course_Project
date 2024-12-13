@@ -1,0 +1,138 @@
+{
+  "P1_reward_mean": [
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 29.00666666666667
+    }
+  ],
+  "P1_reward_mean_T": [
+    67
+  ],
+  "P2_reward_mean": [
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 60.69166666666666
+    }
+  ],
+  "P2_reward_mean_T": [
+    67
+  ],
+  "P3_reward_mean": [
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 82.68666666666667
+    }
+  ],
+  "P3_reward_mean_T": [
+    67
+  ],
+  "agent_0_return_mean": [
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 143.0233332633972
+    }
+  ],
+  "agent_0_return_mean_T": [
+    67
+  ],
+  "agent_0_return_std": [
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 17.72429017543714
+    }
+  ],
+  "agent_0_return_std_T": [
+    67
+  ],
+  "agent_1_return_mean": [
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 206.10833435058595
+    }
+  ],
+  "agent_1_return_mean_T": [
+    67
+  ],
+  "agent_1_return_std": [
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 34.152883943014665
+    }
+  ],
+  "agent_1_return_std_T": [
+    67
+  ],
+  "agent_2_return_mean": [
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 299.16333351135256
+    }
+  ],
+  "agent_2_return_mean_T": [
+    67
+  ],
+  "agent_2_return_std": [
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 45.663535167979475
+    }
+  ],
+  "agent_2_return_std_T": [
+    67
+  ],
+  "common_reward_value_mean": [
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 276.2800000000001
+    }
+  ],
+  "common_reward_value_mean_T": [
+    67
+  ],
+  "env_score_mean": [
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 21.666666666666664
+    }
+  ],
+  "env_score_mean_T": [
+    67
+  ],
+  "ep_length_mean": [
+    6.7
+  ],
+  "ep_length_mean_T": [
+    67
+  ],
+  "total_return_mean": [
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 648.2950011253357
+    }
+  ],
+  "total_return_mean_T": [
+    67
+  ],
+  "total_return_std": [
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 97.25623098459839
+    }
+  ],
+  "total_return_std_T": [
+    67
+  ]
+}

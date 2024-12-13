@@ -1,0 +1,22 @@
+env: simcity
+
+env_args:
+  key: "simcity"
+  map_name: "simcity"
+  seed: null
+  time_limit: 100
+  grid_size: 4
+
+test_greedy: True
+test_nepisode: 100
+test_interval: 100
+log_interval: 100
+runner_log_interval: 1000
+learner_log_interval: 1000
+t_max: 1000000
+use_tensorboard: True
+save_model: True # Save the models to disk
+save_model_interval: 1000 # Save models after this many timesteps
+# batch_size_run: 10
+use_cuda: False
+common_reward: True

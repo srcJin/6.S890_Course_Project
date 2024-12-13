@@ -1,0 +1,96 @@
+[INFO 07:06:05] pymarl Running command 'my_main'
+[INFO 07:06:05] pymarl Started run with ID "1"
+[WARNING 07:06:05] my_main !!!!!!!!!!!CUDA Avaliable!!!!!!!!!!!!
+[INFO 07:06:05] my_main Runner specified in config: episode
+[INFO 07:06:05] my_main Runner resolved in args: episode
+[INFO 07:06:05] my_main Experiment Parameters:
+[INFO 07:06:05] my_main 
+
+{   'add_value_last_step': True,
+    'agent': 'rnn',
+    'agent_output_type': 'pi_logits',
+    'batch_size': 32,
+    'batch_size_run': 1,
+    'buffer_cpu_only': True,
+    'buffer_size': 50000,
+    'checkpoint_path': '',
+    'common_reward': True,
+    'critic_type': 'maddpg_critic',
+    'env': 'simcity',
+    'env_args': {   'grid_size': 4,
+                    'key': 'simcity',
+                    'map_name': 'simcity',
+                    'seed': 843812648,
+                    'time_limit': 100},
+    'evaluate': False,
+    'gamma': 0.99,
+    'grad_norm_clip': 10,
+    'hidden_dim': 128,
+    'hypergroup': None,
+    'label': 'default_label',
+    'learner': 'maddpg_learner',
+    'learner_log_interval': 1000,
+    'load_step': 0,
+    'local_results_path': 'results',
+    'log_interval': 100,
+    'lr': 0.0005,
+    'mac': 'maddpg_mac',
+    'name': 'maddpg',
+    'obs_agent_id': True,
+    'obs_individual_obs': False,
+    'obs_last_action': False,
+    'optim_alpha': 0.99,
+    'optim_eps': 1e-05,
+    'reg': 0.001,
+    'render': False,
+    'repeat_id': 1,
+    'reward_scalarisation': 'sum',
+    'runner': 'episode',
+    'runner_log_interval': 1000,
+    'save_model': True,
+    'save_model_interval': 1000,
+    'save_replay': False,
+    'seed': 843812648,
+    'standardise_returns': False,
+    'standardise_rewards': True,
+    't_max': 1000000,
+    'target_update_interval_or_tau': 200,
+    'test_greedy': True,
+    'test_interval': 100,
+    'test_nepisode': 100,
+    'use_cuda': True,
+    'use_rnn': True,
+    'use_tensorboard': True,
+    'use_wandb': False,
+    'wandb_mode': 'offline',
+    'wandb_project': None,
+    'wandb_save_model': False,
+    'wandb_team': None}
+
+[INFO 07:06:05] my_main *******************
+[INFO 07:06:05] my_main Tensorboard logging dir:
+[INFO 07:06:05] my_main /workspace/home/user/Documents/Github/6.S890_Course_Project/results/tb_logs/maddpg_seed843812648_simcity_2024-12-11 07:06:05.816424
+[INFO 07:06:05] my_main *******************
+[INFO 07:06:05] my_main Final parsed config: {'runner': 'episode', 'mac': 'maddpg_mac', 'env': 'simcity', 'common_reward': True, 'reward_scalarisation': 'sum', 'env_args': {'key': 'simcity', 'map_name': 'simcity', 'seed': 843812648, 'time_limit': 100, 'grid_size': 4}, 'batch_size_run': 1, 'test_nepisode': 100, 'test_interval': 100, 'test_greedy': True, 'log_interval': 100, 'runner_log_interval': 1000, 'learner_log_interval': 1000, 't_max': 1000000, 'use_cuda': True, 'buffer_cpu_only': True, 'use_tensorboard': True, 'use_wandb': False, 'wandb_team': None, 'wandb_project': None, 'wandb_mode': 'offline', 'wandb_save_model': False, 'save_model': True, 'save_model_interval': 1000, 'checkpoint_path': '', 'evaluate': False, 'render': False, 'load_step': 0, 'save_replay': False, 'local_results_path': 'results', 'gamma': 0.99, 'batch_size': 32, 'buffer_size': 50000, 'lr': 0.0005, 'optim_alpha': 0.99, 'optim_eps': 1e-05, 'grad_norm_clip': 10, 'add_value_last_step': True, 'agent': 'rnn', 'hidden_dim': 128, 'obs_agent_id': True, 'obs_last_action': False, 'repeat_id': 1, 'label': 'default_label', 'hypergroup': None, 'target_update_interval_or_tau': 200, 'obs_individual_obs': False, 'reg': 0.001, 'use_rnn': True, 'standardise_returns': False, 'standardise_rewards': True, 'learner': 'maddpg_learner', 'agent_output_type': 'pi_logits', 'critic_type': 'maddpg_critic', 'name': 'maddpg', 'seed': 843812648}
+[INFO 07:06:05] my_main run.py Using runner: episode
+[INFO 07:06:05] my_main Initialized runner: EpisodeRunner
+[INFO 07:06:18] my_main Beginning training for 1000000 timesteps
+[INFO 07:06:19] my_main t_env: 7 / 1000000
+[INFO 07:06:19] my_main Estimated time left: 1 hours, 28 minutes, 13 seconds. Time passed: 0 seconds
+[INFO 07:06:41] my_main Saving models to results/models/maddpg_seed843812648_simcity_2024-12-11 07:06:05.816424/7
+[INFO 07:06:43] my_main Recent Stats | t_env:        100 | Episode:       14
+P1_reward_mean:           30.5667	P2_reward_mean:           63.9167	P3_reward_mean:          104.1667	common_reward:           1230.9800
+common_reward_value:     331.8400	common_reward_value_mean:327.4000	env_score_mean:           21.6667	ep_length_mean:            7.0000
+return_mean:             1137.4000	return_std:                0.0000	test_P1_reward_mean:      30.7257	test_P2_reward_mean:      63.7217
+test_P3_reward_mean:      90.6547	test_common_reward_value_mean:301.7470	test_env_score_mean:      21.6667	test_ep_length_mean:       7.1000
+test_return_mean:        1111.9040	test_return_std:         223.6318	
+[INFO 07:06:43] my_main t_env: 107 / 1000000
+[INFO 07:06:43] my_main Estimated time left: 2 days, 19 hours, 18 minutes, 39 seconds. Time passed: 24 seconds
+[INFO 07:07:14] my_main Recent Stats | t_env:        206 | Episode:       29
+P1_reward_mean:           30.5667	P2_reward_mean:           63.9167	P3_reward_mean:          104.1667	common_reward:           1075.2400
+common_reward_value:     306.5800	common_reward_value_mean:327.4000	env_score_mean:           21.6667	ep_length_mean:            7.0000
+return_mean:             1137.4000	return_std:                0.0000	test_P1_reward_mean:      30.9027	test_P2_reward_mean:      63.6242
+test_P3_reward_mean:      91.3627	test_common_reward_value_mean:303.2905	test_env_score_mean:      21.6667	test_ep_length_mean:       7.0950
+test_return_mean:        1116.5070	test_return_std:         249.4139	
+[INFO 07:07:14] my_main t_env: 212 / 1000000
+[INFO 07:07:14] my_main Estimated time left: 3 days, 10 hours, 30 minutes, 44 seconds. Time passed: 56 seconds

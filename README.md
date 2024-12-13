@@ -46,6 +46,10 @@ xterm -hold -e "$cmd" &
 
 python src/main.py --config=qmix --env-config=simcity
 
+python src/main.py --config=pac_dcg_ns --env-config=simcity_large_no_cuda
+python src/main.py --config=pac_ns --env-config=simcity_large_no_cuda
+python src/main.py --config=pac_dcg_ns --env-config=simcity_large_no_common_no_cuda
+python src/main.py --config=pac_ns --env-config=simcity_large_no_common_no_cuda
 
 pip install gpustat
 watch -n 0.5 -c gpustat -cp --color
