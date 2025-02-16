@@ -1,3 +1,5 @@
+# src/modules/agents/__init__.py
+
 from .rnn_agent import RNNAgent
 from .rnn_ns_agent import RNNNSAgent
 from .rnn_feature_agent import RNNFeatureAgent

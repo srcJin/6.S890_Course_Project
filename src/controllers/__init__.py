@@ -1,3 +1,5 @@
+# src/controllers/__init__.py
+
 REGISTRY = {}
 
 from .basic_controller import BasicMAC

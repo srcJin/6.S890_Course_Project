@@ -6,6 +6,12 @@ import numpy as np
 import os, sys
 from argparse import Namespace
 import logging
+import warnings
+
+# temporarly disable futurewarning for
+# FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value),  which uses the default pickle module implicitly.
+warnings.simplefilter("ignore", FutureWarning)
+
 
 # 配置日志（可根据需要调整日志级别）
 logging.basicConfig(level=logging.DEBUG)
@@ -74,7 +80,7 @@ args = Namespace(
     device=device,
     gamma=0.99,
     grad_norm_clip=10.0,
-    agent="rnn_agent",  # 这里的 "rnn_agent" 必须与你在 modules/agents/rnn_agent.py 中注册的 key 保持一致
+    agent="rnn",  # 这里的 "rnn" 必须与你在 modules/agents/rnn_agent.py 中注册的 key 保持一致
 )
 
 # 定义一个 minimal scheme 用于构造 MAC
@@ -88,13 +94,13 @@ groups = {}
 
 # 初始化多智能体控制器（MAC）
 mac = BasicMAC(scheme, groups, args)
-mac.to(device)
+mac.agent.to(device)
 # 初始化 MAC 隐状态（batch_size=1 表示单个 episode 推理）
 mac.init_hidden(batch_size=1)
 logger.info("MAC initialized.")
 
 # 加载训练好的 agent 模型参数
-model_save_path = os.path.join("saved_models")
+model_save_path = os.path.join("saved_models", "maa2c")
 agent_model_path = os.path.join(model_save_path, "agent.th")
 if os.path.exists(agent_model_path):
     mac.load_models(model_save_path)
@@ -262,4 +268,4 @@ def simulate_episode():
 # 3. 启动 Flask 服务
 # --------------------------
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=5888, debug=True)
