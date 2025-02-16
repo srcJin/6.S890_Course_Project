@@ -8,7 +8,9 @@ import numpy as np
 
 from .multiagentenv import MultiAgentEnv
 from .wrappers import FlattenObservation
-import envs.pretrained as pretrained  # noqa
+
+# import envs.pretrained as pretrained  # noqa
+from src.envs import pretrained
 
 try:
     from .pz_wrapper import PettingZooWrapper  # noqa
