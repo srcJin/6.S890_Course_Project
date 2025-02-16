@@ -1,3 +1,5 @@
+# modules/agents/rnn_agent.py
+
 # code adapted from https://github.com/wendelinboehmer/dcg
 
 import torch.nn as nn
@@ -29,4 +31,3 @@ class RNNAgent(nn.Module):
             h = F.relu(self.rnn(x))
         q = self.fc2(h)
         return q, h
-

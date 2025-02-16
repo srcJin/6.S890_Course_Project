@@ -1,3 +1,5 @@
+# src/config/algs/maa2c.yaml
+
 # --- Central-V specific parameters ---
 
 action_selector: "soft_policies"
