@@ -8,6 +8,11 @@ from argparse import Namespace
 import logging
 import warnings
 
+# Ensure src/ is in sys.path
+sys.path.insert(
+    0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "src"))
+)
+
 # temporarly disable futurewarning for
 # FutureWarning: You are using `torch.load` with `weights_only=False` (the current default value),  which uses the default pickle module implicitly.
 warnings.simplefilter("ignore", FutureWarning)
@@ -17,16 +22,15 @@ warnings.simplefilter("ignore", FutureWarning)
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
-# Ensure src/ is in sys.path
-sys.path.insert(
-    0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "src"))
-)
+
+from components.episode_buffer import EpisodeBatch
 
 # 导入环境封装类
 from envs.simcity_wrapper import SimCityWrapper
 
 # 导入多智能体控制器 BasicMAC（该模块内部会调用已注册的 RNNAgent）
 from controllers.basic_controller import BasicMAC
+
 
 app = Flask(__name__)
 
@@ -85,12 +89,14 @@ args = Namespace(
 
 # 定义一个 minimal scheme 用于构造 MAC
 scheme = {
-    "obs": {"vshape": env.obs_size},
-    # 如果 obs_last_action 为 True，则需要添加 "actions_onehot" 字段；此处为 False，可省略
+    "obs": {"vshape": int(env.obs_size), "group": "agents"},
+    "avail_actions": {"vshape": int(n_actions), "group": "agents"},
 }
 
-# groups 参数在这里不做特殊处理，传空字典即可
-groups = {}
+# 在 server.py 中，将 groups 从空字典修改为包含组信息
+# 这样 EpisodeBatch 在设置数据时，就会知道 "agents" 组的大小，从而不会触发断言错误。
+groups = {"agents": n_agents}
+
 
 # 初始化多智能体控制器（MAC）
 mac = BasicMAC(scheme, groups, args)
@@ -118,7 +124,10 @@ t_env = 0
 # --------------------------
 
 
-@app.route("/reset", methods=["POST"])
+@app.route(
+    "/reset",
+    methods=["POST", "GET"],
+)
 def reset_env():
     """
     重置环境，同时重置 MAC 隐状态，并返回初始观测和环境信息。
@@ -138,7 +147,7 @@ def reset_env():
     )
 
 
-@app.route("/step", methods=["POST"])
+@app.route("/step", methods=["POST", "GET"])
 def step_env():
     """
     执行一步交互：
@@ -158,18 +167,23 @@ def step_env():
 
     # 构造一个 dummy batch，用于调用 MAC.select_actions
     # 注意：MAC.select_actions 期望 batch["obs"] 的形状为 (batch_size, episode_length, n_agents, obs_dim)
+    # 构造 dummy batch
     batch_obs = np.reshape(obs, (1, 1, n_agents, env.obs_size))
     batch_avail = np.reshape(avail_actions, (1, 1, n_agents, n_actions))
-    dummy_batch = {
-        "obs": batch_obs,
-        "avail_actions": batch_avail,
-        "batch_size": 1,
-        "device": device,
-    }
+    batch_obs_tensor = torch.tensor(batch_obs, dtype=torch.float32, device=device)
+    batch_avail_tensor = torch.tensor(batch_avail, dtype=torch.float32, device=device)
+
+    dummy_batch = EpisodeBatch(
+        scheme, groups, batch_size=1, max_seq_length=1, preprocess=None, device=device
+    )
+    dummy_batch.update(
+        {"obs": batch_obs_tensor, "avail_actions": batch_avail_tensor}, ts=0
+    )
 
     # 使用 MAC 选取动作，t_ep 固定为 0（单步推理），t_env 为全局步数
     mac_actions = mac.select_actions(dummy_batch, t_ep=0, t_env=t_env, test_mode=True)
-    mac_actions = mac_actions.tolist()  # 转为列表，长度为 n_agents
+    # 提取内层列表（batch_size=1的情况）
+    mac_actions = mac_actions.tolist()[0]
 
     # 如果前端指定了部分 agent 的动作，则覆盖 MAC 输出
     final_actions = []
@@ -199,7 +213,7 @@ def step_env():
     return jsonify(response)
 
 
-@app.route("/simulate", methods=["POST"])
+@app.route("/simulate", methods=["POST", "GET"])
 def simulate_episode():
     """
     运行一个完整的 self play episode（所有 agent 均由模型控制），直至游戏结束，
@@ -219,21 +233,32 @@ def simulate_episode():
         obs = env.get_obs()  # (1, n_agents, obs_size)
         avail_actions = env.get_avail_actions()  # (1, n_agents, n_actions)
 
-        # 构造 dummy batch
+        # 构造 dummy batch 使用 EpisodeBatch
         batch_obs = np.reshape(obs, (1, 1, n_agents, env.obs_size))
         batch_avail = np.reshape(avail_actions, (1, 1, n_agents, n_actions))
-        dummy_batch = {
-            "obs": batch_obs,
-            "avail_actions": batch_avail,
-            "batch_size": 1,
-            "device": device,
-        }
+        batch_obs_tensor = torch.tensor(batch_obs, dtype=torch.float32, device=device)
+        batch_avail_tensor = torch.tensor(
+            batch_avail, dtype=torch.float32, device=device
+        )
+
+        dummy_batch = EpisodeBatch(
+            scheme,
+            groups,
+            batch_size=1,
+            max_seq_length=1,
+            preprocess=None,
+            device=device,
+        )
+        dummy_batch.update(
+            {"obs": batch_obs_tensor, "avail_actions": batch_avail_tensor}, ts=0
+        )
 
         # 使用 MAC 计算动作（所有 agent 均由模型控制）
         mac_actions = mac.select_actions(
             dummy_batch, t_ep=0, t_env=t_env, test_mode=True
         )
-        mac_actions = mac_actions.tolist()
+        mac_actions = mac_actions.tolist()[0]  # 取出内层列表
+
         actions = np.array(mac_actions)
         logger.debug("t_env=%d, actions=%s", t_env, actions.tolist())
 
