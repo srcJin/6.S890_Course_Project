@@ -36,3 +36,5 @@ whichcraft
 wrapt
 Flask
 flask-cors
+gym
+pettingzoo
