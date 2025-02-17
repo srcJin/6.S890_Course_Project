@@ -109,7 +109,7 @@ mac.init_hidden(batch_size=1)
 logger.info("MAC initialized.")
 
 # 加载训练好的 agent 模型参数
-model_save_path = os.path.join("saved_models", "maa2c")
+model_save_path = os.path.join("inference_server", "saved_models", "maa2c")
 agent_model_path = os.path.join(model_save_path, "agent.th")
 if os.path.exists(agent_model_path):
     mac.load_models(model_save_path)
