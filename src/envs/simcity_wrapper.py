@@ -91,7 +91,15 @@ class SimCityWrapper(MultiAgentEnv):
 
     def get_obs_agent(self, agent_id):
         logger.debug(f"simcity_wrapper: Fetching observation for agent {agent_id}.")
+        logger.debug("simcity_wrapper get_obs_agent self.env.agents", self.env.agents)
+
+        logger.debug("get_obs_agent, agent_id=", agent_id)
+
         agent = self.env.agents[agent_id]
+        if agent != "P1":
+            print(f"Warning: Expected P1 but got {agent}")
+        else:
+            print(f"get_obs_agent, agent_id={agent_id}, agent={agent}")
         obs = self.env.observe(agent)
         agent_obs = np.concatenate(
             [
@@ -167,9 +175,10 @@ class SimCityWrapper(MultiAgentEnv):
         logger.debug(f"simcity_wrapper: Step called with actions: {actions}")
         # actions_list = actions.squeeze(0).cpu().numpy().tolist()
         actions_list = actions.tolist()
-        logger.debug(f"simcity_wrapper: Actions list: {actions_list}")
+        logger.info(f"simcity_wrapper: Actions list: {actions_list}")
 
         for idx, agent in enumerate(self.env.agents):
+            logger.debug(f"simcity_wrapper step: Processing agent {agent}.")
             if self.env.terminations[agent] or self.env.truncations[agent]:
                 self.env.step(None)
                 logger.debug(
@@ -233,9 +242,11 @@ class SimCityWrapper(MultiAgentEnv):
         info = {
             "env_score": self.env.env_score,
             "common_reward_value": self.env.common_reward_value,
+            "player_resources": {},
         }
         for agent, reward in self.env.individual_rewards_list.items():
             info[f"{agent}_reward"] = reward
+            info["player_resources"][agent] = self.env.players[agent].resources
 
         logger.debug(
             f"simcity_wrapper: Step result: obs shape={obs.shape}, rewards={rewards}, terminated={terminated}, truncated={truncated}, info={info}"
@@ -250,7 +261,10 @@ class SimCityWrapper(MultiAgentEnv):
 
         self.n_agents = len(self.env.agents)
         if self.n_agents > 0:
-            single_obs = self.env.observe(self.env.agents[0])
+            # single_obs = self.env.observe(self.env.agents[0])
+            # agents[0] may not be P1, we force to use P1
+            print("simcity_wrapper reset self.env.agents=", self.env.agents)
+            single_obs = self.env.observe("P1")
             self.obs_size = (
                 single_obs["grid"].size
                 + 2

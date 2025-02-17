@@ -1,6 +1,8 @@
 # server.py
 
 from flask import Flask, request, jsonify
+from flask_cors import CORS
+
 import torch
 import numpy as np
 import os, sys
@@ -33,6 +35,7 @@ from controllers.basic_controller import BasicMAC
 
 
 app = Flask(__name__)
+CORS(app)  # This will enable CORS for all routes
 
 # --------------------------
 # 1. 全局初始化
@@ -193,9 +196,10 @@ def step_env():
         else:
             final_actions.append(mac_actions[i])
     final_actions = np.array(final_actions)
-    logger.debug("Actions chosen: %s", final_actions.tolist())
+    logger.info("Actions chosen: %s", final_actions.tolist())
 
     # 将动作传递给环境，执行一步
+    logger.info("!!!! Step %d: actions=%s", t_env, final_actions)
     obs_next, rewards, terminated, truncated, info = env.step(final_actions)
     t_env += 1
 
@@ -210,6 +214,8 @@ def step_env():
         "info": info,
         "t_env": t_env,
     }
+    logger.info("Response: %s", response)
+
     return jsonify(response)
 
 
