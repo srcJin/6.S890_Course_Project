@@ -35,3 +35,4 @@ websocket-client
 whichcraft
 wrapt
 Flask
+flask-cors

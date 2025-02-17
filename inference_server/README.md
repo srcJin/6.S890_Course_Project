@@ -1,3 +1,5 @@
+python inference_server/server.py
+
 
 Test:
 
