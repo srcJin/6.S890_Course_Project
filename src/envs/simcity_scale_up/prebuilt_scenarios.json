@@ -1,0 +1,351 @@
+{
+  "urban_resilience_scenarios": {
+    "description": "Pre-built board configurations for urban resilience scenarios",
+    "version": "1.0",
+    "grid_size": {
+      "x": 8,
+      "y": 8
+    },
+    "parameters": {
+      "S": "Sustainability (environmental impact, renewable energy)",
+      "W": "Well-being (community health, social cohesion)",
+      "R": "Resilience (disaster preparedness, adaptability)",
+      "C": "Climate (carbon footprint, climate adaptation)"
+    },
+    "scenarios": {
+      "coastal_city": {
+        "name": "Coastal Resilient City",
+        "description": "A coastal city facing sea-level rise and extreme weather events",
+        "grid_layout": [
+          [0, 0, 1, 1, 1, 0, 0, 0],
+          [0, 2, 0, 1, 1, 0, 2, 0],
+          [0, 0, 0, 1, 1, 0, 0, 0],
+          [1, 1, 1, 1, 1, 1, 1, 1],
+          [0, 0, 0, 0, 0, 0, 0, 0],
+          [0, 2, 0, 0, 0, 0, 2, 0],
+          [0, 0, 0, 1, 1, 0, 0, 0],
+          [0, 0, 0, 1, 1, 0, 0, 0]
+        ],
+        "terrain": {
+          "(0, 2)": "River",
+          "(0, 3)": "River", 
+          "(0, 4)": "River",
+          "(1, 3)": "River",
+          "(1, 4)": "River",
+          "(2, 3)": "River",
+          "(2, 4)": "River",
+          "(3, 0)": "Highway",
+          "(3, 1)": "Highway",
+          "(3, 2)": "Highway",
+          "(3, 3)": "Highway",
+          "(3, 4)": "Highway",
+          "(3, 5)": "Highway",
+          "(3, 6)": "Highway",
+          "(3, 7)": "Highway",
+          "(6, 3)": "Lake",
+          "(6, 4)": "Lake",
+          "(7, 3)": "Mountain",
+          "(7, 4)": "Mountain"
+        },
+        "infrastructure": {
+          "(1, 1)": "Hospital",
+          "(1, 6)": "School",
+          "(5, 1)": "FireStation",
+          "(5, 6)": "PowerPlant"
+        },
+        "baseline_values": {
+          "S": 20,
+          "W": 25,
+          "R": 15,
+          "C": 10
+        },
+        "challenges": [
+          "Rising sea levels",
+          "Increased storm frequency",
+          "Coastal erosion",
+          "Flooding risks"
+        ]
+      },
+      "mountain_valley": {
+        "name": "Mountain Valley Community",
+        "description": "A mountain valley community focused on sustainable development",
+        "grid_layout": [
+          [1, 1, 0, 0, 0, 0, 1, 1],
+          [1, 0, 0, 2, 2, 0, 0, 1],
+          [0, 0, 0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0, 0, 0],
+          [1, 0, 0, 2, 2, 0, 0, 1],
+          [1, 1, 0, 0, 0, 0, 1, 1]
+        ],
+        "terrain": {
+          "(0, 0)": "Mountain",
+          "(0, 1)": "Mountain",
+          "(0, 6)": "Mountain",
+          "(0, 7)": "Mountain",
+          "(1, 0)": "Mountain",
+          "(1, 7)": "Mountain",
+          "(6, 0)": "Mountain",
+          "(6, 7)": "Mountain",
+          "(7, 0)": "Mountain",
+          "(7, 1)": "Mountain",
+          "(7, 6)": "Mountain",
+          "(7, 7)": "Mountain"
+        },
+        "infrastructure": {
+          "(1, 3)": "Hospital",
+          "(1, 4)": "School",
+          "(6, 3)": "FireStation",
+          "(6, 4)": "PowerPlant"
+        },
+        "baseline_values": {
+          "S": 30,
+          "W": 20,
+          "R": 20,
+          "C": 25
+        },
+        "challenges": [
+          "Limited flat land",
+          "Wildfire risk",
+          "Landslide potential",
+          "Remote access"
+        ]
+      },
+      "river_delta": {
+        "name": "River Delta Metropolis",
+        "description": "A large river delta facing flooding and urban sprawl challenges",
+        "grid_layout": [
+          [0, 1, 1, 0, 0, 1, 1, 0],
+          [1, 1, 2, 0, 0, 2, 1, 1],
+          [1, 0, 0, 0, 0, 0, 0, 1],
+          [0, 0, 0, 0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0, 0, 0, 0],
+          [1, 0, 0, 0, 0, 0, 0, 1],
+          [1, 1, 2, 0, 0, 2, 1, 1],
+          [0, 1, 1, 0, 0, 1, 1, 0]
+        ],
+        "terrain": {
+          "(0, 1)": "River",
+          "(0, 2)": "River",
+          "(0, 5)": "River",
+          "(0, 6)": "River",
+          "(1, 0)": "River",
+          "(1, 1)": "River",
+          "(1, 6)": "River",
+          "(1, 7)": "River",
+          "(2, 0)": "River",
+          "(2, 7)": "River",
+          "(5, 0)": "River",
+          "(5, 7)": "River",
+          "(6, 0)": "River",
+          "(6, 1)": "River",
+          "(6, 6)": "River",
+          "(6, 7)": "River",
+          "(7, 1)": "River",
+          "(7, 2)": "River",
+          "(7, 5)": "River",
+          "(7, 6)": "River"
+        },
+        "infrastructure": {
+          "(1, 2)": "Hospital",
+          "(1, 5)": "School",
+          "(6, 2)": "FireStation",
+          "(6, 5)": "PowerPlant"
+        },
+        "baseline_values": {
+          "S": 15,
+          "W": 30,
+          "R": 10,
+          "C": 5
+        },
+        "challenges": [
+          "Frequent flooding",
+          "Water quality issues",
+          "Dense population",
+          "Infrastructure strain"
+        ]
+      },
+      "desert_oasis": {
+        "name": "Desert Oasis Settlement",
+        "description": "A desert community building around limited water resources",
+        "grid_layout": [
+          [1, 1, 1, 0, 0, 1, 1, 1],
+          [1, 1, 0, 0, 0, 0, 1, 1],
+          [1, 0, 0, 2, 2, 0, 0, 1],
+          [0, 0, 0, 1, 1, 0, 0, 0],
+          [0, 0, 0, 1, 1, 0, 0, 0],
+          [1, 0, 0, 2, 2, 0, 0, 1],
+          [1, 1, 0, 0, 0, 0, 1, 1],
+          [1, 1, 1, 0, 0, 1, 1, 1]
+        ],
+        "terrain": {
+          "(0, 0)": "Mountain",
+          "(0, 1)": "Mountain",
+          "(0, 2)": "Mountain",
+          "(0, 5)": "Mountain",
+          "(0, 6)": "Mountain",
+          "(0, 7)": "Mountain",
+          "(1, 0)": "Mountain",
+          "(1, 1)": "Mountain",
+          "(1, 6)": "Mountain",
+          "(1, 7)": "Mountain",
+          "(2, 0)": "Mountain",
+          "(2, 7)": "Mountain",
+          "(3, 3)": "Lake",
+          "(3, 4)": "Lake",
+          "(4, 3)": "Lake",
+          "(4, 4)": "Lake",
+          "(5, 0)": "Mountain",
+          "(5, 7)": "Mountain",
+          "(6, 0)": "Mountain",
+          "(6, 1)": "Mountain",
+          "(6, 6)": "Mountain",
+          "(6, 7)": "Mountain",
+          "(7, 0)": "Mountain",
+          "(7, 1)": "Mountain",
+          "(7, 2)": "Mountain",
+          "(7, 5)": "Mountain",
+          "(7, 6)": "Mountain",
+          "(7, 7)": "Mountain"
+        },
+        "infrastructure": {
+          "(2, 3)": "Hospital",
+          "(2, 4)": "School",
+          "(5, 3)": "FireStation",
+          "(5, 4)": "PowerPlant"
+        },
+        "baseline_values": {
+          "S": 10,
+          "W": 15,
+          "R": 25,
+          "C": 5
+        },
+        "challenges": [
+          "Water scarcity",
+          "Extreme temperatures",
+          "Limited vegetation",
+          "Sandstorms"
+        ]
+      }
+    }
+  },
+  "building_types": {
+    "GreenPark": {
+      "name": "Green Park",
+      "description": "Urban green infrastructure for sustainability and well-being",
+      "cost": {"money": 8, "reputation": 12},
+      "utility": {"money": -2, "reputation": 5},
+      "effects": {"S": 40, "W": 35, "R": 20, "C": 25},
+      "neighbor_effects": {"S": 15, "W": 12, "R": 8, "C": 10},
+      "color": "#22c55e",
+      "icon": "🌳"
+    },
+    "ResilientHouse": {
+      "name": "Resilient House",
+      "description": "Climate-adapted housing for communities",
+      "cost": {"money": 15, "reputation": 8},
+      "utility": {"money": 3, "reputation": 2},
+      "effects": {"S": 15, "W": 25, "R": 30, "C": 20},
+      "neighbor_effects": {"S": 8, "W": 10, "R": 12, "C": 8},
+      "color": "#3b82f6",
+      "icon": "🏠"
+    },
+    "CommunityHub": {
+      "name": "Community Hub",
+      "description": "Social resilience centers for community cohesion",
+      "cost": {"money": 20, "reputation": 15},
+      "utility": {"money": 1, "reputation": 4},
+      "effects": {"S": 10, "W": 45, "R": 35, "C": 5},
+      "neighbor_effects": {"S": 5, "W": 18, "R": 15, "C": 3},
+      "color": "#f59e0b",
+      "icon": "🏢"
+    },
+    "SolarGrid": {
+      "name": "Solar Grid",
+      "description": "Renewable energy infrastructure",
+      "cost": {"money": 25, "reputation": 5},
+      "utility": {"money": 6, "reputation": 1},
+      "effects": {"S": 50, "W": 5, "R": 25, "C": 45},
+      "neighbor_effects": {"S": 20, "W": 2, "R": 10, "C": 18},
+      "color": "#eab308",
+      "icon": "⚡"
+    },
+    "FloodBarrier": {
+      "name": "Flood Barrier",
+      "description": "Climate protection infrastructure",
+      "cost": {"money": 30, "reputation": 10},
+      "utility": {"money": -1, "reputation": 3},
+      "effects": {"S": 5, "W": 10, "R": 50, "C": 30},
+      "neighbor_effects": {"S": 2, "W": 5, "R": 20, "C": 12},
+      "color": "#6366f1",
+      "icon": "🛡️"
+    }
+  },
+  "terrain_types": {
+    "River": {
+      "symbol": "~",
+      "description": "Natural water body - non-buildable",
+      "color": "#06b6d4",
+      "icon": "🌊"
+    },
+    "Mountain": {
+      "symbol": "^",
+      "description": "High elevation terrain - non-buildable",
+      "color": "#78716c",
+      "icon": "⛰️"
+    },
+    "Lake": {
+      "symbol": "o",
+      "description": "Water body - non-buildable",
+      "color": "#0ea5e9",
+      "icon": "🏞️"
+    },
+    "Highway": {
+      "symbol": "=",
+      "description": "Major transportation infrastructure - non-buildable",
+      "color": "#374151",
+      "icon": "🛣️"
+    },
+    "Railway": {
+      "symbol": "||",
+      "description": "Rail transportation - non-buildable",
+      "color": "#4b5563",
+      "icon": "🚂"
+    }
+  },
+  "infrastructure_types": {
+    "Hospital": {
+      "symbol": "H",
+      "description": "Essential healthcare facility",
+      "effects": {"S": 10, "W": 40, "R": 30, "C": 5},
+      "neighbor_effects": {"S": 5, "W": 15, "R": 10, "C": 2},
+      "color": "#dc2626",
+      "icon": "🏥"
+    },
+    "School": {
+      "symbol": "E",
+      "description": "Educational institution",
+      "effects": {"S": 15, "W": 35, "R": 25, "C": 10},
+      "neighbor_effects": {"S": 8, "W": 12, "R": 8, "C": 3},
+      "color": "#059669",
+      "icon": "🏫"
+    },
+    "FireStation": {
+      "symbol": "F",
+      "description": "Emergency response facility",
+      "effects": {"S": 5, "W": 20, "R": 45, "C": 5},
+      "neighbor_effects": {"S": 2, "W": 8, "R": 20, "C": 2},
+      "color": "#dc2626",
+      "icon": "🚒"
+    },
+    "PowerPlant": {
+      "symbol": "P",
+      "description": "Traditional power generation facility",
+      "effects": {"S": -10, "W": -5, "R": 30, "C": -15},
+      "neighbor_effects": {"S": -5, "W": -2, "R": 10, "C": -8},
+      "color": "#6b7280",
+      "icon": "🏭"
+    }
+  }
+}
