@@ -5,10 +5,13 @@ import numpy as np
 
 from components.episode_buffer import EpisodeBatch
 from envs import REGISTRY as env_REGISTRY
-from envs import register_smac, register_smacv2
+
+# from envs import register_smac, register_smacv2
 
 from utils.logging import get_logger
+
 logger = get_logger(log_file_path="simulation.log")
+
 
 class EpisodeRunner:
     def __init__(self, args, logger):
@@ -19,10 +22,10 @@ class EpisodeRunner:
 
         # registering both smac and smacv2 causes a pysc2 error
         # --> dynamically register the needed env
-        if self.args.env == "sc2":
-            register_smac()
-        elif self.args.env == "sc2v2":
-            register_smacv2()
+        # if self.args.env == "sc2":
+        #     register_smac()
+        # elif self.args.env == "sc2v2":
+        #     register_smacv2()
 
         self.env = env_REGISTRY[self.args.env](
             **self.args.env_args,
@@ -70,39 +73,47 @@ class EpisodeRunner:
 
     def run(self, test_mode=False):
         self.reset()
-    
+
         terminated = False
 
         if self.args.common_reward:
             episode_return = 0
         else:
-            episode_return = np.zeros(self.args.n_agents) # Array for individual rewards
+            episode_return = np.zeros(
+                self.args.n_agents
+            )  # Array for individual rewards
 
         self.mac.init_hidden(batch_size=self.batch_size)
-    
+
         while not terminated:
             pre_transition_data = {
                 "state": [self.env.get_state()],
                 "avail_actions": [self.env.get_avail_actions()],
                 "obs": [self.env.get_obs()],
             }
-    
-            logger.debug(f"episode_runner: Pre-transition data at time step {self.t}: {pre_transition_data}")
-    
+
+            logger.debug(
+                f"episode_runner: Pre-transition data at time step {self.t}: {pre_transition_data}"
+            )
+
             self.batch.update(pre_transition_data, ts=self.t)
-    
+
             # Select actions
             actions = self.mac.select_actions(
                 self.batch, t_ep=self.t, t_env=self.t_env, test_mode=test_mode
             )
             logger.debug(f"episode_runner: Selected actions: {actions}")
-    
+
             obs, reward, terminated, truncated, env_info = self.env.step(actions[0])
             terminated = terminated or truncated
-            logger.debug(f"episode_runner: Step result - Reward: {reward}, Terminated: {terminated}, Truncated: {truncated}")
+            logger.debug(
+                f"episode_runner: Step result - Reward: {reward}, Terminated: {terminated}, Truncated: {truncated}"
+            )
             #
             if terminated or truncated:
-                logger.debug(f"episode_runner: Episode ended due to termination: {terminated}, truncation: {truncated}")
+                logger.debug(
+                    f"episode_runner: Episode ended due to termination: {terminated}, truncation: {truncated}"
+                )
             # Reset logic
 
             if test_mode and self.args.render:
@@ -110,7 +121,7 @@ class EpisodeRunner:
 
             episode_return += reward
             logger.debug(f"episode_runner: Episode return so far: {episode_return}")
-    
+
             post_transition_data = {
                 "actions": actions,
                 "terminated": [(terminated != env_info.get("episode_limit", False),)],
@@ -119,32 +130,34 @@ class EpisodeRunner:
                 post_transition_data["reward"] = [(reward,)]
             else:
                 post_transition_data["reward"] = [tuple(reward)]
-    
-            logger.debug(f"episode_runner: Post-transition data at time step {self.t}: {post_transition_data}")
-    
+
+            logger.debug(
+                f"episode_runner: Post-transition data at time step {self.t}: {post_transition_data}"
+            )
+
             self.batch.update(post_transition_data, ts=self.t)
-    
+
             self.t += 1
-    
+
         last_data = {
             "state": [self.env.get_state()],
             "avail_actions": [self.env.get_avail_actions()],
             "obs": [self.env.get_obs()],
         }
         logger.debug(f"episode_runner: Last data before episode ends: {last_data}")
-    
+
         if test_mode and self.args.render:
             print(f"Episode return: {episode_return}")
         self.batch.update(last_data, ts=self.t)
-    
+
         # Select actions in the last stored state
         actions = self.mac.select_actions(
             self.batch, t_ep=self.t, t_env=self.t_env, test_mode=test_mode
         )
         logger.debug(f"episode_runner: Selected actions for last state: {actions}")
-    
+
         self.batch.update({"actions": actions}, ts=self.t)
-    
+
         # Update stats
         cur_stats = self.test_stats if test_mode else self.train_stats
         cur_returns = self.test_returns if test_mode else self.train_returns
@@ -157,12 +170,11 @@ class EpisodeRunner:
         )
         cur_stats["n_episodes"] = 1 + cur_stats.get("n_episodes", 0)
         cur_stats["ep_length"] = self.t + cur_stats.get("ep_length", 0)
-    
+
         if not test_mode:
             self.t_env += self.t
-    
+
         cur_returns.append(episode_return)
-    
 
         # If we have a common reward scenario:
         if self.args.common_reward:
@@ -170,22 +182,26 @@ class EpisodeRunner:
             self.logger.log_stat("common_reward", float(episode_return), self.t_env)
             # If env_info provides a separate common_reward_value and they differ, log that too
             if "common_reward_value" in env_info:
-                self.logger.log_stat("common_reward_value", env_info["common_reward_value"], self.t_env)
+                self.logger.log_stat(
+                    "common_reward_value", env_info["common_reward_value"], self.t_env
+                )
         else:
             # Individual rewards scenario (episode_return is an array)
             for i in range(self.args.n_agents):
-                self.logger.log_stat(f"agent_{i}_individual_reward", episode_return[i], self.t_env)
+                self.logger.log_stat(
+                    f"agent_{i}_individual_reward", episode_return[i], self.t_env
+                )
 
             # If we still have a common_reward_value in env_info and want to log it:
             if "common_reward_value" in env_info:
-                self.logger.log_stat("common_reward_value", env_info["common_reward_value"], self.t_env)
+                self.logger.log_stat(
+                    "common_reward_value", env_info["common_reward_value"], self.t_env
+                )
 
         # Additionally, if env_info includes agent-specific rewards from the environment:
         for key in env_info:
             if "agent_" in key and "individual_reward" in key:
                 self.logger.log_stat(key, env_info[key], self.t_env)
-
-
 
         if test_mode and (len(self.test_returns) == self.args.test_nepisode):
             self._log(cur_returns, cur_stats, log_prefix)
@@ -196,15 +212,16 @@ class EpisodeRunner:
                     "epsilon", self.mac.action_selector.epsilon, self.t_env
                 )
             self.log_train_stats_t = self.t_env
-    
-        return self.batch
 
+        return self.batch
 
     def _log(self, returns, stats, prefix):
         if self.args.common_reward:
             self.logger.log_stat(prefix + "return_mean", np.mean(returns), self.t_env)
             self.logger.log_stat(prefix + "return_std", np.std(returns), self.t_env)
-            logger.debug(f"{prefix}return_mean: {np.mean(returns)}, {prefix}return_std: {np.std(returns)}")
+            logger.debug(
+                f"{prefix}return_mean: {np.mean(returns)}, {prefix}return_std: {np.std(returns)}"
+            )
         else:
             for i in range(self.args.n_agents):
                 agent_mean = np.array(returns)[:, i].mean()
@@ -219,7 +236,9 @@ class EpisodeRunner:
                     agent_std,
                     self.t_env,
                 )
-                logger.debug(f"{prefix}agent_{i}_return_mean: {agent_mean}, {prefix}agent_{i}_return_std: {agent_std}")
+                logger.debug(
+                    f"{prefix}agent_{i}_return_mean: {agent_mean}, {prefix}agent_{i}_return_std: {agent_std}"
+                )
             total_returns = np.array(returns).sum(axis=-1)
             self.logger.log_stat(
                 prefix + "total_return_mean", total_returns.mean(), self.t_env
@@ -227,15 +246,15 @@ class EpisodeRunner:
             self.logger.log_stat(
                 prefix + "total_return_std", total_returns.std(), self.t_env
             )
-            logger.debug(f"{prefix}total_return_mean: {total_returns.mean()}, {prefix}total_return_std: {total_returns.std()}")
-        
+            logger.debug(
+                f"{prefix}total_return_mean: {total_returns.mean()}, {prefix}total_return_std: {total_returns.std()}"
+            )
+
         returns.clear()
-    
+
         for k, v in stats.items():
             if k != "n_episodes":
                 mean_val = v / stats["n_episodes"]
-                self.logger.log_stat(
-                    prefix + k + "_mean", mean_val, self.t_env
-                )
+                self.logger.log_stat(prefix + k + "_mean", mean_val, self.t_env)
                 logger.debug(f"{prefix}{k}_mean: {mean_val}")
         stats.clear()
