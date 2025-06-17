@@ -535,6 +535,8 @@ class SimCityScaleUpEnv(AECEnv):
             "resources": self.players[agent].resources.copy(),
             "builders": self.builders.copy(),
             "building_types": self.building_types.copy(),
+            "terrain_map": self.terrain_map.copy(),
+            "infrastructure_map": self.infrastructure_map.copy(),
         }
         logger.debug(f"environment: observe Observation for {agent}: {observation}")
         return observation

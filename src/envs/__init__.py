@@ -2,10 +2,19 @@ import os
 import sys
 
 from .multiagentenv import MultiAgentEnv
-from .gymma import GymmaWrapper
 
-# from .smaclite_wrapper import SMACliteWrapper
-from .simcity_wrapper import SimCityWrapper  # Import your wrapper
+# Import wrappers only when needed to avoid dependency issues
+def _import_gymma():
+    from .gymma import GymmaWrapper
+    return GymmaWrapper
+
+def _import_simcity():
+    from .simcity_wrapper import SimCityWrapper
+    return SimCityWrapper
+
+def _import_simcity_scale_up():
+    from .simcity_scale_up_wrapper import SimCityScaleUpWrapper
+    return SimCityScaleUpWrapper
 
 
 # if sys.platform == "linux":
@@ -32,6 +41,7 @@ from .simcity_wrapper import SimCityWrapper  # Import your wrapper
 
 def gymma_fn(**kwargs) -> MultiAgentEnv:
     assert "common_reward" in kwargs and "reward_scalarisation" in kwargs
+    GymmaWrapper = _import_gymma()
     return GymmaWrapper(**kwargs)
 
 
@@ -42,7 +52,8 @@ def env_fn(env, **kwargs) -> MultiAgentEnv:
 REGISTRY = {}
 # REGISTRY["smaclite"] = smaclite_fn
 REGISTRY["gymma"] = gymma_fn
-REGISTRY["simcity"] = lambda **kwargs: env_fn(SimCityWrapper, **kwargs)
+REGISTRY["simcity"] = lambda **kwargs: env_fn(_import_simcity(), **kwargs)
+REGISTRY["simcity_scale_up"] = lambda **kwargs: env_fn(_import_simcity_scale_up(), **kwargs)
 
 # registering both smac and smacv2 causes a pysc2 error
 # --> dynamically register the needed env

@@ -1,0 +1,25 @@
+env: simcity_scale_up
+
+env_args:
+  key: "simcity_scale_up"
+  map_name: "simcity_scale_up"
+  seed: null
+  time_limit: 100
+  grid_x: 8
+  grid_y: 8
+
+common_reward: False
+test_greedy: True
+test_nepisode: 20
+test_interval: 2000
+log_interval: 1000
+runner_log_interval: 1000
+learner_log_interval: 1000
+t_max: 2000000
+use_tensorboard: True
+use_cuda: True
+save_model: True # Save the models to disk
+save_model_interval: 5000 # Save models after this many timesteps
+batch_size_run: 8
+batch_size: 32
+buffer_size: 5000

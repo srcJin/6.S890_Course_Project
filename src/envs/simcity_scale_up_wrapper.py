@@ -41,6 +41,8 @@ class SimCityScaleUpWrapper(MultiAgentEnv):
                 + len(single_obs["resources"])
                 + single_obs["builders"].size
                 + single_obs["building_types"].size
+                + 64  # terrain_matrix (8x8)
+                + 64  # infrastructure_matrix (8x8)
             )
         else:
             self.obs_size = 0
@@ -88,70 +90,105 @@ class SimCityScaleUpWrapper(MultiAgentEnv):
             f"simcity_scale_up_wrapper: Step {self.current_step}, actions: {actions}"
         )
 
-        rewards = []
-        dones = []
-        infos = []
+        # Convert actions to list if needed
+        if hasattr(actions, 'tolist'):
+            actions_list = actions.tolist()
+        else:
+            actions_list = actions if isinstance(actions, list) else [actions]
+        
+        logger.debug(f"simcity_scale_up_wrapper: Actions list: {actions_list}")
 
         # Execute actions for each agent
-        for i, agent in enumerate(self.env.agents):
-            if not self.env.terminations[agent] and not self.env.truncations[agent]:
-                if self.env.agent_selection == agent:
-                    action = actions[i] if i < len(actions) else 0
-                    self.env.step(action)
+        for idx, agent in enumerate(self.env.agents):
+            logger.debug(f"simcity_scale_up_wrapper step: Processing agent {agent}.")
+            if self.env.terminations[agent] or self.env.truncations[agent]:
+                self.env.step(None)
+                logger.debug(
+                    f"simcity_scale_up_wrapper: Agent {agent} is terminated or truncated; stepping with None."
+                )
+                continue
 
-                    # Get reward for this agent
-                    if self.env.common_reward:
-                        reward = self.env.common_reward_value
-                    else:
-                        reward = self.env.individual_rewards_list.get(agent, 0)
+            action = actions_list[idx] if idx < len(actions_list) else 0
+            if action < 0 or action >= self.n_actions:
+                logger.warning(
+                    f"simcity_scale_up_wrapper: Invalid action {action} for agent {agent}. Forcing No-op."
+                )
+                action = 0  # default to no-op
 
-                    rewards.append(reward)
-                    dones.append(
-                        self.env.terminations[agent] or self.env.truncations[agent]
-                    )
-                    infos.append(self.env.infos.get(agent, {}))
-                else:
-                    # Agent is not active this step
-                    rewards.append(0)
-                    dones.append(
-                        self.env.terminations[agent] or self.env.truncations[agent]
-                    )
-                    infos.append({})
-            else:
-                # Agent is already done
-                rewards.append(0)
-                dones.append(True)
-                infos.append({})
+            self.env.step(action)
+            logger.debug(f"simcity_scale_up_wrapper: Agent {agent} took action {action}.")
 
-        # Get updated observations
-        obs = []
-        for agent in self.env.agents:
-            agent_obs = self.env.observe(agent)
-            flat_obs = self._flatten_observation(agent_obs)
-            obs.append(flat_obs)
+            if all(self.env.terminations.values()) or all(self.env.truncations.values()):
+                logger.debug(
+                    "simcity_scale_up_wrapper: Game ended during multi-agent step loop."
+                )
+                break
 
-        obs = np.array(obs, dtype=np.float32)
-        rewards = np.array(rewards, dtype=np.float32)
-        dones = np.array(dones, dtype=bool)
+        obs = self.get_obs()
+
+        # Handle rewards like the original wrapper
+        if self.env.common_reward:
+            # Return a single scalar reward
+            rewards = float(self.env.common_reward_value)
+        else:
+            # Return a vector of length n_agents
+            rewards = np.array(
+                [self.env.individual_rewards_list[agent] for agent in self.env.agents],
+                dtype=np.float32,
+            )
+
+        # Determine termination flags
+        done = all(self.env.terminations.values()) or all(self.env.truncations.values())
+        terminated_flags = [self.env.terminations[agent] for agent in self.env.agents]
+        truncated_flags = [self.env.truncations[agent] for agent in self.env.agents]
+
+        terminated = any(terminated_flags)
+        truncated = any(truncated_flags)
 
         self.current_step += 1
+        if self.current_step >= self.episode_limit:
+            terminated = True
+            truncated = True
+            logger.debug("simcity_scale_up_wrapper: Episode limit reached, terminating.")
 
-        # Check if episode is done
-        episode_done = all(dones) or self.current_step >= self.episode_limit
+        # Info should record the environment score, each agent's reward, and common reward
+        info = {
+            "env_score": self.env.env_score,
+            "common_reward_value": self.env.common_reward_value,
+        }
+        # Add individual rewards as separate numeric keys
+        for agent, reward in self.env.individual_rewards_list.items():
+            info[f"{agent}_reward"] = reward
+        
+        # Add resource info as separate numeric keys instead of nested dict
+        for agent in self.env.agents:
+            player_resources = self.env.players[agent].resources
+            info[f"{agent}_money"] = player_resources["money"]
+            info[f"{agent}_reputation"] = player_resources["reputation"]
 
         logger.debug(
-            f"simcity_scale_up_wrapper: Step complete, rewards: {rewards}, done: {episode_done}"
+            f"simcity_scale_up_wrapper: Step result: obs shape={obs.shape}, rewards={rewards}, terminated={terminated}, truncated={truncated}, info={info}"
         )
-        return rewards, obs, dones, infos, episode_done
+
+        return obs, rewards, terminated, truncated, info
 
     def get_obs(self):
         """Get current observations for all agents"""
-        obs = []
+        logger.debug("simcity_scale_up_wrapper: Collecting observations for all agents.")
+        observations = []
+
         for agent in self.env.agents:
             agent_obs = self.env.observe(agent)
             flat_obs = self._flatten_observation(agent_obs)
-            obs.append(flat_obs)
-        return np.array(obs, dtype=np.float32)
+            observations.append(flat_obs)
+            
+        logger.debug(f"simcity_scale_up_wrapper: Collected {len(observations)} observations")
+        
+        obs_array = np.array(observations, dtype=np.float32)[np.newaxis]
+        logger.debug(
+            f"simcity_scale_up_wrapper: Aggregated observations shape={obs_array.shape}"
+        )
+        return obs_array
 
     def get_obs_agent(self, agent_id):
         """Get observation for specific agent"""
@@ -165,8 +202,11 @@ class SimCityScaleUpWrapper(MultiAgentEnv):
 
     def get_state(self):
         """Get global state (concatenated observations)"""
+        logger.debug("simcity_scale_up_wrapper: Fetching global state.")
         obs = self.get_obs()
-        return obs.flatten()
+        state = obs.reshape(1, -1)
+        logger.debug(f"simcity_scale_up_wrapper: Global state shape={state.shape}")
+        return state
 
     def get_state_size(self):
         """Return the size of the global state"""
@@ -174,26 +214,28 @@ class SimCityScaleUpWrapper(MultiAgentEnv):
 
     def get_avail_actions(self):
         """Get available actions for all agents"""
-        avail_actions = []
-        for agent in self.env.agents:
-            if self.env.terminations[agent] or self.env.truncations[agent]:
-                # Agent is done, only no-op available
-                agent_avail = np.zeros(self.n_actions)
-                agent_avail[0] = 1  # No-op action
-            else:
-                # All actions are available for active agents
-                agent_avail = np.ones(self.n_actions)
-            avail_actions.append(agent_avail)
-        return np.array(avail_actions, dtype=np.float32)
+        logger.debug("simcity_scale_up_wrapper: Fetching available actions for all agents.")
+        avail_actions = np.ones((1, self.n_agents, self.n_actions), dtype=np.float32)
+        for agent_id, agent in enumerate(self.env.agents):
+            agent_avail = self.get_avail_agent_actions(agent_id)
+            avail_actions[0, agent_id] = agent_avail
+        return avail_actions
 
     def get_avail_agent_actions(self, agent_id):
         """Get available actions for specific agent"""
+        logger.debug(
+            f"simcity_scale_up_wrapper: Fetching available actions for agent {agent_id}."
+        )
         agent = self.env.agents[agent_id]
         if self.env.terminations[agent] or self.env.truncations[agent]:
-            avail_actions = np.zeros(self.n_actions)
-            avail_actions[0] = 1  # No-op action
+            avail_actions = np.zeros(self.n_actions, dtype=np.float32)
+            avail_actions[0] = 1.0  # No-op action
         else:
-            avail_actions = np.ones(self.n_actions)
+            avail_actions = np.ones(self.n_actions, dtype=np.float32)
+        
+        logger.debug(
+            f"simcity_scale_up_wrapper: Available actions for agent {agent_id}: {avail_actions}"
+        )
         return avail_actions
 
     def get_total_actions(self):
@@ -225,19 +267,42 @@ class SimCityScaleUpWrapper(MultiAgentEnv):
     def _flatten_observation(self, obs_dict):
         """Convert observation dictionary to flat array"""
         flat_parts = []
-        
+
         # Flatten grid (S, W, R, C parameters for 8x8 grid)
         flat_parts.append(obs_dict["grid"].flatten())
-        
+
         # Add resources (money, reputation) as individual elements
         resources = obs_dict["resources"]
         flat_parts.append(np.array([resources["money"]], dtype=np.float32))
         flat_parts.append(np.array([resources["reputation"]], dtype=np.float32))
-        
+
         # Flatten builders and building_types
         flat_parts.append(obs_dict["builders"].flatten())
         flat_parts.append(obs_dict["building_types"].flatten())
-        
+
+        # Add terrain and infrastructure information
+        # Convert terrain_map to 8x8 matrix (-1 for no terrain, indices for terrain types)
+        terrain_matrix = np.full((8, 8), -1, dtype=np.int32)
+        terrain_type_map = {
+            "River": 0,
+            "Mountain": 1,
+            "Lake": 2,
+            "Highway": 3,
+            "Railway": 4,
+        }
+        for (x, y), terrain_type in obs_dict["terrain_map"].items():
+            if terrain_type in terrain_type_map:
+                terrain_matrix[x][y] = terrain_type_map[terrain_type]
+        flat_parts.append(terrain_matrix.flatten())
+
+        # Convert infrastructure_map to 8x8 matrix (-1 for no infrastructure, indices for infrastructure types)
+        infra_matrix = np.full((8, 8), -1, dtype=np.int32)
+        infra_type_map = {"Hospital": 0, "School": 1, "FireStation": 2, "PowerPlant": 3}
+        for (x, y), infra_type in obs_dict["infrastructure_map"].items():
+            if infra_type in infra_type_map:
+                infra_matrix[x][y] = infra_type_map[infra_type]
+        flat_parts.append(infra_matrix.flatten())
+
         return np.concatenate(flat_parts).astype(np.float32)
 
     def get_episode_records(self):

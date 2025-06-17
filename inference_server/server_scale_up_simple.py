@@ -1,34 +1,24 @@
-# server_scale_up.py - Inference server for SimCity Scale-Up Environment
+# server_scale_up_simple.py - Simple inference server for SimCity Scale-Up Environment
 
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
-import torch
 import numpy as np
+import random
 import os, sys
-from argparse import Namespace
 import logging
-import warnings
 
 # Ensure src/ is in sys.path
 sys.path.insert(
     0, os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "src"))
 )
 
-# Temporarily disable FutureWarning for torch.load
-warnings.simplefilter("ignore", FutureWarning)
-
 # Configure logging
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
-from components.episode_buffer import EpisodeBatch
-
 # Import environment wrapper for scale-up environment
 from envs.simcity_scale_up_wrapper import SimCityScaleUpWrapper
-
-# Import multi-agent controller
-from controllers.basic_controller import BasicMAC
 
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
@@ -36,10 +26,6 @@ CORS(app)  # Enable CORS for all routes
 # --------------------------
 # 1. Global Initialization
 # --------------------------
-
-# Select device
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-logger.info("Using device: %s", device)
 
 # Initialize scaled-up environment (8x8 grid, 4 players, 5 building types)
 env = SimCityScaleUpWrapper(grid_x=8, grid_y=8, common_reward=False)
@@ -55,85 +41,12 @@ logger.info(
     env.episode_limit,
 )
 
-# Create args object for configuration
-args = Namespace(
-    action_selector="soft_policies",
-    mask_before_softmax=True,
-    runner="parallel",
-    buffer_size=10,
-    batch_size_run=10,
-    batch_size=10,
-    target_update_interval_or_tau=0.01,
-    lr=0.0005,
-    hidden_dim=128,
-    obs_agent_id=True,
-    obs_last_action=False,
-    obs_individual_obs=False,
-    agent_output_type="pi_logits",
-    learner="actor_critic_learner",
-    entropy_coef=0.01,
-    use_rnn=True,
-    standardise_returns=False,
-    standardise_rewards=True,
-    q_nstep=5,
-    critic_type="cv_critic",
-    name="maa2c",
-    t_max=20050000,
-    n_agents=n_agents,
-    n_actions=n_actions,
-    device=device,
-    gamma=0.99,
-    grad_norm_clip=10.0,
-    agent="rnn",
-)
-
-# Define scheme for EpisodeBatch
-scheme = {
-    "obs": {"vshape": int(env.obs_size), "group": "agents"},
-    "avail_actions": {"vshape": int(n_actions), "group": "agents"},
-}
-
-groups = {"agents": n_agents}
-
-# Initialize MAC (Multi-Agent Controller)
-mac = BasicMAC(scheme, groups, args)
-
 # Global variables for episode tracking
-episode_data = []
 current_episode = None
 episode_counter = 0
 
 # --------------------------
-# 2. Model Loading Function
-# --------------------------
-
-
-def load_model(model_path):
-    """Load trained model from checkpoint"""
-    global mac
-    try:
-        if os.path.exists(model_path):
-            logger.info(f"Loading model from: {model_path}")
-            checkpoint = torch.load(model_path, map_location=device, weights_only=False)
-            mac.load_state(checkpoint)
-            logger.info("Model loaded successfully")
-            return True
-        else:
-            logger.warning(f"Model file not found: {model_path}")
-            return False
-    except Exception as e:
-        logger.error(f"Error loading model: {e}")
-        return False
-
-
-# Try to load default model if available
-default_model_path = os.path.join(
-    os.path.dirname(__file__), "saved_models", "scale_up_model.pt"
-)
-logger.info("Skipping model loading for now, using random policy for testing")
-
-# --------------------------
-# 3. API Endpoints
+# 2. API Endpoints
 # --------------------------
 
 
@@ -148,6 +61,7 @@ def health_check():
             "n_agents": int(n_agents),
             "n_actions": int(n_actions),
             "building_types": 5,
+            "obs_size": int(env.obs_size),
         }
     )
 
@@ -162,9 +76,6 @@ def reset_environment():
 
         # Reset environment
         obs, info = env.reset()
-
-        # Reset MAC hidden states
-        mac.init_hidden(batch_size=1)
 
         # Create new episode tracking
         episode_counter += 1
@@ -226,24 +137,19 @@ def step_environment():
                 400,
             )
 
-        # For simplicity, use random actions for other agents for now
-        # In a full implementation, you would use the MAC framework here
+        # Use random actions for other agents (simple AI)
         actions = []
         for i in range(n_agents):
             if i == agent_id:
                 actions.append(human_action)
             else:
-                # Use a simple strategy: random action from available actions
-                import random
-
+                # Random action from valid range [0, n_actions-1]
                 actions.append(random.randint(0, n_actions - 1))
 
         logger.info(f"Combined actions: {actions}")
 
         # Execute step
-        next_obs, rewards, dones, truncated, env_info = env.step(actions)
-        episode_done = env_info.get("episode_done", False)
-        infos = env_info.get("infos", [])
+        rewards, next_obs, dones, infos, episode_done = env.step(actions)
 
         # Update episode tracking
         current_episode["actions"].append(actions)
@@ -275,7 +181,6 @@ def step_environment():
 
         # If episode is done, store it
         if episode_done:
-            episode_data.append(current_episode.copy())
             logger.info(
                 f"Episode {current_episode['episode_id']} completed with {current_episode['step_count']} steps"
             )
@@ -290,13 +195,12 @@ def step_environment():
 
 @app.route("/simulate", methods=["POST"])
 def simulate_full_episode():
-    """Simulate a complete episode with AI agents only"""
+    """Simulate a complete episode with random AI agents only"""
     try:
-        logger.info("Starting full AI simulation")
+        logger.info("Starting full random AI simulation")
 
         # Reset environment
         obs, info = env.reset()
-        mac.init_hidden(batch_size=1)
 
         episode_records = []
         step_count = 0
@@ -307,29 +211,14 @@ def simulate_full_episode():
             obs = env.get_obs()
             avail_actions = env.get_avail_actions()
 
-            # Create batch for MAC
-            batch = EpisodeBatch(scheme, groups, 1, 1)
-            batch.update(
-                {
-                    "obs": obs.reshape(1, 1, n_agents, -1),
-                    "avail_actions": avail_actions.reshape(1, 1, n_agents, -1),
-                },
-                bs=None,
-                ts=0,
-                mark_filled=True,
-            )
-
-            # Get actions from MAC
-            actions = mac.select_actions(
-                batch, t_ep=0, t_env=step_count, test_mode=True
-            )
-            actions = actions.cpu().numpy().flatten()
+            # Generate random actions for all agents
+            actions = [random.randint(0, n_actions - 1) for _ in range(n_agents)]
 
             # Store step data
             step_data = {
                 "t_env": step_count,
-                "observation": [obs.tolist()],  # Wrapped in list for consistency
-                "actions_taken": actions.tolist(),
+                "observation": obs.tolist(),
+                "actions_taken": actions,
                 "avail_actions": avail_actions.tolist(),
             }
 
@@ -358,41 +247,6 @@ def simulate_full_episode():
 
     except Exception as e:
         logger.error(f"Error in simulate: {e}")
-        return jsonify({"status": "error", "message": str(e)}), 500
-
-
-@app.route("/load_model", methods=["POST"])
-def load_model_endpoint():
-    """Load a trained model"""
-    try:
-        data = request.get_json()
-        model_path = data.get("model_path")
-
-        if not model_path:
-            return (
-                jsonify({"status": "error", "message": "model_path is required"}),
-                400,
-            )
-
-        success = load_model(model_path)
-
-        if success:
-            return jsonify(
-                {"status": "success", "message": f"Model loaded from {model_path}"}
-            )
-        else:
-            return (
-                jsonify(
-                    {
-                        "status": "error",
-                        "message": f"Failed to load model from {model_path}",
-                    }
-                ),
-                500,
-            )
-
-    except Exception as e:
-        logger.error(f"Error in load_model: {e}")
         return jsonify({"status": "error", "message": str(e)}), 500
 
 
@@ -441,12 +295,14 @@ def render_environment():
 
 
 # --------------------------
-# 4. Main Function
+# 3. Main Function
 # --------------------------
 
 if __name__ == "__main__":
-    logger.info("Starting SimCity Scale-Up Inference Server")
-    logger.info(f"Environment: 8x8 grid, {n_agents} agents, {n_actions} actions")
+    logger.info("Starting SimCity Scale-Up Simple Inference Server")
+    logger.info(
+        f"Environment: 8x8 grid, {n_agents} agents, {n_actions} actions, {env.obs_size} obs_size"
+    )
     logger.info("Server will run on http://127.0.0.1:5888")
 
     # Run Flask app
