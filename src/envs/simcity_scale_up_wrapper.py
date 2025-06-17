@@ -91,11 +91,11 @@ class SimCityScaleUpWrapper(MultiAgentEnv):
         )
 
         # Convert actions to list if needed
-        if hasattr(actions, 'tolist'):
+        if hasattr(actions, "tolist"):
             actions_list = actions.tolist()
         else:
             actions_list = actions if isinstance(actions, list) else [actions]
-        
+
         logger.debug(f"simcity_scale_up_wrapper: Actions list: {actions_list}")
 
         # Execute actions for each agent
@@ -116,9 +116,13 @@ class SimCityScaleUpWrapper(MultiAgentEnv):
                 action = 0  # default to no-op
 
             self.env.step(action)
-            logger.debug(f"simcity_scale_up_wrapper: Agent {agent} took action {action}.")
+            logger.debug(
+                f"simcity_scale_up_wrapper: Agent {agent} took action {action}."
+            )
 
-            if all(self.env.terminations.values()) or all(self.env.truncations.values()):
+            if all(self.env.terminations.values()) or all(
+                self.env.truncations.values()
+            ):
                 logger.debug(
                     "simcity_scale_up_wrapper: Game ended during multi-agent step loop."
                 )
@@ -149,7 +153,9 @@ class SimCityScaleUpWrapper(MultiAgentEnv):
         if self.current_step >= self.episode_limit:
             terminated = True
             truncated = True
-            logger.debug("simcity_scale_up_wrapper: Episode limit reached, terminating.")
+            logger.debug(
+                "simcity_scale_up_wrapper: Episode limit reached, terminating."
+            )
 
         # Info should record the environment score, each agent's reward, and common reward
         info = {
@@ -159,7 +165,7 @@ class SimCityScaleUpWrapper(MultiAgentEnv):
         # Add individual rewards as separate numeric keys
         for agent, reward in self.env.individual_rewards_list.items():
             info[f"{agent}_reward"] = reward
-        
+
         # Add resource info as separate numeric keys instead of nested dict
         for agent in self.env.agents:
             player_resources = self.env.players[agent].resources
@@ -174,16 +180,20 @@ class SimCityScaleUpWrapper(MultiAgentEnv):
 
     def get_obs(self):
         """Get current observations for all agents"""
-        logger.debug("simcity_scale_up_wrapper: Collecting observations for all agents.")
+        logger.debug(
+            "simcity_scale_up_wrapper: Collecting observations for all agents."
+        )
         observations = []
 
         for agent in self.env.agents:
             agent_obs = self.env.observe(agent)
             flat_obs = self._flatten_observation(agent_obs)
             observations.append(flat_obs)
-            
-        logger.debug(f"simcity_scale_up_wrapper: Collected {len(observations)} observations")
-        
+
+        logger.debug(
+            f"simcity_scale_up_wrapper: Collected {len(observations)} observations"
+        )
+
         obs_array = np.array(observations, dtype=np.float32)[np.newaxis]
         logger.debug(
             f"simcity_scale_up_wrapper: Aggregated observations shape={obs_array.shape}"
@@ -214,7 +224,9 @@ class SimCityScaleUpWrapper(MultiAgentEnv):
 
     def get_avail_actions(self):
         """Get available actions for all agents"""
-        logger.debug("simcity_scale_up_wrapper: Fetching available actions for all agents.")
+        logger.debug(
+            "simcity_scale_up_wrapper: Fetching available actions for all agents."
+        )
         avail_actions = np.ones((1, self.n_agents, self.n_actions), dtype=np.float32)
         for agent_id, agent in enumerate(self.env.agents):
             agent_avail = self.get_avail_agent_actions(agent_id)
@@ -232,7 +244,7 @@ class SimCityScaleUpWrapper(MultiAgentEnv):
             avail_actions[0] = 1.0  # No-op action
         else:
             avail_actions = np.ones(self.n_actions, dtype=np.float32)
-        
+
         logger.debug(
             f"simcity_scale_up_wrapper: Available actions for agent {agent_id}: {avail_actions}"
         )

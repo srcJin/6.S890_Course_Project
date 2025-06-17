@@ -3,17 +3,23 @@ import sys
 
 from .multiagentenv import MultiAgentEnv
 
+
 # Import wrappers only when needed to avoid dependency issues
 def _import_gymma():
     from .gymma import GymmaWrapper
+
     return GymmaWrapper
+
 
 def _import_simcity():
     from .simcity_wrapper import SimCityWrapper
+
     return SimCityWrapper
+
 
 def _import_simcity_scale_up():
     from .simcity_scale_up_wrapper import SimCityScaleUpWrapper
+
     return SimCityScaleUpWrapper
 
 
@@ -53,7 +59,9 @@ REGISTRY = {}
 # REGISTRY["smaclite"] = smaclite_fn
 REGISTRY["gymma"] = gymma_fn
 REGISTRY["simcity"] = lambda **kwargs: env_fn(_import_simcity(), **kwargs)
-REGISTRY["simcity_scale_up"] = lambda **kwargs: env_fn(_import_simcity_scale_up(), **kwargs)
+REGISTRY["simcity_scale_up"] = lambda **kwargs: env_fn(
+    _import_simcity_scale_up(), **kwargs
+)
 
 # registering both smac and smacv2 causes a pysc2 error
 # --> dynamically register the needed env

@@ -1,0 +1,1 @@
+cd /Volumes/Mac_Working/GitHub/6.S890_Course_Project && conda activate epymarl && python src/main.py --config=mappo --env-config=simcity_scale_up with runner=episode batch_size=1 batch_size_run=1 t_max=100000 save_model_interval=10000 test_interval=5000 log_interval=2000

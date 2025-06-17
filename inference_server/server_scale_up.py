@@ -109,17 +109,25 @@ episode_counter = 0
 
 
 def load_model(model_path):
-    """Load trained model from checkpoint"""
+    """Load trained model from directory containing model files"""
     global mac
     try:
         if os.path.exists(model_path):
             logger.info(f"Loading model from: {model_path}")
-            checkpoint = torch.load(model_path, map_location=device, weights_only=False)
-            mac.load_state(checkpoint)
-            logger.info("Model loaded successfully")
+            # Check if it's a directory with separate model files
+            if os.path.isdir(model_path):
+                mac.load_models(model_path)
+                logger.info("Model loaded successfully from directory")
+            else:
+                # Try loading as a single checkpoint file
+                checkpoint = torch.load(
+                    model_path, map_location=device, weights_only=False
+                )
+                mac.load_state(checkpoint)
+                logger.info("Model loaded successfully from checkpoint")
             return True
         else:
-            logger.warning(f"Model file not found: {model_path}")
+            logger.warning(f"Model file/directory not found: {model_path}")
             return False
     except Exception as e:
         logger.error(f"Error loading model: {e}")
@@ -127,10 +135,20 @@ def load_model(model_path):
 
 
 # Try to load default model if available
-default_model_path = os.path.join(
-    os.path.dirname(__file__), "saved_models", "scale_up_model.pt"
-)
-logger.info("Skipping model loading for now, using random policy for testing")
+default_model_path = os.path.join(os.path.dirname(__file__), "saved_models_scale_up")
+
+# Load the scale-up models
+if os.path.exists(default_model_path):
+    try:
+        logger.info(f"Loading scale-up models from: {default_model_path}")
+        mac.load_models(default_model_path)
+        logger.info("Scale-up models loaded successfully")
+    except Exception as e:
+        logger.error(f"Error loading scale-up models: {e}")
+        logger.info("Continuing with random policy")
+else:
+    logger.warning(f"Scale-up models directory not found: {default_model_path}")
+    logger.info("Using random policy for testing")
 
 # --------------------------
 # 3. API Endpoints
@@ -226,28 +244,53 @@ def step_environment():
                 400,
             )
 
-        # For simplicity, use random actions for other agents for now
-        # In a full implementation, you would use the MAC framework here
-        actions = []
-        for i in range(n_agents):
-            if i == agent_id:
-                actions.append(human_action)
-            else:
-                # Use a simple strategy: random action from available actions
-                import random
+        # Get actions for all agents using the trained models
+        obs = env.get_obs()
+        avail_actions = env.get_avail_actions()
 
-                actions.append(random.randint(0, n_actions - 1))
+        # Convert to PyTorch tensors
+        obs_tensor = torch.tensor(obs, dtype=torch.float32, device=device)
+        avail_actions_tensor = torch.tensor(
+            avail_actions, dtype=torch.float32, device=device
+        )
+
+        # Create batch for MAC
+        batch = EpisodeBatch(scheme, groups, 1, 1)
+        batch.update(
+            {
+                "obs": obs_tensor.reshape(1, 1, n_agents, -1),
+                "avail_actions": avail_actions_tensor.reshape(1, 1, n_agents, -1),
+            },
+            bs=None,
+            ts=0,
+            mark_filled=True,
+        )
+
+        # Get actions from MAC (trained models)
+        ai_actions = mac.select_actions(
+            batch, t_ep=0, t_env=current_episode["step_count"], test_mode=True
+        )
+        ai_actions = ai_actions.cpu().numpy().flatten()
+
+        # Override the human player's action
+        actions = ai_actions.copy()
+        actions[agent_id] = human_action
 
         logger.info(f"Combined actions: {actions}")
 
         # Execute step
-        next_obs, rewards, dones, truncated, env_info = env.step(actions)
-        episode_done = env_info.get("episode_done", False)
-        infos = env_info.get("infos", [])
+        next_obs, rewards, terminated, truncated, env_info = env.step(actions)
+        episode_done = terminated or truncated
+
+        # Handle rewards - ensure they are in list format
+        if hasattr(rewards, "tolist"):
+            rewards_list = rewards.tolist()
+        else:
+            rewards_list = [float(rewards)] * n_agents
 
         # Update episode tracking
         current_episode["actions"].append(actions)
-        current_episode["rewards"].append(rewards.tolist())
+        current_episode["rewards"].append(rewards_list)
         current_episode["observations"].append(next_obs.tolist())
         current_episode["step_count"] += 1
 
@@ -258,15 +301,16 @@ def step_environment():
         response = {
             "status": "success",
             "observation": next_obs.tolist(),
-            "rewards": rewards.tolist(),
-            "dones": dones.tolist(),
+            "rewards": rewards_list,
+            "terminated": bool(terminated),
+            "truncated": bool(truncated),
             "episode_done": bool(episode_done),
             "avail_actions": next_avail_actions.tolist(),
             "actions_taken": actions,
             "info": {
                 "step_count": current_episode["step_count"],
                 "human_action": human_action,
-                "infos": infos,
+                "env_info": env_info,
             },
             "current_agent": (
                 env.env.agent_selection if hasattr(env.env, "agent_selection") else "P1"
@@ -307,12 +351,18 @@ def simulate_full_episode():
             obs = env.get_obs()
             avail_actions = env.get_avail_actions()
 
+            # Convert to PyTorch tensors
+            obs_tensor = torch.tensor(obs, dtype=torch.float32, device=device)
+            avail_actions_tensor = torch.tensor(
+                avail_actions, dtype=torch.float32, device=device
+            )
+
             # Create batch for MAC
             batch = EpisodeBatch(scheme, groups, 1, 1)
             batch.update(
                 {
-                    "obs": obs.reshape(1, 1, n_agents, -1),
-                    "avail_actions": avail_actions.reshape(1, 1, n_agents, -1),
+                    "obs": obs_tensor.reshape(1, 1, n_agents, -1),
+                    "avail_actions": avail_actions_tensor.reshape(1, 1, n_agents, -1),
                 },
                 bs=None,
                 ts=0,
@@ -334,10 +384,20 @@ def simulate_full_episode():
             }
 
             # Execute step
-            rewards, next_obs, dones, infos, episode_done = env.step(actions)
+            next_obs, rewards, terminated, truncated, env_info = env.step(actions)
+            episode_done = terminated or truncated
 
             step_data.update(
-                {"rewards": rewards.tolist(), "dones": dones.tolist(), "info": infos}
+                {
+                    "rewards": (
+                        rewards.tolist()
+                        if hasattr(rewards, "tolist")
+                        else [float(rewards)] * n_agents
+                    ),
+                    "terminated": bool(terminated),
+                    "truncated": bool(truncated),
+                    "info": env_info,
+                }
             )
 
             episode_records.append(step_data)
