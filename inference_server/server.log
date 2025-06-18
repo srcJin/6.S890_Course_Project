@@ -1,0 +1,30 @@
+[INFO 20:51:48] __main__ Using device: cpu
+[INFO 20:51:48] __main__ Environment initialized: n_agents=4, n_actions=321, obs_size=514
+[INFO 20:51:48] __main__ MAC initialized.
+[INFO 20:51:48] __main__ Loaded trained agent model from ../src/results/models
+ * Serving Flask app 'inference_server_scale_up'
+ * Debug mode: on
+[INFO 20:51:48] werkzeug [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5889
+ * Running on http://10.29.239.125:5889
+[INFO 20:51:48] werkzeug [33mPress CTRL+C to quit[0m
+[INFO 20:51:48] werkzeug  * Restarting with stat
+[INFO 20:51:49] __main__ Using device: cpu
+[INFO 20:51:49] __main__ Environment initialized: n_agents=4, n_actions=321, obs_size=514
+[INFO 20:51:49] __main__ MAC initialized.
+[INFO 20:51:49] __main__ Loaded trained agent model from ../src/results/models
+[WARNING 20:51:49] werkzeug  * Debugger is active!
+[INFO 20:51:49] werkzeug  * Debugger PIN: 925-195-931
+Traceback (most recent call last):
+  File "/Volumes/Mac_Working/GitHub/6.S890_Course_Project/inference_server/inference_server_scale_up.py", line 305, in <module>
+    app.run(host="0.0.0.0", port=5889, debug=True)
+  File "/opt/anaconda3/envs/epymarl/lib/python3.8/site-packages/flask/app.py", line 625, in run
+    run_simple(t.cast(str, host), port, self, **options)
+  File "/opt/anaconda3/envs/epymarl/lib/python3.8/site-packages/werkzeug/serving.py", line 1115, in run_simple
+    run_with_reloader(
+  File "/opt/anaconda3/envs/epymarl/lib/python3.8/site-packages/werkzeug/_reloader.py", line 459, in run_with_reloader
+    ensure_echo_on()
+  File "/opt/anaconda3/envs/epymarl/lib/python3.8/site-packages/werkzeug/_reloader.py", line 439, in ensure_echo_on
+    termios.tcsetattr(sys.stdin, termios.TCSANOW, attributes)
+termios.error: (4, 'Interrupted system call')

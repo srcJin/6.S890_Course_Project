@@ -111,8 +111,8 @@ mac.init_hidden(batch_size=1)
 logger.info("MAC initialized.")
 
 # 加载训练好的 agent 模型参数
-# Models are saved in src/results/models/ directory structure
-model_save_path = os.path.join("..", "src", "results", "models")
+# Models are saved in inference_server/saved_models_scale_up/ directory
+model_save_path = os.path.join("inference_server", "saved_models_scale_up")
 agent_model_path = os.path.join(model_save_path, "agent.th")
 if os.path.exists(agent_model_path):
     mac.load_models(model_save_path)
@@ -302,4 +302,4 @@ def simulate_episode():
 # 3. 启动 Flask 服务
 # --------------------------
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5889, debug=True)
+    app.run(host="0.0.0.0", port=5888, debug=True)
