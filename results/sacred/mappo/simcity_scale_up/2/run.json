@@ -1,0 +1,109 @@
+{
+  "artifacts": [],
+  "command": "my_main",
+  "experiment": {
+    "base_dir": "/Volumes/Mac_Working/GitHub/6.S890_Course_Project/src",
+    "dependencies": [
+      "numpy==1.24.4",
+      "PyYAML==5.3.1",
+      "sacred==0.8.7",
+      "torch==2.4.1"
+    ],
+    "mainfile": "main.py",
+    "name": "pymarl",
+    "repositories": [
+      {
+        "commit": "1d31046fa53351fe6a8acbe0be52013c9486b8b5",
+        "dirty": true,
+        "url": "https://github.com/srcJin/6.S890_Course_Project.git"
+      },
+      {
+        "commit": "1d31046fa53351fe6a8acbe0be52013c9486b8b5",
+        "dirty": true,
+        "url": "https://github.com/srcJin/6.S890_Course_Project.git"
+      },
+      {
+        "commit": "1d31046fa53351fe6a8acbe0be52013c9486b8b5",
+        "dirty": true,
+        "url": "https://github.com/srcJin/6.S890_Course_Project.git"
+      }
+    ],
+    "sources": [
+      [
+        "main.py",
+        "_sources/main_10071cd35b239d4d9d6b06262697f6b3.py"
+      ],
+      [
+        "run.py",
+        "_sources/run_d62d3087da7829de8e4bcdca6986827e.py"
+      ],
+      [
+        "utils/logging.py",
+        "_sources/logging_836123fa54ffb6ffe3010ba48531394a.py"
+      ]
+    ]
+  },
+  "heartbeat": "2025-06-18T02:11:36.704371",
+  "host": {
+    "ENV": {},
+    "cpu": "Apple M4 Pro",
+    "hostname": "dhcp-10-29-239-125.dyn.mit.edu",
+    "os": [
+      "Darwin",
+      "macOS-15.5-arm64-arm-64bit"
+    ],
+    "python_version": "3.8.20"
+  },
+  "meta": {
+    "command": "my_main",
+    "config_updates": {
+      "batch_size": 1,
+      "batch_size_run": 1,
+      "log_interval": 2000,
+      "runner": "episode",
+      "save_model_interval": 10000,
+      "t_max": 1000000,
+      "test_interval": 5000
+    },
+    "named_configs": [],
+    "options": {
+      "--beat-interval": null,
+      "--capture": null,
+      "--comment": null,
+      "--debug": false,
+      "--enforce_clean": false,
+      "--file_storage": null,
+      "--force": false,
+      "--help": false,
+      "--id": null,
+      "--loglevel": null,
+      "--mongo_db": null,
+      "--name": null,
+      "--pdb": false,
+      "--print-config": false,
+      "--priority": null,
+      "--queue": false,
+      "--s3": null,
+      "--sql": null,
+      "--tiny_db": null,
+      "--unobserved": false,
+      "COMMAND": null,
+      "UPDATE": [
+        "runner=episode",
+        "batch_size=1",
+        "batch_size_run=1",
+        "t_max=1000000",
+        "save_model_interval=10000",
+        "test_interval=5000",
+        "log_interval=2000"
+      ],
+      "help": false,
+      "with": true
+    }
+  },
+  "resources": [],
+  "result": null,
+  "start_time": "2025-06-18T02:10:13.541742",
+  "status": "INTERRUPTED",
+  "stop_time": "2025-06-18T02:11:36.723282"
+}

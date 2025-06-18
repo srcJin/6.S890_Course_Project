@@ -11,10 +11,10 @@ from .config import (
     BUILDING_UTILITIES,
     BUILDING_EFFECTS,
     TERRAIN_TYPES,
-    PREBUILT_INFRASTRUCTURE,
+    PREBUILT_PROJECTS,
     DEFAULT_GRID_LAYOUT,
     DEFAULT_TERRAIN_ASSIGNMENT,
-    DEFAULT_INFRASTRUCTURE_ASSIGNMENT,
+    DEFAULT_PREBUILT_ASSIGNMENT,
 )
 from .log import (
     display_current_turn,
@@ -27,13 +27,7 @@ from utils.logging import get_logger
 logger = get_logger(log_file_path="simulation_scale_up.log")
 
 NO_OP = 0
-BUILDING_TYPES = [
-    "GreenPark",
-    "ResilientHouse",
-    "CommunityHub",
-    "SolarGrid",
-    "FloodBarrier",
-]
+# Use building types from config
 NUM_BUILDING_TYPES = len(BUILDING_TYPES)
 
 
@@ -48,8 +42,12 @@ class SimCityScaleUpEnv(AECEnv):
     - C: Climate (carbon footprint, climate adaptation)
 
     Building Types:
+    Basic Development:
+    - House: Standard residential housing (economic focus)
+    - Shop: Commercial retail space (immediate profits)
+    
+    Resilience Projects:
     - GreenPark: Urban green infrastructure for sustainability and well-being
-    - ResilientHouse: Climate-adapted housing for communities
     - CommunityHub: Social resilience centers for community cohesion
     - SolarGrid: Renewable energy infrastructure
     - FloodBarrier: Climate protection infrastructure
@@ -150,9 +148,9 @@ class SimCityScaleUpEnv(AECEnv):
         # Initialize grid layout (0=buildable, 1=terrain, 2=infrastructure)
         self.grid_layout = np.array(DEFAULT_GRID_LAYOUT)
 
-        # Initialize terrain and infrastructure mappings
+        # Initialize terrain and pre-built project mappings
         self.terrain_map = DEFAULT_TERRAIN_ASSIGNMENT.copy()
-        self.infrastructure_map = DEFAULT_INFRASTRUCTURE_ASSIGNMENT.copy()
+        self.prebuilt_map = DEFAULT_PREBUILT_ASSIGNMENT.copy()
 
         self.buildings = np.full((self.grid_x, self.grid_y), None)
         self.builders = np.full((self.grid_x, self.grid_y), -1, dtype=np.int32)
@@ -160,8 +158,8 @@ class SimCityScaleUpEnv(AECEnv):
             (self.grid_x, self.grid_y), -1, dtype=np.int32
         )  # -1 for no building
 
-        # Apply pre-built infrastructure effects to grid
-        self._apply_prebuilt_infrastructure()
+        # Apply pre-built city projects effects to grid
+        self._apply_prebuilt_projects()
 
         self.individual_rewards_list = {agent: 0 for agent in self.agents}
         self.common_reward_value = 0
@@ -188,17 +186,17 @@ class SimCityScaleUpEnv(AECEnv):
         logger.debug("environment: Urban Resilience Environment reset completed.")
         return self.observe(self.agent_selection), {}
 
-    def _apply_prebuilt_infrastructure(self):
-        """Apply effects of pre-built infrastructure to the grid."""
-        for (x, y), infrastructure_type in self.infrastructure_map.items():
-            if infrastructure_type in PREBUILT_INFRASTRUCTURE:
-                infra = PREBUILT_INFRASTRUCTURE[infrastructure_type]
+    def _apply_prebuilt_projects(self):
+        """Apply effects of pre-built city projects to the grid."""
+        for (x, y), project_type in self.prebuilt_map.items():
+            if project_type in PREBUILT_PROJECTS:
+                project = PREBUILT_PROJECTS[project_type]
 
-                # Apply direct effects to the infrastructure cell
-                self.grid[x][y][0] += infra["effects"]["S"]  # Sustainability
-                self.grid[x][y][1] += infra["effects"]["W"]  # Well-being
-                self.grid[x][y][2] += infra["effects"]["R"]  # Resilience
-                self.grid[x][y][3] += infra["effects"]["C"]  # Climate
+                # Apply direct effects to the project cell
+                self.grid[x][y][0] += project["effects"]["S"]  # Sustainability
+                self.grid[x][y][1] += project["effects"]["W"]  # Well-being
+                self.grid[x][y][2] += project["effects"]["R"]  # Resilience
+                self.grid[x][y][3] += project["effects"]["C"]  # Climate
 
                 # Apply neighbor effects
                 for dx, dy in [
@@ -213,52 +211,18 @@ class SimCityScaleUpEnv(AECEnv):
                 ]:
                     nx, ny = x + dx, y + dy
                     if 0 <= nx < self.grid_x and 0 <= ny < self.grid_y:
-                        self.grid[nx][ny][0] += infra["neighbor_effects"]["S"]
-                        self.grid[nx][ny][1] += infra["neighbor_effects"]["W"]
-                        self.grid[nx][ny][2] += infra["neighbor_effects"]["R"]
-                        self.grid[nx][ny][3] += infra["neighbor_effects"]["C"]
+                        self.grid[nx][ny][0] += project["neighbor_effects"]["S"]
+                        self.grid[nx][ny][1] += project["neighbor_effects"]["W"]
+                        self.grid[nx][ny][2] += project["neighbor_effects"]["R"]
+                        self.grid[nx][ny][3] += project["neighbor_effects"]["C"]
 
                 logger.debug(
-                    f"environment: Applied {infrastructure_type} effects at ({x},{y})"
+                    f"environment: Applied {project_type} effects at ({x},{y})"
                 )
 
     def _is_buildable(self, x, y):
-        """Check if a cell is buildable (not terrain or infrastructure)."""
+        """Check if a cell is buildable (not terrain or pre-built projects)."""
         return self.grid_layout[x][y] == 0 and self.buildings[x][y] is None
-
-        self.buildings = np.full((self.grid_x, self.grid_y), None)
-        self.builders = np.full((self.grid_x, self.grid_y), -1, dtype=np.int32)
-        self.building_types = np.full(
-            (self.grid_x, self.grid_y), -1, dtype=np.int32
-        )  # -1 for no building
-
-        # Apply pre-built infrastructure effects to grid
-        self._apply_prebuilt_infrastructure()
-
-        self.individual_rewards_list = {agent: 0 for agent in self.agents}
-        self.common_reward_value = 0
-        self.infos = {agent: {} for agent in self.agents}
-        self.terminations = {agent: False for agent in self.agents}
-        self.truncations = {agent: False for agent in self.agents}
-
-        # Higher starting resources for scaled environment
-        for player in self.players.values():
-            player.resources = {"money": 80, "reputation": 80}
-            player.self_score = 0
-            player.integrated_score = 0
-
-        self.env_score = self.calculate_environment_score()["env_score"]
-        self._agent_selector.reset()
-        self.agent_selection = self._agent_selector.next()
-        self.num_moves = 0
-        self.has_reset = True
-        self.agent_index = 0
-
-        # Reset previous integrated scores
-        self.previous_integrated_score = {agent: 0 for agent in self.agents}
-
-        logger.debug("environment: Environment reset completed.")
-        return self.observe(self.agent_selection), {}
 
     def step(self, action):
         logger.debug("Calling environment step")
@@ -536,7 +500,7 @@ class SimCityScaleUpEnv(AECEnv):
             "builders": self.builders.copy(),
             "building_types": self.building_types.copy(),
             "terrain_map": self.terrain_map.copy(),
-            "infrastructure_map": self.infrastructure_map.copy(),
+            "prebuilt_map": self.prebuilt_map.copy(),
         }
         logger.debug(f"environment: observe Observation for {agent}: {observation}")
         return observation
@@ -546,10 +510,10 @@ class SimCityScaleUpEnv(AECEnv):
         for x in range(self.grid_x):
             row = ""
             for y in range(self.grid_y):
-                # Check for pre-built infrastructure first
-                if (x, y) in self.infrastructure_map:
-                    infra_type = self.infrastructure_map[(x, y)]
-                    symbol = PREBUILT_INFRASTRUCTURE[infra_type]["symbol"]
+                # Check for pre-built projects first
+                if (x, y) in self.prebuilt_map:
+                    project_type = self.prebuilt_map[(x, y)]
+                    symbol = PREBUILT_PROJECTS[project_type]["symbol"]
                     row += f"[{symbol}]"
                 # Check for terrain
                 elif (x, y) in self.terrain_map:
@@ -561,14 +525,16 @@ class SimCityScaleUpEnv(AECEnv):
                 # Check for buildings
                 elif self.buildings[x][y] is not None:
                     b = self.buildings[x][y]
-                    if b["type"] == "GreenPark":
+                    if b["type"] == "House":
+                        row += "[H]"
+                    elif b["type"] == "Shop":
+                        row += "[S]"
+                    elif b["type"] == "GreenPark":
                         row += "[G]"
-                    elif b["type"] == "ResilientHouse":
-                        row += "[R]"
                     elif b["type"] == "CommunityHub":
                         row += "[C]"
                     elif b["type"] == "SolarGrid":
-                        row += "[S]"
+                        row += "[O]"  # Solar grid uses O to avoid conflict with Shop's S
                     elif b["type"] == "FloodBarrier":
                         row += "[F]"
                     else:

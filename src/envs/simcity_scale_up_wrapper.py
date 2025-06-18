@@ -307,10 +307,10 @@ class SimCityScaleUpWrapper(MultiAgentEnv):
                 terrain_matrix[x][y] = terrain_type_map[terrain_type]
         flat_parts.append(terrain_matrix.flatten())
 
-        # Convert infrastructure_map to 8x8 matrix (-1 for no infrastructure, indices for infrastructure types)
+        # Convert prebuilt_map to 8x8 matrix (-1 for no prebuilt projects, indices for project types)
         infra_matrix = np.full((8, 8), -1, dtype=np.int32)
         infra_type_map = {"Hospital": 0, "School": 1, "FireStation": 2, "PowerPlant": 3}
-        for (x, y), infra_type in obs_dict["infrastructure_map"].items():
+        for (x, y), infra_type in obs_dict["prebuilt_map"].items():
             if infra_type in infra_type_map:
                 infra_matrix[x][y] = infra_type_map[infra_type]
         flat_parts.append(infra_matrix.flatten())
