@@ -43,7 +43,7 @@
       ]
     ]
   },
-  "heartbeat": "2025-06-18T03:49:35.785140",
+  "heartbeat": "2025-06-18T05:53:19.275271",
   "host": {
     "ENV": {},
     "cpu": "Apple M4 Pro",
@@ -104,5 +104,6 @@
   "resources": [],
   "result": null,
   "start_time": "2025-06-18T02:12:16.303406",
-  "status": "RUNNING"
+  "status": "COMPLETED",
+  "stop_time": "2025-06-18T05:53:19.158730"
 }
