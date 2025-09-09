@@ -261,10 +261,9 @@ class SimCityScaleUpKotoWrapper(MultiAgentEnv):
             affordable_types = []
             for t, bname in enumerate(self.env.BUILDING_TYPES):
                 cost = self.env.TERRAIN_AND_PROJECTS[bname]["cost"]
-                can_afford = (
-                    player_res.get("money", 0) >= cost.get("money", 0)
-                    and player_res.get("reputation", 0) >= cost.get("reputation", 0)
-                )
+                can_afford = player_res.get("money", 0) >= cost.get(
+                    "money", 0
+                ) and player_res.get("reputation", 0) >= cost.get("reputation", 0)
                 affordable_types.append(can_afford)
 
             # The discrete action layout is: 0 = NO-OP, then for each building type t and each cell c
@@ -281,9 +280,16 @@ class SimCityScaleUpKotoWrapper(MultiAgentEnv):
                             if 0 <= aidx < self.n_actions:
                                 avail_actions[aidx] = 1.0
 
-        logger.debug(
-            f"simcity_scale_up_wrapper: Available actions for agent {agent_id}: {avail_actions}"
-        )
+        # Avoid logging full availability arrays; log counts only
+        try:
+            logger.debug(
+                "simcity_scale_up_wrapper: avail_actions | agent=%s | enabled=%d/%d",
+                agent_id,
+                int(np.sum(avail_actions)),
+                self.n_actions,
+            )
+        except Exception:
+            pass
         return avail_actions
 
     def get_total_actions(self):

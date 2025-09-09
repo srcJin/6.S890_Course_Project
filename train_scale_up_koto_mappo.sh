@@ -8,7 +8,7 @@
 # - Balanced resource system (Money=100, Reputation=70)
 
 echo "Starting MAPPO training for SimCity Scale-Up Koto Environment..."
-echo "Environment: 8x8 grid, 4 player archetypes, 8 building types"
+echo "Environment: 12x12 grid, 4 player archetypes, 8 building types"
 echo "Parameters: G(Greenery), V(Vitality), D(Density), A(Adaptability), S(Sustainability), F(Flood_Resistance)"
 echo "Algorithm: MAPPO"
 
@@ -24,7 +24,7 @@ python main.py \
     --config=mappo \
     --env-config=simcity_scale_up_koto \
     with env_args.time_limit=100 \
-    t_max=1000000 \
+    t_max=2000000 \
     use_cuda=True \
     save_model=True \
     save_model_interval=10000 \
@@ -32,9 +32,10 @@ python main.py \
     log_interval=1000 \
     runner_log_interval=1000 \
     learner_log_interval=1000 \
-    buffer_size=5000 \
-    batch_size=32 \
-    batch_size_run=8 \
+    buffer_size=40000 \
+    batch_size=128 \
+    batch_size_run=16 \
+    epochs=10 \
     common_reward=False
 
 echo "Koto training completed!"

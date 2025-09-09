@@ -28,3 +28,7 @@ Traceback (most recent call last):
   File "/opt/anaconda3/envs/epymarl/lib/python3.8/site-packages/werkzeug/_reloader.py", line 439, in ensure_echo_on
     termios.tcsetattr(sys.stdin, termios.TCSANOW, attributes)
 termios.error: (4, 'Interrupted system call')
+Traceback (most recent call last):
+  File "/Volumes/Mac_Working/GitHub/6.S890_Course_Project/inference_server/server_scale_up_koto.py", line 3, in <module>
+    from flask import Flask, request, jsonify
+ModuleNotFoundError: No module named 'flask'

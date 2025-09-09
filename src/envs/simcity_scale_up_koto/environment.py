@@ -654,7 +654,28 @@ class SimCityScaleUpEnv(AECEnv):
             "building_types": self.building_types.copy(),
             "grid_layout": self.grid_layout.copy(),
         }
-        logger.debug(f"environment: observe Observation for {agent}: {observation}")
+        # Avoid printing full arrays which is very slow; log shapes and key stats instead
+        try:
+            logger.debug(
+                "environment: observe | agent=%s | grid.shape=%s grid_layout.shape=%s builders.shape=%s building_types=%s resources_keys=%s",
+                agent,
+                getattr(observation["grid"], "shape", None),
+                getattr(observation["grid_layout"], "shape", None),
+                getattr(observation["builders"], "shape", None),
+                (
+                    list(observation["building_types"].keys())
+                    if isinstance(observation["building_types"], dict)
+                    else type(observation["building_types"]).__name__
+                ),
+                (
+                    list(observation["resources"].keys())
+                    if isinstance(observation["resources"], dict)
+                    else type(observation["resources"]).__name__
+                ),
+            )
+        except Exception:
+            # Best-effort debug logging only
+            pass
         return observation
 
     def render(self, mode="human"):
