@@ -17,7 +17,9 @@ logger = get_logger(log_file_path="simulation_scale_up_koto.log")
 
 class SimCityScaleUpKotoWrapper(MultiAgentEnv):
     def __init__(self, grid_x=12, grid_y=12, **kwargs):
-        logger.debug("simcity_scale_up_koto_wrapper: Initializing SimCityScaleUpKotoWrapper")
+        logger.debug(
+            "simcity_scale_up_koto_wrapper: Initializing SimCityScaleUpKotoWrapper"
+        )
 
         self.env = SimCityScaleUpEnv(
             grid_x=grid_x,
@@ -50,7 +52,7 @@ class SimCityScaleUpKotoWrapper(MultiAgentEnv):
 
         # Calculate state size after obs_size is determined
         self.state_size = self.obs_size * self.n_agents
-        
+
         logger.debug(
             f"simcity_scale_up_wrapper: Obs size={self.obs_size}, State size={self.state_size}, Actions={self.n_actions}"
         )
@@ -58,11 +60,15 @@ class SimCityScaleUpKotoWrapper(MultiAgentEnv):
         # Validate by actually checking the observation size
         obs, _ = self.reset()
         if obs.shape != (self.n_agents, self.obs_size):
-            logger.warning(f"Observation shape mismatch: expected ({self.n_agents}, {self.obs_size}), got {obs.shape}")
+            logger.warning(
+                f"Observation shape mismatch: expected ({self.n_agents}, {self.obs_size}), got {obs.shape}"
+            )
             # Update obs_size to match actual size
             self.obs_size = obs.shape[1]
             self.state_size = self.obs_size * self.n_agents
-            logger.info(f"Updated obs_size to {self.obs_size}, state_size to {self.state_size}")
+            logger.info(
+                f"Updated obs_size to {self.obs_size}, state_size to {self.state_size}"
+            )
 
         logger.debug("simcity_scale_up_wrapper: Initialization completed successfully")
 
@@ -250,16 +256,27 @@ class SimCityScaleUpKotoWrapper(MultiAgentEnv):
             # Always allow NO-OP
             avail_actions[0] = 1.0
 
-            # The discrete action layout is: 0 = NO-OP, then for each building type t in [0..NUM_BUILDING_TYPES-1]
-            # and each cell c in [0..num_cells-1], action index = 1 + t*num_cells + c
+            # Resource-aware: only allow building types the agent can afford now
+            player_res = self.env.players[agent].resources
+            affordable_types = []
+            for t, bname in enumerate(self.env.BUILDING_TYPES):
+                cost = self.env.TERRAIN_AND_PROJECTS[bname]["cost"]
+                can_afford = (
+                    player_res.get("money", 0) >= cost.get("money", 0)
+                    and player_res.get("reputation", 0) >= cost.get("reputation", 0)
+                )
+                affordable_types.append(can_afford)
+
+            # The discrete action layout is: 0 = NO-OP, then for each building type t and each cell c
             num_cells = self.env.grid_x * self.env.grid_y
-            # Iterate all cells and mark buildable ones for all project types
+            # Iterate all cells and mark buildable ones for all affordable project types
             for x in range(self.env.grid_x):
                 for y in range(self.env.grid_y):
                     if self.env._is_buildable(x, y):
                         cell_index = x * self.env.grid_y + y
-                        # enable all building types on this cell
                         for t in range(len(self.env.BUILDING_TYPES)):
+                            if not affordable_types[t]:
+                                continue
                             aidx = 1 + t * num_cells + cell_index
                             if 0 <= aidx < self.n_actions:
                                 avail_actions[aidx] = 1.0
