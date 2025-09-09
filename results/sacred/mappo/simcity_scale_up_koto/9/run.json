@@ -1,0 +1,124 @@
+{
+  "artifacts": [],
+  "command": "my_main",
+  "experiment": {
+    "base_dir": "/Volumes/Mac_Working/GitHub/6.S890_Course_Project/src",
+    "dependencies": [
+      "numpy==1.24.4",
+      "PyYAML==5.3.1",
+      "sacred==0.8.7",
+      "torch==2.4.1"
+    ],
+    "mainfile": "main.py",
+    "name": "pymarl",
+    "repositories": [
+      {
+        "commit": "986fca29bdb1731c675336b383e014a0b1a67ad8",
+        "dirty": false,
+        "url": "https://github.com/srcJin/6.S890_Course_Project.git"
+      },
+      {
+        "commit": "986fca29bdb1731c675336b383e014a0b1a67ad8",
+        "dirty": false,
+        "url": "https://github.com/srcJin/6.S890_Course_Project.git"
+      },
+      {
+        "commit": "986fca29bdb1731c675336b383e014a0b1a67ad8",
+        "dirty": false,
+        "url": "https://github.com/srcJin/6.S890_Course_Project.git"
+      }
+    ],
+    "sources": [
+      [
+        "main.py",
+        "_sources/main_10071cd35b239d4d9d6b06262697f6b3.py"
+      ],
+      [
+        "run.py",
+        "_sources/run_d62d3087da7829de8e4bcdca6986827e.py"
+      ],
+      [
+        "utils/logging.py",
+        "_sources/logging_836123fa54ffb6ffe3010ba48531394a.py"
+      ]
+    ]
+  },
+  "heartbeat": "2025-09-09T18:57:13.566690",
+  "host": {
+    "ENV": {},
+    "cpu": "Apple M4 Pro",
+    "hostname": "Jins-MacBook-Pro.local",
+    "os": [
+      "Darwin",
+      "macOS-15.6.1-arm64-arm-64bit"
+    ],
+    "python_version": "3.8.20"
+  },
+  "meta": {
+    "command": "my_main",
+    "config_updates": {
+      "batch_size": 128,
+      "batch_size_run": 16,
+      "buffer_size": 40000,
+      "common_reward": false,
+      "env_args": {
+        "time_limit": 100
+      },
+      "epochs": 10,
+      "learner_log_interval": 1000,
+      "log_interval": 1000,
+      "runner_log_interval": 1000,
+      "save_model": true,
+      "save_model_interval": 10000,
+      "t_max": 2000000,
+      "test_interval": 5000,
+      "use_cuda": true
+    },
+    "named_configs": [],
+    "options": {
+      "--beat-interval": null,
+      "--capture": null,
+      "--comment": null,
+      "--debug": false,
+      "--enforce_clean": false,
+      "--file_storage": null,
+      "--force": false,
+      "--help": false,
+      "--id": null,
+      "--loglevel": null,
+      "--mongo_db": null,
+      "--name": null,
+      "--pdb": false,
+      "--print-config": false,
+      "--priority": null,
+      "--queue": false,
+      "--s3": null,
+      "--sql": null,
+      "--tiny_db": null,
+      "--unobserved": false,
+      "COMMAND": null,
+      "UPDATE": [
+        "env_args.time_limit=100",
+        "t_max=2000000",
+        "use_cuda=True",
+        "save_model=True",
+        "save_model_interval=10000",
+        "test_interval=5000",
+        "log_interval=1000",
+        "runner_log_interval=1000",
+        "learner_log_interval=1000",
+        "buffer_size=40000",
+        "batch_size=128",
+        "batch_size_run=16",
+        "epochs=10",
+        "common_reward=False"
+      ],
+      "help": false,
+      "with": true
+    }
+  },
+  "resources": [],
+  "result": null,
+  "start_time": "2025-09-09T18:56:53.513398",
+  "status": "RUNNING"
+}

@@ -23,8 +23,8 @@ cd /Volumes/Mac_Working/GitHub/6.S890_Course_Project/src
 python main.py \
     --config=mappo \
     --env-config=simcity_scale_up_koto \
-    with env_args.time_limit=100 \
-    t_max=2000000 \
+    with env_args.time_limit=200 \
+    t_max=10000000 \
     use_cuda=True \
     save_model=True \
     save_model_interval=10000 \
