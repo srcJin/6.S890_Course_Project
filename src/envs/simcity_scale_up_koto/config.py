@@ -11,35 +11,35 @@
 
 # Universal income lifecycle for all buildings
 INCOME_LIFECYCLE = {
-    "duration": 80,  # Buildings generate income for 80 turns
+    "duration": 25,  # Buildings generate income for 25 turns (valuable period)
     "decay_rate": 0.02,  # 2% reduction per turn from start
     "start_delay": 1,  # Income starts from turn 2 after construction
-    "replacement_threshold": 0.3  # Can be replaced when income drops below 30%
+    "replacement_threshold": 0.3,  # Can be replaced when income drops below 30%
 }
 
 
 # Define player building utilities (ongoing income/costs)
 BUILDING_UTILITIES = {
     # Basic development - immediate economic returns
-    "House": {"money": 4, "reputation": 1},  # Rental income, basic community value
-    "Shop": {"money": 6, "reputation": 0},  # Commercial profits, neutral reputation
-    # Resilience projects - balanced or long-term benefits
+    "House": {"money": 7, "reputation": 2},  # Scaled from 4/1 to match shorter duration
+    "Shop": {"money": 10, "reputation": 0},  # Scaled from 6/0
+    # Resilience projects - balanced or long-term benefits (scaled)
     "GreenPark": {
-        "money": -1,
-        "reputation": 4,
-    },  # Maintenance cost but high social value
-    "CommunityHub": {
-        "money": 1,
-        "reputation": 5,
-    },  # Community services, high social impact
-    "SolarGrid": {
-        "money": 5,
-        "reputation": 2,
-    },  # Energy generation income, clean reputation
-    "FloodBarrier": {
         "money": -2,
+        "reputation": 7,
+    },  # Scaled from -1/4
+    "CommunityHub": {
+        "money": 2,
+        "reputation": 8,
+    },  # Scaled from 1/5
+    "SolarGrid": {
+        "money": 8,
         "reputation": 3,
-    },  # Maintenance cost but protection value
+    },  # Scaled from 5/2
+    "FloodBarrier": {
+        "money": -3,
+        "reputation": 5,
+    },  # Scaled from -2/3
 }
 
 # Define player building effects on grid parameters (G, V, D, A, S, F)

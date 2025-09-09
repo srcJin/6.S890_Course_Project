@@ -173,7 +173,7 @@ class SimCityScaleUpEnv(AECEnv):
         # Calculate actual grid parameters based on INITIAL_GRID terrain and projects
         # This applies effects from Water, Road, House, Factory, etc. to each cell
         self._apply_initial_terrain_effects()
-        
+
         # Initialize pre-built buildings with lifecycle data
         self._initialize_prebuilt_buildings()
 
@@ -235,7 +235,7 @@ class SimCityScaleUpEnv(AECEnv):
     def _is_buildable(self, x, y):
         """Check if a cell is buildable (Empty terrain or replaceable building)."""
         cell_id = self.grid_layout[x][y]
-        
+
         # Check if terrain is buildable
         for name, data in self.TERRAIN_AND_PROJECTS.items():
             if data["id"] == cell_id:
@@ -251,7 +251,7 @@ class SimCityScaleUpEnv(AECEnv):
     def _calculate_building_income(self, building, building_type):
         """
         Calculate building income multiplier based on age and lifecycle.
-        
+
         Income pattern:
         - Turn 1 (age 0): No income (construction turn)
         - Turn 2 (age 1): Start with 100% income
@@ -260,51 +260,59 @@ class SimCityScaleUpEnv(AECEnv):
         """
         age = building["age"]
         duration = INCOME_LIFECYCLE["duration"]
-        decay_rate = INCOME_LIFECYCLE["decay_rate"]
         start_delay = INCOME_LIFECYCLE["start_delay"]
-        
+
         # No income during construction and start delay
         if age <= start_delay:
             return 0.0
-        
+
         # No income after building expires
         if age > duration:
             return 0.0
-        
-        # Calculate decaying income: starts at 100% and decays each turn
-        income_age = age - start_delay  # Age since income started
-        income_multiplier = (1.0 - decay_rate) ** (income_age - 1)
-        
+
+        # Income age counts producing turns: 1 means the first producing turn
+        income_age = age - start_delay
+
+        # Linear decline: producing income starts at 1.0 and decreases linearly
+        # so that at income_age == duration the multiplier is ~1/duration and
+        # after duration it is 0 (handled above).
+        income_multiplier = 1.0 - (income_age - 1) / float(duration)
         return max(0.0, income_multiplier)
-    
+
     def _initialize_prebuilt_buildings(self):
         """Initialize pre-built buildings from INITIAL_GRID with lifecycle data."""
         for x in range(self.grid_x):
             for y in range(self.grid_y):
                 cell_id = self.grid_layout[x][y]
-                
+
                 # Check if this cell contains a pre-built building
                 for name, data in self.TERRAIN_AND_PROJECTS.items():
                     if data["id"] == cell_id and data["type"] == "project":
                         # Initialize pre-built building with lifecycle data
                         # Start with random age to simulate existing city
                         import random
-                        random_age = random.randint(10, 40)  # Pre-built buildings have some age
-                        
+
+                        random_age = random.randint(
+                            10, 40
+                        )  # Pre-built buildings have some age
+
                         self.buildings[x][y] = {
                             "type": name,
                             "turn_built": -random_age,  # Negative to indicate pre-built
                             "age": random_age,
-                            "is_replaceable": random_age > 30,  # Older buildings may be replaceable
+                            # Replacement is only allowed after a project fully expires (no income)
+                            "is_replaceable": random_age > INCOME_LIFECYCLE["duration"],
                         }
-                        
+
                         # Mark as built by "system" (no specific agent)
                         self.builders[x][y] = -1  # -1 indicates pre-built
-                        
+
                         if name in BUILDING_TYPES:
                             self.building_types[x][y] = BUILDING_TYPES.index(name)
-                        
-                        logger.debug(f"Initialized pre-built {name} at ({x},{y}) with age {random_age}")
+
+                        logger.debug(
+                            f"Initialized pre-built {name} at ({x},{y}) with age {random_age}"
+                        )
                         break
 
     def _age_all_buildings(self):
@@ -314,20 +322,20 @@ class SimCityScaleUpEnv(AECEnv):
                 if self.buildings[x][y] is not None:
                     building = self.buildings[x][y]
                     building["age"] += 1
-                    
-                    # Calculate current income to check replaceability
-                    income = self._calculate_building_income(building, building["type"])
-                    
-                    # Update replaceability status
-                    if income <= INCOME_LIFECYCLE["replacement_threshold"]:
-                        building["is_replaceable"] = True
-                        logger.debug(f"Building {building['type']} at ({x},{y}) age {building['age']} becomes replaceable (income: {income*100:.1f}%)")
+                    # Update replaceability status: allow replacement ONLY after expiry
+                    duration = INCOME_LIFECYCLE["duration"]
+                    if building["age"] > duration:
+                        if not building.get("is_replaceable", False):
+                            building["is_replaceable"] = True
+                            logger.debug(
+                                f"Building {building['type']} at ({x},{y}) age {building['age']} becomes replaceable (expired)"
+                            )
 
     def _remove_building_effects(self, x, y, building_type):
         """Remove the grid effects of a building when it's replaced."""
         building_data = self.TERRAIN_AND_PROJECTS[building_type]
         effect = building_data["effect"]
-        
+
         # Remove direct effects
         self.grid[x][y][0] -= effect["G"]  # Greenery
         self.grid[x][y][1] -= effect["V"]  # Vitality
@@ -335,7 +343,7 @@ class SimCityScaleUpEnv(AECEnv):
         self.grid[x][y][3] -= effect["A"]  # Adaptability
         self.grid[x][y][4] -= effect["S"]  # Sustainability
         self.grid[x][y][5] -= effect["F"]  # Flood_Resistance
-        
+
         # Remove neighbor effects
         if "neighbors" in building_data:
             neighbors = building_data["neighbors"]
@@ -382,7 +390,9 @@ class SimCityScaleUpEnv(AECEnv):
                 logger.debug(
                     f"environment: Agent {agent} tried to build on non-buildable terrain at ({x},{y}). Penalty: {terrain_penalty}."
                 )
-            elif self.buildings[x][y] is not None and not self.buildings[x][y].get("is_replaceable", False):
+            elif self.buildings[x][y] is not None and not self.buildings[x][y].get(
+                "is_replaceable", False
+            ):
                 build_on_occupied_penalty = -999999999999999999
                 reward += build_on_occupied_penalty
                 logger.debug(
@@ -414,7 +424,9 @@ class SimCityScaleUpEnv(AECEnv):
                     if self.buildings[x][y] is not None:
                         old_building = self.buildings[x][y]
                         old_type = old_building["type"]
-                        logger.debug(f"Replacing {old_type} with {building_type} at ({x},{y})")
+                        logger.debug(
+                            f"Replacing {old_type} with {building_type} at ({x},{y})"
+                        )
                         self._remove_building_effects(x, y, old_type)
 
                     # Update buildings and builders
@@ -469,28 +481,31 @@ class SimCityScaleUpEnv(AECEnv):
         # Age all buildings once per full round (only when first agent acts)
         if self.agents.index(agent) == 0:
             self._age_all_buildings()
-        
+
         # Update utilities based on buildings - only for buildings owned by current agent
         for gx in range(self.grid_x):
             for gy in range(self.grid_y):
-                if (self.buildings[gx][gy] is not None and 
-                    self.builders[gx][gy] == self.agents.index(agent)):
+                if self.buildings[gx][gy] is not None and self.builders[gx][
+                    gy
+                ] == self.agents.index(agent):
                     building = self.buildings[gx][gy]
                     b_type = building["type"]
-                    
+
                     # Calculate income based on age and lifecycle
                     income = self._calculate_building_income(building, b_type)
-                    
+
                     # Apply income if building is producing
                     if income > 0:
                         b_utility = self.TERRAIN_AND_PROJECTS[b_type]["utility"]
                         # Apply decay multiplier
                         actual_money = b_utility["money"] * income
                         actual_reputation = b_utility["reputation"] * income
-                        
+
                         self.players[agent].resources["money"] += actual_money
                         self.players[agent].resources["reputation"] += actual_reputation
-                        self.players[agent].self_score += (actual_money + actual_reputation)
+                        self.players[agent].self_score += (
+                            actual_money + actual_reputation
+                        )
 
         # Calculate environment scores using new 6-parameter system
         env_scores = self.calculate_environment_score()
@@ -647,39 +662,22 @@ class SimCityScaleUpEnv(AECEnv):
         for x in range(self.grid_x):
             row = ""
             for y in range(self.grid_y):
-                # Check for pre-built projects first
-                if (x, y) in self.prebuilt_map:
-                    project_type = self.prebuilt_map[(x, y)]
-                    symbol = PREBUILT_PROJECTS[project_type]["symbol"]
+                # If there is a player-built or prebuilt building, show its symbol
+                if self.buildings[x][y] is not None:
+                    b_type = self.buildings[x][y]["type"]
+                    symbol = self.TERRAIN_AND_PROJECTS.get(b_type, {}).get(
+                        "symbol", "?"
+                    )
                     row += f"[{symbol}]"
-                # Check for terrain
-                elif (x, y) in self.terrain_map:
-                    terrain_type = self.terrain_map[(x, y)]
-                    symbol = TERRAIN_TYPES[terrain_type]["symbol"][
-                        :1
-                    ]  # Take first character
-                    row += f"[{symbol}]"
-                # Check for buildings
-                elif self.buildings[x][y] is not None:
-                    b = self.buildings[x][y]
-                    if b["type"] == "House":
-                        row += "[H]"
-                    elif b["type"] == "Shop":
-                        row += "[S]"
-                    elif b["type"] == "GreenPark":
-                        row += "[G]"
-                    elif b["type"] == "CommunityHub":
-                        row += "[C]"
-                    elif b["type"] == "SolarGrid":
-                        row += (
-                            "[O]"  # Solar grid uses O to avoid conflict with Shop's S
-                        )
-                    elif b["type"] == "FloodBarrier":
-                        row += "[F]"
-                    else:
-                        row += "[?]"
                 else:
-                    row += "[ ]"
+                    # Otherwise show the base grid layout (terrain or prebuilt project symbol)
+                    cell_id = int(self.grid_layout[x][y])
+                    symbol = "?"
+                    for name, data in self.TERRAIN_AND_PROJECTS.items():
+                        if data.get("id") == cell_id:
+                            symbol = str(data.get("symbol", "?"))[:1]
+                            break
+                    row += f"[{symbol}]"
             display_grid += row + "\n"
         logger.debug(f"environment: Render output:\n{display_grid}")
         print(display_grid)
