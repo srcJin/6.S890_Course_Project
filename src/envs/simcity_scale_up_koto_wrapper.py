@@ -1,4 +1,4 @@
-# src/envs/simcity_scale_up_wrapper.py
+# src/envs/simcity_scale_up_koto_wrapper.py
 
 import numpy as np
 import torch as th
@@ -12,12 +12,12 @@ from envs.simcity_scale_up_koto import (
 )
 from utils.logging import get_logger
 
-logger = get_logger(log_file_path="simulation_scale_up.log")
+logger = get_logger(log_file_path="simulation_scale_up_koto.log")
 
 
-class SimCityScaleUpWrapper(MultiAgentEnv):
-    def __init__(self, grid_x=8, grid_y=8, **kwargs):
-        logger.debug("simcity_scale_up_wrapper: Initializing SimCityScaleUpWrapper")
+class SimCityScaleUpKotoWrapper(MultiAgentEnv):
+    def __init__(self, grid_x=12, grid_y=12, **kwargs):
+        logger.debug("simcity_scale_up_koto_wrapper: Initializing SimCityScaleUpKotoWrapper")
 
         self.env = SimCityScaleUpEnv(
             grid_x=grid_x,
@@ -282,7 +282,7 @@ class SimCityScaleUpWrapper(MultiAgentEnv):
         """Convert observation dictionary to flat array"""
         flat_parts = []
 
-        # Flatten grid (G, V, D, A, S, F parameters for 8x8 grid) - now 6 parameters
+        # Flatten grid (G, V, D, A, S, F parameters for 12x12 grid) - now 6 parameters
         flat_parts.append(obs_dict["grid"].flatten())
 
         # Add resources (money, reputation) as individual elements
@@ -296,7 +296,7 @@ class SimCityScaleUpWrapper(MultiAgentEnv):
 
         # Add terrain layout information (simplified - just the grid layout IDs)
         # The environment now uses TERRAIN_AND_PROJECTS with unified structure
-        terrain_matrix = obs_dict.get("grid_layout", np.zeros((8, 8), dtype=np.int32))
+        terrain_matrix = obs_dict.get("grid_layout", np.zeros((12, 12), dtype=np.int32))
         flat_parts.append(terrain_matrix.flatten())
 
         return np.concatenate(flat_parts).astype(np.float32)

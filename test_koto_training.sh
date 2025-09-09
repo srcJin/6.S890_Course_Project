@@ -14,8 +14,8 @@ conda activate epymarl
 # Navigate to src directory
 cd /Volumes/Mac_Working/GitHub/6.S890_Course_Project/src
 
-# Run short test training (only 10000 timesteps)
-python3 main.py \
+# Run short test training (only 10000 timesteps)  
+python main.py \
     --config=mappo \
     --env-config=simcity_scale_up_koto \
     with env_args.time_limit=50 \

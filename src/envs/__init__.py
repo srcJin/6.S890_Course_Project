@@ -24,9 +24,9 @@ def _import_simcity_scale_up():
 
 
 def _import_simcity_scale_up_koto():
-    from .simcity_scale_up_koto_wrapper import SimCityScaleUpWrapper
+    from .simcity_scale_up_koto_wrapper import SimCityScaleUpKotoWrapper
 
-    return SimCityScaleUpWrapper
+    return SimCityScaleUpKotoWrapper
 
 
 # if sys.platform == "linux":

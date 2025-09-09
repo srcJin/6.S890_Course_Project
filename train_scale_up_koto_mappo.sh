@@ -8,7 +8,7 @@
 # - Balanced resource system (Money=100, Reputation=70)
 
 echo "Starting MAPPO training for SimCity Scale-Up Koto Environment..."
-echo "Environment: 12x12 grid, 4 player archetypes, 8 building types"
+echo "Environment: 8x8 grid, 4 player archetypes, 8 building types"
 echo "Parameters: G(Greenery), V(Vitality), D(Density), A(Adaptability), S(Sustainability), F(Flood_Resistance)"
 echo "Algorithm: MAPPO"
 
@@ -19,8 +19,8 @@ conda activate epymarl
 # Navigate to src directory
 cd /Volumes/Mac_Working/GitHub/6.S890_Course_Project/src
 
-# Run training with MAPPO on koto scale-up environment
-python3 main.py \
+# Run training with MAPPO on koto scale-up environment  
+python main.py \
     --config=mappo \
     --env-config=simcity_scale_up_koto \
     with env_args.time_limit=100 \

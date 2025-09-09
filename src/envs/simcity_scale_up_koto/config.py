@@ -9,6 +9,14 @@
 # S = Sustainability (environmental footprint, resource efficiency)
 # F = Flood_Resistance (disaster preparedness, protective infrastructure)
 
+# Universal income lifecycle for all buildings
+INCOME_LIFECYCLE = {
+    "duration": 80,  # Buildings generate income for 80 turns
+    "decay_rate": 0.02,  # 2% reduction per turn from start
+    "start_delay": 1,  # Income starts from turn 2 after construction
+    "replacement_threshold": 0.3  # Can be replaced when income drops below 30%
+}
+
 
 # Define player building utilities (ongoing income/costs)
 BUILDING_UTILITIES = {
@@ -71,63 +79,63 @@ TERRAIN_AND_PROJECTS = {
     "House": {
         "id": 100,
         "type": "project",
-        "is_buildable": False,
-        "effect": {"G": -15, "V": 10, "D": 25, "A": 5, "S": -10, "F": 0},
+        "is_buildable": True,
+        "effect": {"G": -8, "V": 10, "D": 20, "A": 5, "S": -5, "F": 0},
         "utility": {"money": 4, "reputation": 1},
         "cost": {"money": 10, "reputation": 5},
         "symbol": "H",
-        "neighbors": {"G": -5, "V": 5, "D": 8, "A": 2, "S": -3, "F": 0},
+        "neighbors": {"G": -3, "V": 5, "D": 6, "A": 2, "S": -2, "F": 0},
         "description": "Standard residential housing",
     },
     "Shop": {
         "id": 101,
         "type": "project",
-        "is_buildable": False,
-        "effect": {"G": -20, "V": 30, "D": 15, "A": 5, "S": -15, "F": 0},
+        "is_buildable": True,
+        "effect": {"G": -10, "V": 25, "D": 15, "A": 5, "S": -8, "F": 0},
         "utility": {"money": 6, "reputation": 0},
         "cost": {"money": 12, "reputation": 3},
         "symbol": "S",
-        "neighbors": {"G": -8, "V": 10, "D": 5, "A": 2, "S": -5, "F": 0},
+        "neighbors": {"G": -4, "V": 8, "D": 4, "A": 2, "S": -3, "F": 0},
         "description": "Commercial retail space",
     },
     "Office": {
         "id": 102,
         "type": "project",
-        "is_buildable": False,
-        "effect": {"G": -25, "V": 20, "D": 20, "A": 10, "S": -20, "F": 0},
+        "is_buildable": True,
+        "effect": {"G": -12, "V": 20, "D": 18, "A": 8, "S": -10, "F": 0},
         "cost": {"money": 20, "reputation": 7},
         "utility": {"money": 8, "reputation": 0},
         "symbol": "O",
-        "neighbors": {"G": -10, "V": 8, "D": 8, "A": 3, "S": -8, "F": 0},
+        "neighbors": {"G": -5, "V": 6, "D": 6, "A": 3, "S": -4, "F": 0},
         "description": "Commercial office building",
     },
     "Factory": {
         "id": 103,
         "type": "project",
-        "is_buildable": False,
-        "effect": {"G": -40, "V": 15, "D": 30, "A": 5, "S": -35, "F": -5},
+        "is_buildable": True,
+        "effect": {"G": -20, "V": 15, "D": 25, "A": 5, "S": -18, "F": -3},
         "cost": {"money": 25, "reputation": 10},
         "utility": {"money": 10, "reputation": 2},
         "symbol": "F",
-        "neighbors": {"G": -15, "V": 5, "D": 10, "A": 2, "S": -12, "F": -2},
+        "neighbors": {"G": -8, "V": 4, "D": 8, "A": 2, "S": -6, "F": -1},
         "description": "Industrial manufacturing facility",
     },
     # Resilience projects - strong positive impacts on urban resilience
     "Park": {
         "id": 201,
         "type": "project",
-        "is_buildable": False,
-        "effect": {"G": 45, "V": 20, "D": -5, "A": 15, "S": 35, "F": 10},
+        "is_buildable": True,
+        "effect": {"G": 30, "V": 15, "D": -5, "A": 12, "S": 25, "F": 8},
         "cost": {"money": 8, "reputation": 6},
         "utility": {"money": -1, "reputation": 3},
         "symbol": "P",
-        "neighbors": {"G": 15, "V": 8, "D": -2, "A": 5, "S": 12, "F": 3},
+        "neighbors": {"G": 10, "V": 6, "D": -2, "A": 4, "S": 8, "F": 3},
         "description": "Green park for community recreation",
     },
     "Shelter": {
         "id": 202,
         "type": "project",
-        "is_buildable": False,
+        "is_buildable": True,
         "effect": {"G": 15, "V": 35, "D": 10, "A": 40, "S": 20, "F": 30},
         "cost": {"money": 12, "reputation": 8},
         "utility": {"money": 1, "reputation": 4},
@@ -138,7 +146,7 @@ TERRAIN_AND_PROJECTS = {
     "Watergate": {
         "id": 203,
         "type": "project",
-        "is_buildable": False,
+        "is_buildable": True,
         "effect": {"G": 10, "V": 25, "D": 5, "A": 35, "S": 45, "F": 20},
         "cost": {"money": 15, "reputation": 5},
         "utility": {"money": 3, "reputation": 2},
@@ -149,7 +157,7 @@ TERRAIN_AND_PROJECTS = {
     "FloodBarrier": {
         "id": 204,
         "type": "project",
-        "is_buildable": False,
+        "is_buildable": True,
         "effect": {"G": 5, "V": 10, "D": 0, "A": 25, "S": 15, "F": 50},
         "cost": {"money": 18, "reputation": 7},
         "utility": {"money": -2, "reputation": 3},

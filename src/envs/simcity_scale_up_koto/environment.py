@@ -15,6 +15,7 @@ from .config import (
     TERRAIN_AND_PROJECTS,
     BUILDING_UTILITIES,
     INITIAL_GRID,
+    INCOME_LIFECYCLE,
 )
 from .log import (
     display_current_turn,
@@ -95,8 +96,8 @@ class SimCityScaleUpEnv(AECEnv):
             agent: spaces.Dict(
                 {
                     "grid": spaces.Box(
-                        low=0,
-                        high=100,
+                        low=-50,
+                        high=250,
                         shape=(
                             self.grid_x,
                             self.grid_y,
@@ -153,12 +154,12 @@ class SimCityScaleUpEnv(AECEnv):
         # Initialize grid with baseline values for 6 parameters
         # These will be modified by terrain and project effects from INITIAL_GRID
         self.grid = np.empty((self.grid_x, self.grid_y, 6), dtype=np.int32)
-        self.grid[:, :, 0] = 100  # G - Greenery baseline
-        self.grid[:, :, 1] = 100  # V - Vitality baseline
-        self.grid[:, :, 2] = 100  # D - Density baseline
-        self.grid[:, :, 3] = 100  # A - Adaptability baseline
-        self.grid[:, :, 4] = 100  # S - Sustainability baseline
-        self.grid[:, :, 5] = 100  # F - Flood_Resistance baseline
+        self.grid[:, :, 0] = 50  # G - Greenery baseline
+        self.grid[:, :, 1] = 50  # V - Vitality baseline
+        self.grid[:, :, 2] = 50  # D - Density baseline
+        self.grid[:, :, 3] = 50  # A - Adaptability baseline
+        self.grid[:, :, 4] = 50  # S - Sustainability baseline
+        self.grid[:, :, 5] = 50  # F - Flood_Resistance baseline
 
         # Initialize grid layout from config (predefined terrain and projects)
         self.grid_layout = np.array(INITIAL_GRID)
@@ -172,6 +173,9 @@ class SimCityScaleUpEnv(AECEnv):
         # Calculate actual grid parameters based on INITIAL_GRID terrain and projects
         # This applies effects from Water, Road, House, Factory, etc. to each cell
         self._apply_initial_terrain_effects()
+        
+        # Initialize pre-built buildings with lifecycle data
+        self._initialize_prebuilt_buildings()
 
         self.individual_rewards_list = {agent: 0 for agent in self.agents}
         self.common_reward_value = 0
@@ -229,13 +233,121 @@ class SimCityScaleUpEnv(AECEnv):
                         break
 
     def _is_buildable(self, x, y):
-        """Check if a cell is buildable (Empty terrain type)."""
+        """Check if a cell is buildable (Empty terrain or replaceable building)."""
         cell_id = self.grid_layout[x][y]
-        # Find if this cell is buildable (Empty terrain)
+        
+        # Check if terrain is buildable
         for name, data in self.TERRAIN_AND_PROJECTS.items():
             if data["id"] == cell_id:
-                return data["is_buildable"] and self.buildings[x][y] is None
+                if data["is_buildable"]:
+                    # Empty cell or replaceable building
+                    if self.buildings[x][y] is None:
+                        return True
+                    elif self.buildings[x][y].get("is_replaceable", False):
+                        return True
+                return False
         return False
+
+    def _calculate_building_income(self, building, building_type):
+        """
+        Calculate building income multiplier based on age and lifecycle.
+        
+        Income pattern:
+        - Turn 1 (age 0): No income (construction turn)
+        - Turn 2 (age 1): Start with 100% income
+        - Each subsequent turn: Income decays by decay_rate
+        - After duration: No income
+        """
+        age = building["age"]
+        duration = INCOME_LIFECYCLE["duration"]
+        decay_rate = INCOME_LIFECYCLE["decay_rate"]
+        start_delay = INCOME_LIFECYCLE["start_delay"]
+        
+        # No income during construction and start delay
+        if age <= start_delay:
+            return 0.0
+        
+        # No income after building expires
+        if age > duration:
+            return 0.0
+        
+        # Calculate decaying income: starts at 100% and decays each turn
+        income_age = age - start_delay  # Age since income started
+        income_multiplier = (1.0 - decay_rate) ** (income_age - 1)
+        
+        return max(0.0, income_multiplier)
+    
+    def _initialize_prebuilt_buildings(self):
+        """Initialize pre-built buildings from INITIAL_GRID with lifecycle data."""
+        for x in range(self.grid_x):
+            for y in range(self.grid_y):
+                cell_id = self.grid_layout[x][y]
+                
+                # Check if this cell contains a pre-built building
+                for name, data in self.TERRAIN_AND_PROJECTS.items():
+                    if data["id"] == cell_id and data["type"] == "project":
+                        # Initialize pre-built building with lifecycle data
+                        # Start with random age to simulate existing city
+                        import random
+                        random_age = random.randint(10, 40)  # Pre-built buildings have some age
+                        
+                        self.buildings[x][y] = {
+                            "type": name,
+                            "turn_built": -random_age,  # Negative to indicate pre-built
+                            "age": random_age,
+                            "is_replaceable": random_age > 30,  # Older buildings may be replaceable
+                        }
+                        
+                        # Mark as built by "system" (no specific agent)
+                        self.builders[x][y] = -1  # -1 indicates pre-built
+                        
+                        if name in BUILDING_TYPES:
+                            self.building_types[x][y] = BUILDING_TYPES.index(name)
+                        
+                        logger.debug(f"Initialized pre-built {name} at ({x},{y}) with age {random_age}")
+                        break
+
+    def _age_all_buildings(self):
+        """Age all buildings by 1 turn and update their replaceability status."""
+        for x in range(self.grid_x):
+            for y in range(self.grid_y):
+                if self.buildings[x][y] is not None:
+                    building = self.buildings[x][y]
+                    building["age"] += 1
+                    
+                    # Calculate current income to check replaceability
+                    income = self._calculate_building_income(building, building["type"])
+                    
+                    # Update replaceability status
+                    if income <= INCOME_LIFECYCLE["replacement_threshold"]:
+                        building["is_replaceable"] = True
+                        logger.debug(f"Building {building['type']} at ({x},{y}) age {building['age']} becomes replaceable (income: {income*100:.1f}%)")
+
+    def _remove_building_effects(self, x, y, building_type):
+        """Remove the grid effects of a building when it's replaced."""
+        building_data = self.TERRAIN_AND_PROJECTS[building_type]
+        effect = building_data["effect"]
+        
+        # Remove direct effects
+        self.grid[x][y][0] -= effect["G"]  # Greenery
+        self.grid[x][y][1] -= effect["V"]  # Vitality
+        self.grid[x][y][2] -= effect["D"]  # Density
+        self.grid[x][y][3] -= effect["A"]  # Adaptability
+        self.grid[x][y][4] -= effect["S"]  # Sustainability
+        self.grid[x][y][5] -= effect["F"]  # Flood_Resistance
+        
+        # Remove neighbor effects
+        if "neighbors" in building_data:
+            neighbors = building_data["neighbors"]
+            for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
+                nx, ny = x + dx, y + dy
+                if 0 <= nx < self.grid_x and 0 <= ny < self.grid_y:
+                    self.grid[nx][ny][0] -= neighbors["G"]
+                    self.grid[nx][ny][1] -= neighbors["V"]
+                    self.grid[nx][ny][2] -= neighbors["D"]
+                    self.grid[nx][ny][3] -= neighbors["A"]
+                    self.grid[nx][ny][4] -= neighbors["S"]
+                    self.grid[nx][ny][5] -= neighbors["F"]
 
     def step(self, action):
         logger.debug("Calling environment step")
@@ -270,11 +382,11 @@ class SimCityScaleUpEnv(AECEnv):
                 logger.debug(
                     f"environment: Agent {agent} tried to build on non-buildable terrain at ({x},{y}). Penalty: {terrain_penalty}."
                 )
-            elif self.buildings[x][y] is not None:
+            elif self.buildings[x][y] is not None and not self.buildings[x][y].get("is_replaceable", False):
                 build_on_occupied_penalty = -999999999999999999
                 reward += build_on_occupied_penalty
                 logger.debug(
-                    f"environment: Agent {agent} tried to build on an occupied cell ({x},{y}). Penalty: {build_on_occupied_penalty}."
+                    f"environment: Agent {agent} tried to build on a non-replaceable building at ({x},{y}). Penalty: {build_on_occupied_penalty}."
                 )
             else:
                 building_data = self.TERRAIN_AND_PROJECTS[building_type]
@@ -298,10 +410,19 @@ class SimCityScaleUpEnv(AECEnv):
                         f"environment: Agent {agent} resources after building: {player_resources}"
                     )
 
+                    # Remove old building effects if replacing
+                    if self.buildings[x][y] is not None:
+                        old_building = self.buildings[x][y]
+                        old_type = old_building["type"]
+                        logger.debug(f"Replacing {old_type} with {building_type} at ({x},{y})")
+                        self._remove_building_effects(x, y, old_type)
+
                     # Update buildings and builders
                     self.buildings[x][y] = {
                         "type": building_type,
                         "turn_built": self.num_moves,
+                        "age": 0,  # Building age for income calculation
+                        "is_replaceable": False,  # Can be replaced when income is low
                     }
                     self.builders[x][y] = self.agents.index(
                         agent
@@ -345,19 +466,31 @@ class SimCityScaleUpEnv(AECEnv):
                         + building_utility["reputation"],
                     }
 
-        # Update utilities based on buildings
+        # Age all buildings once per full round (only when first agent acts)
+        if self.agents.index(agent) == 0:
+            self._age_all_buildings()
+        
+        # Update utilities based on buildings - only for buildings owned by current agent
         for gx in range(self.grid_x):
             for gy in range(self.grid_y):
-                if self.buildings[gx][gy] is not None:
-                    b_type = self.buildings[gx][gy]["type"]
-                    b_utility = self.TERRAIN_AND_PROJECTS[b_type]["utility"]
-                    self.players[agent].resources["money"] += b_utility["money"]
-                    self.players[agent].resources["reputation"] += b_utility[
-                        "reputation"
-                    ]
-                    self.players[agent].self_score += (
-                        b_utility["money"] + b_utility["reputation"]
-                    )
+                if (self.buildings[gx][gy] is not None and 
+                    self.builders[gx][gy] == self.agents.index(agent)):
+                    building = self.buildings[gx][gy]
+                    b_type = building["type"]
+                    
+                    # Calculate income based on age and lifecycle
+                    income = self._calculate_building_income(building, b_type)
+                    
+                    # Apply income if building is producing
+                    if income > 0:
+                        b_utility = self.TERRAIN_AND_PROJECTS[b_type]["utility"]
+                        # Apply decay multiplier
+                        actual_money = b_utility["money"] * income
+                        actual_reputation = b_utility["reputation"] * income
+                        
+                        self.players[agent].resources["money"] += actual_money
+                        self.players[agent].resources["reputation"] += actual_reputation
+                        self.players[agent].self_score += (actual_money + actual_reputation)
 
         # Calculate environment scores using new 6-parameter system
         env_scores = self.calculate_environment_score()
