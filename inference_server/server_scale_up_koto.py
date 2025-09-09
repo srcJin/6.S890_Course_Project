@@ -135,7 +135,9 @@ def load_model(model_path):
 
 
 # Try to load default koto model if available
-default_model_path = os.path.join(os.path.dirname(__file__), "saved_models_scale_up_koto")
+default_model_path = os.path.join(
+    os.path.dirname(__file__), "saved_models_scale_up_koto"
+)
 
 # Load the koto models
 if os.path.exists(default_model_path):
@@ -464,18 +466,18 @@ def get_env_info():
         env_info_dict = env.get_env_info()
         env_info_dict.update(
             {
-                "building_types": getattr(env.env, 'BUILDING_TYPES', {}),
+                "building_types": getattr(env.env, "BUILDING_TYPES", {}),
                 "grid_layout": env.env.grid.tolist(),
-                "terrain_and_projects": getattr(env.env, 'terrain_and_projects', {}),
+                "terrain_and_projects": getattr(env.env, "terrain_and_projects", {}),
                 "parameters": ["G", "V", "D", "A", "S", "F"],
                 "parameter_names": {
                     "G": "Greenery",
-                    "V": "Vitality", 
+                    "V": "Vitality",
                     "D": "Density",
                     "A": "Adaptability",
                     "S": "Sustainability",
-                    "F": "Flood_Resistance"
-                }
+                    "F": "Flood_Resistance",
+                },
             }
         )
 
@@ -516,7 +518,7 @@ def render_environment():
 if __name__ == "__main__":
     logger.info("Starting SimCity Scale-Up Koto Inference Server")
     logger.info(f"Environment: 12x12 grid, {n_agents} agents, {n_actions} actions")
-    logger.info("Server will run on http://127.0.0.1:5889")
+    logger.info("Server will run on http://127.0.0.1:5888")
 
     # Run Flask app
-    app.run(host="127.0.0.1", port=5889, debug=False)
+    app.run(host="127.0.0.1", port=5888, debug=False)
