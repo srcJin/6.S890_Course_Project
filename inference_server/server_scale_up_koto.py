@@ -134,6 +134,28 @@ def load_model(model_path):
         return False
 
 
+# --------------------------
+# Utility: JSON-safe conversion
+# --------------------------
+def json_safe(obj):
+    """Recursively convert numpy types to native Python for JSON serialization."""
+    try:
+        import numpy as _np
+    except Exception:
+        _np = None
+
+    if _np is not None:
+        if isinstance(obj, _np.ndarray):
+            return obj.tolist()
+        if isinstance(obj, _np.generic):
+            return obj.item()
+    if isinstance(obj, dict):
+        return {k: json_safe(v) for k, v in obj.items()}
+    if isinstance(obj, (list, tuple)):
+        return [json_safe(v) for v in obj]
+    return obj
+
+
 # Try to load default koto model if available
 default_model_path = os.path.join(
     os.path.dirname(__file__), "saved_models_scale_up_koto"
@@ -208,7 +230,7 @@ def reset_environment():
             "episode_id": episode_counter,
             "observation": obs.tolist(),
             "avail_actions": avail_actions.tolist(),
-            "info": info,
+            "info": json_safe(info),
             "current_agent": (
                 env.env.agent_selection if hasattr(env.env, "agent_selection") else "P1"
             ),
@@ -292,7 +314,10 @@ def step_environment():
             rewards_list = [float(rewards)] * n_agents
 
         # Update episode tracking
-        current_episode["actions"].append(actions)
+        # store python lists for actions
+        current_episode["actions"].append(
+            actions.tolist() if hasattr(actions, "tolist") else list(actions)
+        )
         current_episode["rewards"].append(rewards_list)
         current_episode["observations"].append(next_obs.tolist())
         current_episode["step_count"] += 1
@@ -309,11 +334,13 @@ def step_environment():
             "truncated": bool(truncated),
             "episode_done": bool(episode_done),
             "avail_actions": next_avail_actions.tolist(),
-            "actions_taken": actions,
+            "actions_taken": (
+                actions.tolist() if hasattr(actions, "tolist") else list(actions)
+            ),
             "info": {
                 "step_count": current_episode["step_count"],
                 "human_action": human_action,
-                "env_info": env_info,
+                "env_info": json_safe(env_info),
             },
             "current_agent": (
                 env.env.agent_selection if hasattr(env.env, "agent_selection") else "P1"
@@ -399,7 +426,7 @@ def simulate_full_episode():
                     ),
                     "terminated": bool(terminated),
                     "truncated": bool(truncated),
-                    "info": env_info,
+                    "info": json_safe(env_info),
                 }
             )
 
