@@ -32,9 +32,9 @@ python main.py \
     log_interval=1000 \
     runner_log_interval=1000 \
     learner_log_interval=1000 \
-    buffer_size=40000 \
-    batch_size=128 \
-    batch_size_run=16 \
+    buffer_size=10000 \
+    batch_size=64 \
+    batch_size_run=8 \
     epochs=10 \
     common_reward=False
 
