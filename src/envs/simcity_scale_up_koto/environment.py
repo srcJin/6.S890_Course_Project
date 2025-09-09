@@ -4,17 +4,17 @@
 from pettingzoo.utils import AECEnv, agent_selector
 from gymnasium import spaces
 import numpy as np
-from .players import BasePlayer, BalancedPlayer, InterestDrivenPlayer, AltruisticPlayer
+from .players import (
+    BasePlayer,
+    BalancedPlayer,
+    InterestDrivenPlayer,
+    AltruisticPlayer,
+    EnvironmentalFocusedPlayer,
+)
 from .config import (
-    BUILDING_TYPES,
-    BUILDING_COSTS,
+    TERRAIN_AND_PROJECTS,
     BUILDING_UTILITIES,
-    BUILDING_EFFECTS,
-    TERRAIN_TYPES,
-    PREBUILT_PROJECTS,
-    DEFAULT_GRID_LAYOUT,
-    DEFAULT_TERRAIN_ASSIGNMENT,
-    DEFAULT_PREBUILT_ASSIGNMENT,
+    INITIAL_GRID,
 )
 from .log import (
     display_current_turn,
@@ -27,29 +27,36 @@ from utils.logging import get_logger
 logger = get_logger(log_file_path="simulation_scale_up.log")
 
 NO_OP = 0
-# Use building types from config
+# Extract building types from config
+BUILDING_TYPES = [
+    name for name, data in TERRAIN_AND_PROJECTS.items() if data["type"] == "project"
+]
 NUM_BUILDING_TYPES = len(BUILDING_TYPES)
 
 
 class SimCityScaleUpEnv(AECEnv):
     """
-    Urban Resilience-Focused SimCity Environment
+    Urban Resilience-Focused SimCity Environment (Koto Experiment)
 
-    Grid Parameters:
-    - S: Sustainability (environmental impact, renewable energy)
-    - W: Well-being (community health, social cohesion)
-    - R: Resilience (disaster preparedness, adaptability)
-    - C: Climate (carbon footprint, climate adaptation)
+    Grid Parameters (6-parameter system):
+    - G: Greenery (urban green spaces, biodiversity, environmental quality)
+    - V: Vitality (economic activity, social vibrancy, community life)
+    - D: Density (population density, urban development intensity)
+    - A: Adaptability (climate adaptation capacity, infrastructure flexibility)
+    - S: Sustainability (environmental footprint, resource efficiency)
+    - F: Flood_Resistance (disaster preparedness, protective infrastructure)
 
     Building Types:
     Basic Development:
-    - House: Standard residential housing (economic focus)
-    - Shop: Commercial retail space (immediate profits)
-    
+    - House: Standard residential housing
+    - Shop: Commercial retail space
+    - Office: Commercial office building
+    - Factory: Industrial manufacturing facility
+
     Resilience Projects:
-    - GreenPark: Urban green infrastructure for sustainability and well-being
-    - CommunityHub: Social resilience centers for community cohesion
-    - SolarGrid: Renewable energy infrastructure
+    - Park: Green park for community recreation
+    - Shelter: Community resilience center
+    - Watergate: Renewable energy infrastructure
     - FloodBarrier: Climate protection infrastructure
     """
 
@@ -59,10 +66,9 @@ class SimCityScaleUpEnv(AECEnv):
         self, grid_x=8, grid_y=8, common_reward=False, reward_alpha=0.5, reward_beta=0.5
     ):
         super().__init__()
-        self.BUILDING_COSTS = BUILDING_COSTS
+        self.TERRAIN_AND_PROJECTS = TERRAIN_AND_PROJECTS
         self.BUILDING_TYPES = BUILDING_TYPES
         self.BUILDING_UTILITIES = BUILDING_UTILITIES
-        self.BUILDING_EFFECTS = BUILDING_EFFECTS
         self.common_reward = common_reward
         self.grid_x = grid_x
         self.grid_y = grid_y
@@ -84,14 +90,18 @@ class SimCityScaleUpEnv(AECEnv):
             agent: spaces.Discrete(self.total_actions) for agent in self.agents
         }
 
-        # Observation space with 4 grid parameters (S, W, R, C)
+        # Observation space with 6 grid parameters (G, V, D, A, S, F)
         self.observation_spaces = {
             agent: spaces.Dict(
                 {
                     "grid": spaces.Box(
                         low=0,
                         high=100,
-                        shape=(self.grid_x, self.grid_y, 4),  # 4 parameters: S, W, R, C
+                        shape=(
+                            self.grid_x,
+                            self.grid_y,
+                            6,
+                        ),  # 6 parameters: G, V, D, A, S, F
                         dtype=np.int32,
                     ),
                     "resources": spaces.Dict(
@@ -127,7 +137,9 @@ class SimCityScaleUpEnv(AECEnv):
             elif i % 4 == 2:
                 self.players[agent] = InterestDrivenPlayer(agent)  # Economic efficiency
             else:
-                self.players[agent] = BalancedPlayer(agent)  # Environmental focus
+                self.players[agent] = EnvironmentalFocusedPlayer(
+                    agent
+                )  # Environmental focus
 
         # Initialize previous integrated scores for reward calculation
         self.previous_integrated_score = {agent: 0 for agent in self.agents}
@@ -138,19 +150,18 @@ class SimCityScaleUpEnv(AECEnv):
         if seed is not None:
             np.random.seed(seed)
 
-        # Initialize grid with baseline resilience values
-        self.grid = np.empty((self.grid_x, self.grid_y, 4), dtype=np.int32)
-        self.grid[:, :, 0] = 20  # S - Sustainability baseline
-        self.grid[:, :, 1] = 25  # W - Well-being baseline
-        self.grid[:, :, 2] = 15  # R - Resilience baseline
-        self.grid[:, :, 3] = 10  # C - Climate adaptation baseline
+        # Initialize grid with baseline values for 6 parameters
+        # These will be modified by terrain and project effects from INITIAL_GRID
+        self.grid = np.empty((self.grid_x, self.grid_y, 6), dtype=np.int32)
+        self.grid[:, :, 0] = 100  # G - Greenery baseline
+        self.grid[:, :, 1] = 100  # V - Vitality baseline
+        self.grid[:, :, 2] = 100  # D - Density baseline
+        self.grid[:, :, 3] = 100  # A - Adaptability baseline
+        self.grid[:, :, 4] = 100  # S - Sustainability baseline
+        self.grid[:, :, 5] = 100  # F - Flood_Resistance baseline
 
-        # Initialize grid layout (0=buildable, 1=terrain, 2=infrastructure)
-        self.grid_layout = np.array(DEFAULT_GRID_LAYOUT)
-
-        # Initialize terrain and pre-built project mappings
-        self.terrain_map = DEFAULT_TERRAIN_ASSIGNMENT.copy()
-        self.prebuilt_map = DEFAULT_PREBUILT_ASSIGNMENT.copy()
+        # Initialize grid layout from config (predefined terrain and projects)
+        self.grid_layout = np.array(INITIAL_GRID)
 
         self.buildings = np.full((self.grid_x, self.grid_y), None)
         self.builders = np.full((self.grid_x, self.grid_y), -1, dtype=np.int32)
@@ -158,8 +169,9 @@ class SimCityScaleUpEnv(AECEnv):
             (self.grid_x, self.grid_y), -1, dtype=np.int32
         )  # -1 for no building
 
-        # Apply pre-built city projects effects to grid
-        self._apply_prebuilt_projects()
+        # Calculate actual grid parameters based on INITIAL_GRID terrain and projects
+        # This applies effects from Water, Road, House, Factory, etc. to each cell
+        self._apply_initial_terrain_effects()
 
         self.individual_rewards_list = {agent: 0 for agent in self.agents}
         self.common_reward_value = 0
@@ -167,9 +179,8 @@ class SimCityScaleUpEnv(AECEnv):
         self.terminations = {agent: False for agent in self.agents}
         self.truncations = {agent: False for agent in self.agents}
 
-        # Higher starting resources for scaled environment
+        # Starting resources from config (already set in player init)
         for player in self.players.values():
-            player.resources = {"money": 80, "reputation": 80}
             player.self_score = 0
             player.integrated_score = 0
 
@@ -186,43 +197,45 @@ class SimCityScaleUpEnv(AECEnv):
         logger.debug("environment: Urban Resilience Environment reset completed.")
         return self.observe(self.agent_selection), {}
 
-    def _apply_prebuilt_projects(self):
-        """Apply effects of pre-built city projects to the grid."""
-        for (x, y), project_type in self.prebuilt_map.items():
-            if project_type in PREBUILT_PROJECTS:
-                project = PREBUILT_PROJECTS[project_type]
+    def _apply_initial_terrain_effects(self):
+        """Apply initial terrain and project effects from the grid layout."""
+        for x in range(self.grid_x):
+            for y in range(self.grid_y):
+                cell_id = self.grid_layout[x][y]
+                # Find the terrain/project type for this cell
+                for name, data in self.TERRAIN_AND_PROJECTS.items():
+                    if data["id"] == cell_id:
+                        effect = data["effect"]
+                        # Apply effects to this cell (G, V, D, A, S, F)
+                        self.grid[x][y][0] += effect["G"]
+                        self.grid[x][y][1] += effect["V"]
+                        self.grid[x][y][2] += effect["D"]
+                        self.grid[x][y][3] += effect["A"]
+                        self.grid[x][y][4] += effect["S"]
+                        self.grid[x][y][5] += effect["F"]
 
-                # Apply direct effects to the project cell
-                self.grid[x][y][0] += project["effects"]["S"]  # Sustainability
-                self.grid[x][y][1] += project["effects"]["W"]  # Well-being
-                self.grid[x][y][2] += project["effects"]["R"]  # Resilience
-                self.grid[x][y][3] += project["effects"]["C"]  # Climate
-
-                # Apply neighbor effects
-                for dx, dy in [
-                    (-1, 0),
-                    (1, 0),
-                    (0, -1),
-                    (0, 1),
-                    (1, 1),
-                    (-1, -1),
-                    (1, -1),
-                    (-1, 1),
-                ]:
-                    nx, ny = x + dx, y + dy
-                    if 0 <= nx < self.grid_x and 0 <= ny < self.grid_y:
-                        self.grid[nx][ny][0] += project["neighbor_effects"]["S"]
-                        self.grid[nx][ny][1] += project["neighbor_effects"]["W"]
-                        self.grid[nx][ny][2] += project["neighbor_effects"]["R"]
-                        self.grid[nx][ny][3] += project["neighbor_effects"]["C"]
-
-                logger.debug(
-                    f"environment: Applied {project_type} effects at ({x},{y})"
-                )
+                        # Apply neighbor effects if they exist
+                        if "neighbors" in data:
+                            neighbors = data["neighbors"]
+                            for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
+                                nx, ny = x + dx, y + dy
+                                if 0 <= nx < self.grid_x and 0 <= ny < self.grid_y:
+                                    self.grid[nx][ny][0] += neighbors["G"]
+                                    self.grid[nx][ny][1] += neighbors["V"]
+                                    self.grid[nx][ny][2] += neighbors["D"]
+                                    self.grid[nx][ny][3] += neighbors["A"]
+                                    self.grid[nx][ny][4] += neighbors["S"]
+                                    self.grid[nx][ny][5] += neighbors["F"]
+                        break
 
     def _is_buildable(self, x, y):
-        """Check if a cell is buildable (not terrain or pre-built projects)."""
-        return self.grid_layout[x][y] == 0 and self.buildings[x][y] is None
+        """Check if a cell is buildable (Empty terrain type)."""
+        cell_id = self.grid_layout[x][y]
+        # Find if this cell is buildable (Empty terrain)
+        for name, data in self.TERRAIN_AND_PROJECTS.items():
+            if data["id"] == cell_id:
+                return data["is_buildable"] and self.buildings[x][y] is None
+        return False
 
     def step(self, action):
         logger.debug("Calling environment step")
@@ -264,7 +277,8 @@ class SimCityScaleUpEnv(AECEnv):
                     f"environment: Agent {agent} tried to build on an occupied cell ({x},{y}). Penalty: {build_on_occupied_penalty}."
                 )
             else:
-                building_cost = BUILDING_COSTS[building_type]
+                building_data = self.TERRAIN_AND_PROJECTS[building_type]
+                building_cost = building_data["cost"]
                 player_resources = self.players[agent].resources
                 if (
                     player_resources["money"] < building_cost["money"]
@@ -294,32 +308,29 @@ class SimCityScaleUpEnv(AECEnv):
                     )  # 0 for P1, 1 for P2, 2 for P3, 3 for P4
                     self.building_types[x][y] = BUILDING_TYPES.index(building_type)
 
-                    # Update self grid score with new parameters (S, W, R, C)
-                    building_effect = BUILDING_EFFECTS[building_type]
-                    self.grid[x][y][0] += building_effect["S"]  # Sustainability
-                    self.grid[x][y][1] += building_effect["W"]  # Well-being
-                    self.grid[x][y][2] += building_effect["R"]  # Resilience
-                    self.grid[x][y][3] += building_effect["C"]  # Climate
+                    # Update grid with new 6-parameter system (G, V, D, A, S, F)
+                    building_effect = building_data["effect"]
+                    self.grid[x][y][0] += building_effect["G"]  # Greenery
+                    self.grid[x][y][1] += building_effect["V"]  # Vitality
+                    self.grid[x][y][2] += building_effect["D"]  # Density
+                    self.grid[x][y][3] += building_effect["A"]  # Adaptability
+                    self.grid[x][y][4] += building_effect["S"]  # Sustainability
+                    self.grid[x][y][5] += building_effect["F"]  # Flood_Resistance
 
                     # Update neighbors score
-                    for dx, dy in [
-                        (-1, 0),
-                        (1, 0),
-                        (0, -1),
-                        (0, 1),
-                        (1, 1),
-                        (-1, -1),
-                        (1, -1),
-                        (-1, 1),
-                    ]:
-                        nx, ny = x + dx, y + dy
-                        if 0 <= nx < self.grid_x and 0 <= ny < self.grid_y:
-                            self.grid[nx][ny][0] += building_effect["neighbors"]["S"]
-                            self.grid[nx][ny][1] += building_effect["neighbors"]["W"]
-                            self.grid[nx][ny][2] += building_effect["neighbors"]["R"]
-                            self.grid[nx][ny][3] += building_effect["neighbors"]["C"]
+                    if "neighbors" in building_data:
+                        neighbors = building_data["neighbors"]
+                        for dx, dy in [(-1, 0), (1, 0), (0, -1), (0, 1)]:
+                            nx, ny = x + dx, y + dy
+                            if 0 <= nx < self.grid_x and 0 <= ny < self.grid_y:
+                                self.grid[nx][ny][0] += neighbors["G"]
+                                self.grid[nx][ny][1] += neighbors["V"]
+                                self.grid[nx][ny][2] += neighbors["D"]
+                                self.grid[nx][ny][3] += neighbors["A"]
+                                self.grid[nx][ny][4] += neighbors["S"]
+                                self.grid[nx][ny][5] += neighbors["F"]
 
-                    building_utility = BUILDING_UTILITIES[building_type]
+                    building_utility = building_data["utility"]
                     immediate_reward = (
                         building_utility["money"] + building_utility["reputation"]
                     )
@@ -339,7 +350,7 @@ class SimCityScaleUpEnv(AECEnv):
             for gy in range(self.grid_y):
                 if self.buildings[gx][gy] is not None:
                     b_type = self.buildings[gx][gy]["type"]
-                    b_utility = BUILDING_UTILITIES[b_type]
+                    b_utility = self.TERRAIN_AND_PROJECTS[b_type]["utility"]
                     self.players[agent].resources["money"] += b_utility["money"]
                     self.players[agent].resources["reputation"] += b_utility[
                         "reputation"
@@ -348,43 +359,21 @@ class SimCityScaleUpEnv(AECEnv):
                         b_utility["money"] + b_utility["reputation"]
                     )
 
-        # Calculate environment score
-        self.env_score = self.calculate_environment_score()["env_score"]
+        # Calculate environment scores using new 6-parameter system
+        env_scores = self.calculate_environment_score()
+        self.env_score = env_scores["env_score"]
+        gvd_score = env_scores["gvd_score"]
+        asf_score = env_scores["asf_score"]
+
         logger.debug(f"environment: env_score after step: {self.env_score}")
 
-        # Mode 1: all players intergrated score is the same
-        # alpha, beta = 0.5, 0.5
-        # self.players[agent].integrated_score = alpha * self.players[agent].self_score + beta * self.env_score
+        # Update player state using new utility function with GVD and ASF scores
+        self.players[agent].update_state(reward, info_resources, gvd_score, asf_score)
 
-        # Mode 2: assign different alpha and beta for different player types
-        if isinstance(self.players[agent], InterestDrivenPlayer):
-            alpha, beta = 0.8, 0.2
-            logger.debug(
-                f"environment: Player {agent} is InterestDrivenPlayer, using alpha={alpha}, beta={beta}"
-            )
-        elif isinstance(self.players[agent], AltruisticPlayer):
-            alpha, beta = 0.2, 0.8
-            logger.debug(
-                f"environment: Player {agent} is AltruisticPlayer, using alpha={alpha}, beta={beta}"
-            )
-        elif isinstance(self.players[agent], BalancedPlayer):
-            alpha, beta = 0.5, 0.5
-            logger.debug(
-                f"environment: Player {agent} is BalancedPlayer, using alpha={alpha}, beta={beta}"
-            )
-        else:
-            alpha, beta = 0.5, 0.5  # Default for unknown player types
-            logger.debug(
-                f"environment: Player {agent} is unknown type, using alpha={alpha}, beta={beta}"
-            )
-
-        # Update player's integrated score
-        self.players[agent].integrated_score = (
-            alpha * self.players[agent].self_score + beta * self.env_score
-        )
         logger.debug(
             f"environment: Player {agent} - Self score: {self.players[agent].self_score}, "
-            f"Integrated score: {self.players[agent].integrated_score} (alpha={alpha}, beta={beta})"
+            f"Integrated score: {self.players[agent].integrated_score} "
+            f"(α={self.players[agent].alpha}, β={self.players[agent].beta}, γ={self.players[agent].gamma})"
         )
 
         log_environment_score(self.num_moves, self.env_score)
@@ -433,20 +422,36 @@ class SimCityScaleUpEnv(AECEnv):
         return building_type, x, y
 
     def calculate_environment_score(self):
-        S_avg = np.mean(self.grid[:, :, 0])  # Sustainability
-        W_avg = np.mean(self.grid[:, :, 1])  # Well-being
-        R_avg = np.mean(self.grid[:, :, 2])  # Resilience
-        C_avg = np.mean(self.grid[:, :, 3])  # Climate
-        env_score = (S_avg + W_avg + R_avg + C_avg) / 4
+        G_avg = np.mean(self.grid[:, :, 0])  # Greenery
+        V_avg = np.mean(self.grid[:, :, 1])  # Vitality
+        D_avg = np.mean(self.grid[:, :, 2])  # Density
+        A_avg = np.mean(self.grid[:, :, 3])  # Adaptability
+        S_avg = np.mean(self.grid[:, :, 4])  # Sustainability
+        F_avg = np.mean(self.grid[:, :, 5])  # Flood_Resistance
+
+        # Calculate GVD score (traditional urban metrics)
+        gvd_score = (G_avg + V_avg + D_avg) / 3
+        # Calculate ASF score (resilience metrics)
+        asf_score = (A_avg + S_avg + F_avg) / 3
+        # Overall environment score
+        env_score = (G_avg + V_avg + D_avg + A_avg + S_avg + F_avg) / 6
+
         logger.debug(
-            f"environment: calculate_environment_score S_avg={S_avg}, W_avg={W_avg}, R_avg={R_avg}, C_avg={C_avg}, env_score={env_score}"
+            f"environment: calculate_environment_score G={G_avg:.1f}, V={V_avg:.1f}, D={D_avg:.1f}, A={A_avg:.1f}, S={S_avg:.1f}, F={F_avg:.1f}"
+        )
+        logger.debug(
+            f"environment: GVD_score={gvd_score:.1f}, ASF_score={asf_score:.1f}, env_score={env_score:.1f}"
         )
 
         return {
+            "G_avg": G_avg,
+            "V_avg": V_avg,
+            "D_avg": D_avg,
+            "A_avg": A_avg,
             "S_avg": S_avg,
-            "W_avg": W_avg,
-            "R_avg": R_avg,
-            "C_avg": C_avg,
+            "F_avg": F_avg,
+            "gvd_score": gvd_score,
+            "asf_score": asf_score,
             "env_score": env_score,
         }
 
@@ -499,8 +504,7 @@ class SimCityScaleUpEnv(AECEnv):
             "resources": self.players[agent].resources.copy(),
             "builders": self.builders.copy(),
             "building_types": self.building_types.copy(),
-            "terrain_map": self.terrain_map.copy(),
-            "prebuilt_map": self.prebuilt_map.copy(),
+            "grid_layout": self.grid_layout.copy(),
         }
         logger.debug(f"environment: observe Observation for {agent}: {observation}")
         return observation
@@ -534,7 +538,9 @@ class SimCityScaleUpEnv(AECEnv):
                     elif b["type"] == "CommunityHub":
                         row += "[C]"
                     elif b["type"] == "SolarGrid":
-                        row += "[O]"  # Solar grid uses O to avoid conflict with Shop's S
+                        row += (
+                            "[O]"  # Solar grid uses O to avoid conflict with Shop's S
+                        )
                     elif b["type"] == "FloodBarrier":
                         row += "[F]"
                     else:

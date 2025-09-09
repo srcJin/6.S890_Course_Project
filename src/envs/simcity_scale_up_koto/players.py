@@ -1,7 +1,5 @@
 # src/envs/simcity/players.py
 
-import random
-from .config import BUILDING_TYPES, BUILDING_COSTS
 from utils.logging import get_logger
 
 logger = get_logger(log_file_path="simulation.log")

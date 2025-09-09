@@ -1,2 +1,2 @@
 from .environment import SimCityScaleUpEnv
-from .players import BalancedPlayer, InterestDrivenPlayer, AltruisticPlayer
+from .players import BalancedPlayer, InterestDrivenPlayer, AltruisticPlayer, EnvironmentalFocusedPlayer

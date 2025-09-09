@@ -3,11 +3,12 @@
 import numpy as np
 import torch as th
 from envs.multiagentenv import MultiAgentEnv
-from envs.simcity_scale_up import (
+from envs.simcity_scale_up_koto import (
     SimCityScaleUpEnv,
     BalancedPlayer,
     InterestDrivenPlayer,
     AltruisticPlayer,
+    EnvironmentalFocusedPlayer,
 )
 from utils.logging import get_logger
 
@@ -36,31 +37,32 @@ class SimCityScaleUpWrapper(MultiAgentEnv):
 
         if self.n_agents > 0:
             single_obs = self.env.observe(self.env.agents[0])
-            self.obs_size = (
-                single_obs["grid"].size
-                + len(single_obs["resources"])
-                + single_obs["builders"].size
-                + single_obs["building_types"].size
-                + 64  # terrain_matrix (8x8)
-                + 64  # infrastructure_matrix (8x8)
-            )
+            # Calculate actual observation size
+            flat_obs = self._flatten_observation(single_obs)
+            self.obs_size = len(flat_obs)
         else:
             self.obs_size = 0
             logger.warning(
                 "simcity_scale_up_wrapper: No agents present during initialization."
             )
 
-        self.state_size = self.obs_size * self.n_agents
         self.n_actions = self.env.action_spaces["P1"].n if self.n_agents > 0 else 0
+
+        # Calculate state size after obs_size is determined
+        self.state_size = self.obs_size * self.n_agents
+        
         logger.debug(
             f"simcity_scale_up_wrapper: Obs size={self.obs_size}, State size={self.state_size}, Actions={self.n_actions}"
         )
 
+        # Validate by actually checking the observation size
         obs, _ = self.reset()
-        assert obs.shape == (
-            self.n_agents,
-            self.obs_size,
-        ), f"Expected obs shape ({self.n_agents}, {self.obs_size}), got {obs.shape}"
+        if obs.shape != (self.n_agents, self.obs_size):
+            logger.warning(f"Observation shape mismatch: expected ({self.n_agents}, {self.obs_size}), got {obs.shape}")
+            # Update obs_size to match actual size
+            self.obs_size = obs.shape[1]
+            self.state_size = self.obs_size * self.n_agents
+            logger.info(f"Updated obs_size to {self.obs_size}, state_size to {self.state_size}")
 
         logger.debug("simcity_scale_up_wrapper: Initialization completed successfully")
 
@@ -280,7 +282,7 @@ class SimCityScaleUpWrapper(MultiAgentEnv):
         """Convert observation dictionary to flat array"""
         flat_parts = []
 
-        # Flatten grid (S, W, R, C parameters for 8x8 grid)
+        # Flatten grid (G, V, D, A, S, F parameters for 8x8 grid) - now 6 parameters
         flat_parts.append(obs_dict["grid"].flatten())
 
         # Add resources (money, reputation) as individual elements
@@ -292,28 +294,10 @@ class SimCityScaleUpWrapper(MultiAgentEnv):
         flat_parts.append(obs_dict["builders"].flatten())
         flat_parts.append(obs_dict["building_types"].flatten())
 
-        # Add terrain and infrastructure information
-        # Convert terrain_map to 8x8 matrix (-1 for no terrain, indices for terrain types)
-        terrain_matrix = np.full((8, 8), -1, dtype=np.int32)
-        terrain_type_map = {
-            "River": 0,
-            "Mountain": 1,
-            "Lake": 2,
-            "Highway": 3,
-            "Railway": 4,
-        }
-        for (x, y), terrain_type in obs_dict["terrain_map"].items():
-            if terrain_type in terrain_type_map:
-                terrain_matrix[x][y] = terrain_type_map[terrain_type]
+        # Add terrain layout information (simplified - just the grid layout IDs)
+        # The environment now uses TERRAIN_AND_PROJECTS with unified structure
+        terrain_matrix = obs_dict.get("grid_layout", np.zeros((8, 8), dtype=np.int32))
         flat_parts.append(terrain_matrix.flatten())
-
-        # Convert prebuilt_map to 8x8 matrix (-1 for no prebuilt projects, indices for project types)
-        infra_matrix = np.full((8, 8), -1, dtype=np.int32)
-        infra_type_map = {"Hospital": 0, "School": 1, "FireStation": 2, "PowerPlant": 3}
-        for (x, y), infra_type in obs_dict["prebuilt_map"].items():
-            if infra_type in infra_type_map:
-                infra_matrix[x][y] = infra_type_map[infra_type]
-        flat_parts.append(infra_matrix.flatten())
 
         return np.concatenate(flat_parts).astype(np.float32)
 

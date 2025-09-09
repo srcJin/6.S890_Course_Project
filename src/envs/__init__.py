@@ -23,6 +23,12 @@ def _import_simcity_scale_up():
     return SimCityScaleUpWrapper
 
 
+def _import_simcity_scale_up_koto():
+    from .simcity_scale_up_koto_wrapper import SimCityScaleUpWrapper
+
+    return SimCityScaleUpWrapper
+
+
 # if sys.platform == "linux":
 #     os.environ.setdefault(
 #         "SC2PATH", os.path.join(os.getcwd(), "3rdparty", "StarCraftII")
@@ -61,6 +67,9 @@ REGISTRY["gymma"] = gymma_fn
 REGISTRY["simcity"] = lambda **kwargs: env_fn(_import_simcity(), **kwargs)
 REGISTRY["simcity_scale_up"] = lambda **kwargs: env_fn(
     _import_simcity_scale_up(), **kwargs
+)
+REGISTRY["simcity_scale_up_koto"] = lambda **kwargs: env_fn(
+    _import_simcity_scale_up_koto(), **kwargs
 )
 
 # registering both smac and smacv2 causes a pysc2 error
