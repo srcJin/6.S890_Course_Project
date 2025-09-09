@@ -245,7 +245,24 @@ class SimCityScaleUpKotoWrapper(MultiAgentEnv):
             avail_actions = np.zeros(self.n_actions, dtype=np.float32)
             avail_actions[0] = 1.0  # No-op action
         else:
-            avail_actions = np.ones(self.n_actions, dtype=np.float32)
+            # Start with all actions unavailable, then enable NO-OP and valid build targets
+            avail_actions = np.zeros(self.n_actions, dtype=np.float32)
+            # Always allow NO-OP
+            avail_actions[0] = 1.0
+
+            # The discrete action layout is: 0 = NO-OP, then for each building type t in [0..NUM_BUILDING_TYPES-1]
+            # and each cell c in [0..num_cells-1], action index = 1 + t*num_cells + c
+            num_cells = self.env.grid_x * self.env.grid_y
+            # Iterate all cells and mark buildable ones for all project types
+            for x in range(self.env.grid_x):
+                for y in range(self.env.grid_y):
+                    if self.env._is_buildable(x, y):
+                        cell_index = x * self.env.grid_y + y
+                        # enable all building types on this cell
+                        for t in range(len(self.env.BUILDING_TYPES)):
+                            aidx = 1 + t * num_cells + cell_index
+                            if 0 <= aidx < self.n_actions:
+                                avail_actions[aidx] = 1.0
 
         logger.debug(
             f"simcity_scale_up_wrapper: Available actions for agent {agent_id}: {avail_actions}"
