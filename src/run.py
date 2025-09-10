@@ -52,12 +52,34 @@ def run(_run, _config, _log):
         f"{_config['name']}_seed{_config['seed']}_{map_name}_{datetime.datetime.now()}"
     )
 
+    # If resuming and user requests reuse of original logging dirs, derive token from checkpoint_path
+    if _config.get("reuse_tb_logging", False) and _config.get("checkpoint_path"):
+        # Expect checkpoint_path like .../results/models/<unique_token>
+        cp = _config.get("checkpoint_path")
+        # Normalize any escaped spaces (from older resume commands)
+        cp = cp.replace("\\ ", " ")
+        if os.path.isdir(cp):
+            parent = os.path.basename(os.path.normpath(cp))
+            if parent.startswith(f"{_config['name']}_seed"):
+                unique_token = parent
+                _log.info(f"Reusing unique_token (resume): {unique_token}")
+            else:
+                _log.warning(
+                    f"reuse_tb_logging set but checkpoint dir name {parent} does not look like a token; using new token {unique_token}"
+                )
+        else:
+            _log.warning(
+                f"reuse_tb_logging set but checkpoint_path {cp} not found; using new token {unique_token}"
+            )
+
     args.unique_token = unique_token
     if args.use_tensorboard:
         tb_logs_direc = os.path.join(
             dirname(dirname(abspath(__file__))), "results", "tb_logs"
         )
         tb_exp_direc = os.path.join(tb_logs_direc, "{}").format(unique_token)
+        # Directory may already exist if reusing
+        os.makedirs(tb_exp_direc, exist_ok=True)
         logger.setup_tb(tb_exp_direc)
 
     if args.use_wandb:
@@ -157,6 +179,7 @@ def run_sequential(args, logger):
     if args.use_cuda:
         learner.cuda()
 
+    resumed_loaded_t = None
     if args.checkpoint_path != "":
         timesteps = []
         timestep_to_load = 0
@@ -167,39 +190,39 @@ def run_sequential(args, logger):
             )
             return
 
-        # Go through all files in args.checkpoint_path
         for name in os.listdir(args.checkpoint_path):
             full_name = os.path.join(args.checkpoint_path, name)
-            # Check if they are dirs the names of which are numbers
             if os.path.isdir(full_name) and name.isdigit():
                 timesteps.append(int(name))
 
-        if args.load_step == 0:
-            # choose the max timestep
-            timestep_to_load = max(timesteps)
+        if timesteps:
+            if args.load_step == 0:
+                timestep_to_load = max(timesteps)
+            else:
+                timestep_to_load = min(timesteps, key=lambda x: abs(x - args.load_step))
+
+            model_path = os.path.join(args.checkpoint_path, str(timestep_to_load))
+            logger.console_logger.info("Loading model from {}".format(model_path))
+            learner.load_models(model_path)
+            runner.t_env = timestep_to_load
+            resumed_loaded_t = runner.t_env
+
+            if args.evaluate or args.save_replay:
+                runner.log_train_stats_t = runner.t_env
+                evaluate_sequential(args, runner)
+                logger.log_stat("episode", runner.t_env, runner.t_env)
+                logger.print_recent_stats()
+                logger.console_logger.info("Finished Evaluation")
+                return
         else:
-            # choose the timestep closest to load_step
-            timestep_to_load = min(timesteps, key=lambda x: abs(x - args.load_step))
-
-        model_path = os.path.join(args.checkpoint_path, str(timestep_to_load))
-
-        logger.console_logger.info("Loading model from {}".format(model_path))
-        learner.load_models(model_path)
-        runner.t_env = timestep_to_load
-
-        if args.evaluate or args.save_replay:
-            runner.log_train_stats_t = runner.t_env
-            evaluate_sequential(args, runner)
-            logger.log_stat("episode", runner.t_env, runner.t_env)
-            logger.print_recent_stats()
-            logger.console_logger.info("Finished Evaluation")
-            return
+            logger.console_logger.info("No checkpoints found in directory; starting fresh.")
 
     # start training
     episode = 0
     last_test_T = -args.test_interval - 1
     last_log_T = 0
-    model_save_time = 0
+    # Avoid overwriting the just-loaded checkpoint by skipping immediate save
+    model_save_time = resumed_loaded_t if resumed_loaded_t is not None else 0
 
     start_time = time.time()
     last_time = start_time
