@@ -25,25 +25,61 @@ import os
 import re
 import sys
 import subprocess
-from typing import List, Optional, Tuple
+from typing import List, Optional, Tuple, Dict
 
-RE_RUN_PREFIX = re.compile(r"^mappo_seed.*simcity_scale_up_koto_.*")
+# Accept legacy (simcity_scale_up) and new (simcity_scale_up_koto) naming
+RE_RUN_PREFIX = re.compile(r"^mappo_seed.*simcity_scale_up(_koto)?_.*")
 RE_STEP_DIR = re.compile(r"^[0-9]+$")
 
 ROOT = os.path.abspath(os.path.dirname(__file__))
-MODELS_DIR = os.path.join(ROOT, "results", "models")
 SRC_DIR = os.path.join(ROOT, "src")
 
+# Candidate model directories (training script cd's into src before running main.py)
+MODEL_DIR_CANDIDATES = [
+    os.path.join(ROOT, "results", "models"),            # root-level (older runs)
+    os.path.join(SRC_DIR, "results", "models"),          # src-level (current runs)
+]
 
-def find_runs() -> List[str]:
-    if not os.path.isdir(MODELS_DIR):
-        return []
-    runs = []
-    for name in sorted(os.listdir(MODELS_DIR)):
-        full = os.path.join(MODELS_DIR, name)
-        if os.path.isdir(full) and RE_RUN_PREFIX.match(name):
-            runs.append(full)
+
+def find_runs() -> List[Tuple[str, str]]:
+    """Return list of (run_path, origin_tag). origin_tag indicates which models dir."""
+    runs: List[Tuple[str, str]] = []
+    for root_dir in MODEL_DIR_CANDIDATES:
+        if not os.path.isdir(root_dir):
+            continue
+        try:
+            for name in sorted(os.listdir(root_dir)):
+                full = os.path.join(root_dir, name)
+                if os.path.isdir(full) and RE_RUN_PREFIX.match(name):
+                    runs.append((full, os.path.basename(root_dir)))
+        except Exception:
+            continue
+    # Sort deterministically by path name
+    runs.sort(key=lambda x: x[0])
     return runs
+
+
+def detect_env_tag(run_path: str) -> str:
+    base = os.path.basename(run_path)
+    if "_koto_" in base:
+        return "koto"
+    return "base"
+
+
+def build_run_metadata(runs: List[Tuple[str, str]]) -> List[Dict[str, object]]:
+    meta = []
+    for path, origin in runs:
+        steps = find_steps(path)
+        latest = steps[-1] if steps else None
+        env_tag = detect_env_tag(path)
+        meta.append({
+            "path": path,
+            "origin": origin,
+            "env": env_tag,
+            "n_ckpts": len(steps),
+            "latest": latest,
+        })
+    return meta
 
 
 def find_steps(run_dir: str) -> List[int]:
@@ -85,19 +121,31 @@ def build_command(args, run_dir: str, step: int) -> List[str]:
     return cmd
 
 
-def interactive_select(runs: List[str]) -> int:
+def interactive_select(runs: List[Tuple[str, str]], env_filter: Optional[str]) -> int:
+    meta = build_run_metadata(runs)
+    if env_filter:
+        meta = [m for m in meta if m["env"] == env_filter]
+        if not meta:
+            print(f"No runs match env_filter='{env_filter}'.")
+            sys.exit(1)
     print("Available runs:")
-    for idx, run in enumerate(runs):
-        steps = find_steps(run)
-        latest = steps[-1] if steps else None
-        print(f"[{idx}] {os.path.basename(run)} | checkpoints: {len(steps)} | latest: {latest}")
+    print("Idx | Env  | Ckpts | Latest  | Origin   | Directory")
+    print("----+------+-------+---------+----------+----------------------------------------------")
+    for idx, m in enumerate(meta):
+        print(f"{idx:>3} | {m['env']:<4} | {m['n_ckpts']:>5} | {str(m['latest']):>7} | {m['origin']:<8} | {os.path.basename(m['path'])}")
     while True:
         raw = input("Select run index (q to quit): ").strip()
         if raw.lower() in {"q", "quit", "exit"}:
             print("Aborted.")
             sys.exit(0)
-        if raw.isdigit() and 0 <= int(raw) < len(runs):
-            return int(raw)
+        if raw.isdigit():
+            sel = int(raw)
+            if 0 <= sel < len(meta):
+                # Map back to original runs list index
+                chosen_path = meta[sel]["path"]
+                for i, (rp, _) in enumerate(runs):
+                    if rp == chosen_path:
+                        return i
         print("Invalid selection.")
 
 
@@ -121,6 +169,7 @@ def parse_args():
     p.add_argument("--dry-run", action="store_true", help="Print command and exit without executing.")
     p.add_argument("--auto", action="store_true", help="Non-interactive: use provided --run-index and latest step if --step missing.")
     p.add_argument("extra", nargs=argparse.REMAINDER, help="Additional sacred params appended after main ones.")
+    p.add_argument("--env-filter", choices=["koto", "base"], help="Filter listed runs by environment tag.")
     return p.parse_args()
 
 
@@ -129,21 +178,24 @@ def main():
 
     runs = find_runs()
     if not runs:
-        print("No runs found under results/models/. Start a training run first.")
+        print("No runs found under any of: ")
+        for d in MODEL_DIR_CANDIDATES:
+            print("  -", d)
+        print("Start a training run first.")
         return 1
 
     if args.run_index is None:
         if args.auto:
             print("--auto given but no --run-index; cannot proceed.")
             return 1
-        run_index = interactive_select(runs)
+        run_index = interactive_select(runs, args.env_filter)
     else:
         if not (0 <= args.run_index < len(runs)):
             print(f"run-index {args.run_index} out of range (0..{len(runs)-1}).")
             return 1
         run_index = args.run_index
 
-    run_dir = runs[run_index]
+    run_dir = runs[run_index][0]
     steps = find_steps(run_dir)
     if not steps:
         print(f"No numeric checkpoint subdirectories found in {run_dir}")
