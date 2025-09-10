@@ -113,6 +113,11 @@ def build_command(args, run_dir: str, step: int) -> List[str]:
     ]
     if args.label:
         cmd.append(f"label={args.label}")
+    # Auto reuse tensorboard logging unless disabled or user already specified
+    if not args.no_reuse_tb:
+        user_set = any(s.startswith("reuse_tb_logging=") for s in (args.extra or []))
+        if not user_set:
+            cmd.append("reuse_tb_logging=True")
     if args.extra:
         for item in args.extra:
             cmd.append(item)
@@ -185,6 +190,7 @@ def parse_args():
     p.add_argument("--auto", action="store_true", help="Non-interactive: use provided --run-index and latest step if --step missing.")
     p.add_argument("extra", nargs=argparse.REMAINDER, help="Additional sacred params appended after main ones.")
     p.add_argument("--env-filter", choices=["koto", "base"], help="Filter listed runs by environment tag.")
+    p.add_argument("--no-reuse-tb", action="store_true", help="Disable automatic tensorboard log reuse when resuming.")
     return p.parse_args()
 
 
