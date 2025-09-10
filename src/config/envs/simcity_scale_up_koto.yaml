@@ -24,3 +24,4 @@ save_model_interval: 10000
 batch_size_run: 8
 batch_size: 64
 buffer_size: 10000
+reuse_tb_logging: False  # will be overridden automatically by resume script
