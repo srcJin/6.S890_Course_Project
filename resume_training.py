@@ -100,25 +100,40 @@ def format_bytes(num: int) -> str:
 
 
 def build_command(args, run_dir: str, step: int) -> List[str]:
-    # Escape spaces for sacred CLI param token
-    escaped_ckpt = run_dir.replace(' ', '\\ ')
+    # No shell escaping needed because we pass an argv list; keep raw path.
     cmd = [
         sys.executable,
         "main.py",
         "--config=mappo",
         "--env-config=simcity_scale_up_koto",
         "with",
-        f"checkpoint_path={escaped_ckpt}",
+        f"checkpoint_path={run_dir}",
         f"load_step={step}",
         f"t_max={args.t_max}",
     ]
     if args.label:
         cmd.append(f"label={args.label}")
     if args.extra:
-        # pass through extra raw sacred params
         for item in args.extra:
             cmd.append(item)
     return cmd
+
+
+EXPECTED_FILES = ["agent.th", "agent_opt.th", "critic.th", "critic_opt.th"]
+
+
+def validate_checkpoint(run_dir: str, step: int) -> Optional[str]:
+    # Handle previously escaped path stored in configs (remove backslash before space)
+    cleaned = run_dir.replace("\\ ", " ")
+    if cleaned != run_dir and os.path.isdir(cleaned):
+        run_dir = cleaned
+    step_dir = os.path.join(run_dir, str(step))
+    if not os.path.isdir(step_dir):
+        return f"Checkpoint directory missing: {step_dir}"
+    missing = [f for f in EXPECTED_FILES if not os.path.isfile(os.path.join(step_dir, f))]
+    if missing:
+        return f"Checkpoint {step_dir} missing files: {', '.join(missing)}"
+    return None
 
 
 def interactive_select(runs: List[Tuple[str, str]], env_filter: Optional[str]) -> int:
@@ -212,6 +227,13 @@ def main():
             return 1
         step = args.step
 
+    # Pre-launch validation
+    err = validate_checkpoint(run_dir, step)
+    if err:
+        print("Validation failed:", err)
+        print("Available steps:", steps[-10:])
+        return 1
+
     cmd = build_command(args, run_dir, step)
 
     print("\nResume configuration:")
@@ -220,8 +242,9 @@ def main():
     print(f"  t_max target  : {args.t_max}")
     if args.label:
         print(f"  Label         : {args.label}")
-    print("  Command:")
+    print("  Command (argv list, spaces handled safely):")
     print(" ".join(cmd))
+    print("  For manual shell copy you MAY need to escape spaces in checkpoint_path value.")
 
     if args.dry_run:
         return 0
