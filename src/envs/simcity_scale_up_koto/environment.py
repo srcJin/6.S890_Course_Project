@@ -64,7 +64,7 @@ class SimCityScaleUpEnv(AECEnv):
     metadata = {"render_modes": ["human"], "name": "SimCityScaleUpEnv"}
 
     def __init__(
-        self, grid_x=8, grid_y=8, common_reward=False, reward_alpha=0.5, reward_beta=0.5
+        self, grid_x=12, grid_y=12, common_reward=False, reward_alpha=0.5, reward_beta=0.5
     ):
         super().__init__()
         self.TERRAIN_AND_PROJECTS = TERRAIN_AND_PROJECTS

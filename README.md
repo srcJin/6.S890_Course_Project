@@ -54,6 +54,9 @@ python src/main.py --config=pac_ns --env-config=simcity_large_no_common_no_cuda
 pip install gpustat
 watch -n 0.5 -c gpustat -cp --color
 
+
+python resume_training.py --env-filter koto
+
 # Plotting
 
 python plot_results.py --path results
@@ -153,6 +156,14 @@ python src/main.py --config=pac_ns --env-config=gymma with env_args.time_limit=1
 ```
 
 # Table of Contents
+- [Linux](#linux)
+- [Environment](#environment)
+- [Training](#training)
+- [Plotting](#plotting)
+- [API Access](#api-access)
+  - [Observation](#observation)
+  - [Reset](#reset)
+  - [Step](#step)
 - [Extended Python MARL framework - EPyMARL](#extended-python-marl-framework---epymarl)
   - [Update as of *July 2024*!](#update-as-of-july-2024)
     - [Update to Gymnasium](#update-to-gymnasium)
@@ -174,7 +185,7 @@ python src/main.py --config=pac_ns --env-config=gymma with env_args.time_limit=1
 - [Saving and loading learnt models](#saving-and-loading-learnt-models)
   - [Saving models](#saving-models)
   - [Loading models](#loading-models)
-- [Plotting](#plotting)
+- [Plotting](#plotting-1)
 - [Citing EPyMARL and PyMARL](#citing-epymarl-and-pymarl)
 - [License](#license)
 

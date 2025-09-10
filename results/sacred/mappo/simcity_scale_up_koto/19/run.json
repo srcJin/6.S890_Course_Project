@@ -1,0 +1,102 @@
+{
+  "artifacts": [],
+  "command": "my_main",
+  "experiment": {
+    "base_dir": "/Volumes/Mac_Working/GitHub/6.S890_Course_Project/src",
+    "dependencies": [
+      "numpy==1.24.4",
+      "PyYAML==5.3.1",
+      "sacred==0.8.7",
+      "torch==2.4.1"
+    ],
+    "mainfile": "main.py",
+    "name": "pymarl",
+    "repositories": [
+      {
+        "commit": "318945142d705086311f16d25854afe2eca6ce6a",
+        "dirty": true,
+        "url": "https://github.com/srcJin/6.S890_Course_Project.git"
+      },
+      {
+        "commit": "318945142d705086311f16d25854afe2eca6ce6a",
+        "dirty": true,
+        "url": "https://github.com/srcJin/6.S890_Course_Project.git"
+      },
+      {
+        "commit": "318945142d705086311f16d25854afe2eca6ce6a",
+        "dirty": true,
+        "url": "https://github.com/srcJin/6.S890_Course_Project.git"
+      }
+    ],
+    "sources": [
+      [
+        "main.py",
+        "_sources/main_10071cd35b239d4d9d6b06262697f6b3.py"
+      ],
+      [
+        "run.py",
+        "_sources/run_c13833845f2a7014e6871de857e26bb7.py"
+      ],
+      [
+        "utils/logging.py",
+        "_sources/logging_836123fa54ffb6ffe3010ba48531394a.py"
+      ]
+    ]
+  },
+  "heartbeat": "2025-09-10T05:17:01.412463",
+  "host": {
+    "ENV": {},
+    "cpu": "Apple M4 Pro",
+    "hostname": "Jins-MacBook-Pro.local",
+    "os": [
+      "Darwin",
+      "macOS-15.6.1-arm64-arm-64bit"
+    ],
+    "python_version": "3.8.20"
+  },
+  "meta": {
+    "command": "my_main",
+    "config_updates": {
+      "checkpoint_path": "/Volumes/Mac_Working/GitHub/6.S890_Course_Project/src/results/models/mappo_seed900460933_simcity_scale_up_koto_2025-09-09 15:02:58.926318",
+      "load_step": 652131,
+      "reuse_tb_logging": true,
+      "t_max": 10000000
+    },
+    "named_configs": [],
+    "options": {
+      "--beat-interval": null,
+      "--capture": null,
+      "--comment": null,
+      "--debug": false,
+      "--enforce_clean": false,
+      "--file_storage": null,
+      "--force": false,
+      "--help": false,
+      "--id": null,
+      "--loglevel": null,
+      "--mongo_db": null,
+      "--name": null,
+      "--pdb": false,
+      "--print-config": false,
+      "--priority": null,
+      "--queue": false,
+      "--s3": null,
+      "--sql": null,
+      "--tiny_db": null,
+      "--unobserved": false,
+      "COMMAND": null,
+      "UPDATE": [
+        "checkpoint_path=/Volumes/Mac_Working/GitHub/6.S890_Course_Project/src/results/models/mappo_seed900460933_simcity_scale_up_koto_2025-09-09 15:02:58.926318",
+        "load_step=652131",
+        "t_max=10000000",
+        "reuse_tb_logging=True"
+      ],
+      "help": false,
+      "with": true
+    }
+  },
+  "resources": [],
+  "result": null,
+  "start_time": "2025-09-10T01:52:27.365884",
+  "status": "RUNNING"
+}

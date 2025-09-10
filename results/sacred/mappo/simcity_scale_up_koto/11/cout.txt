@@ -1,0 +1,166 @@
+[INFO 15:01:16] pymarl Running command 'my_main'
+[INFO 15:01:16] pymarl Started run with ID "11"
+[WARNING 15:01:16] my_main CUDA flag use_cuda was switched OFF automatically because no CUDA devices are available!
+[INFO 15:01:16] my_main Runner specified in config: parallel
+[INFO 15:01:16] my_main Runner resolved in args: parallel
+[INFO 15:01:16] my_main Experiment Parameters:
+[INFO 15:01:16] my_main 
+
+{   'action_selector': 'soft_policies',
+    'add_value_last_step': True,
+    'agent': 'rnn',
+    'agent_output_type': 'pi_logits',
+    'batch_size': 64,
+    'batch_size_run': 8,
+    'buffer_cpu_only': True,
+    'buffer_size': 10000,
+    'checkpoint_path': '',
+    'common_reward': False,
+    'critic_type': 'cv_critic',
+    'entropy_coef': 0.001,
+    'env': 'simcity_scale_up_koto',
+    'env_args': {   'grid_x': 12,
+                    'grid_y': 12,
+                    'key': 'simcity_scale_up_koto',
+                    'map_name': 'simcity_scale_up_koto',
+                    'seed': 754660558,
+                    'time_limit': 200},
+    'epochs': 10,
+    'eps_clip': 0.2,
+    'evaluate': False,
+    'gamma': 0.99,
+    'grad_norm_clip': 10,
+    'hidden_dim': 128,
+    'hypergroup': None,
+    'label': 'default_label',
+    'learner': 'ppo_learner',
+    'learner_log_interval': 1000,
+    'load_step': 0,
+    'local_results_path': 'results',
+    'log_interval': 1000,
+    'lr': 0.0003,
+    'mac': 'basic_mac',
+    'mask_before_softmax': True,
+    'name': 'mappo',
+    'obs_agent_id': True,
+    'obs_individual_obs': False,
+    'obs_last_action': False,
+    'optim_alpha': 0.99,
+    'optim_eps': 1e-05,
+    'q_nstep': 5,
+    'render': False,
+    'repeat_id': 1,
+    'reward_scalarisation': 'sum',
+    'runner': 'parallel',
+    'runner_log_interval': 1000,
+    'save_model': True,
+    'save_model_interval': 10000,
+    'save_replay': False,
+    'seed': 754660558,
+    'standardise_returns': False,
+    'standardise_rewards': True,
+    't_max': 10000000,
+    'target_update_interval_or_tau': 0.01,
+    'test_greedy': True,
+    'test_interval': 5000,
+    'test_nepisode': 16,
+    'use_cuda': False,
+    'use_rnn': True,
+    'use_tensorboard': True,
+    'use_wandb': False,
+    'wandb_mode': 'offline',
+    'wandb_project': None,
+    'wandb_save_model': False,
+    'wandb_team': None}
+
+[INFO 15:01:16] my_main *******************
+[INFO 15:01:16] my_main Tensorboard logging dir:
+[INFO 15:01:16] my_main /Volumes/Mac_Working/GitHub/6.S890_Course_Project/results/tb_logs/mappo_seed754660558_simcity_scale_up_koto_2025-09-09 15:01:16.652765
+[INFO 15:01:16] my_main *******************
+[INFO 15:01:16] my_main Final parsed config: {'runner': 'parallel', 'mac': 'basic_mac', 'env': 'simcity_scale_up_koto', 'common_reward': False, 'reward_scalarisation': 'sum', 'env_args': {'key': 'simcity_scale_up_koto', 'map_name': 'simcity_scale_up_koto', 'seed': 754660558, 'time_limit': 200, 'grid_x': 12, 'grid_y': 12}, 'batch_size_run': 8, 'test_nepisode': 16, 'test_interval': 5000, 'test_greedy': True, 'log_interval': 1000, 'runner_log_interval': 1000, 'learner_log_interval': 1000, 't_max': 10000000, 'use_cuda': False, 'buffer_cpu_only': True, 'use_tensorboard': True, 'use_wandb': False, 'wandb_team': None, 'wandb_project': None, 'wandb_mode': 'offline', 'wandb_save_model': False, 'save_model': True, 'save_model_interval': 10000, 'checkpoint_path': '', 'evaluate': False, 'render': False, 'load_step': 0, 'save_replay': False, 'local_results_path': 'results', 'gamma': 0.99, 'batch_size': 64, 'buffer_size': 10000, 'lr': 0.0003, 'optim_alpha': 0.99, 'optim_eps': 1e-05, 'grad_norm_clip': 10, 'add_value_last_step': True, 'agent': 'rnn', 'hidden_dim': 128, 'obs_agent_id': True, 'obs_last_action': False, 'repeat_id': 1, 'label': 'default_label', 'hypergroup': None, 'action_selector': 'soft_policies', 'mask_before_softmax': True, 'target_update_interval_or_tau': 0.01, 'obs_individual_obs': False, 'agent_output_type': 'pi_logits', 'learner': 'ppo_learner', 'entropy_coef': 0.001, 'use_rnn': True, 'standardise_returns': False, 'standardise_rewards': True, 'q_nstep': 5, 'critic_type': 'cv_critic', 'epochs': 10, 'eps_clip': 0.2, 'name': 'mappo', 'seed': 754660558}
+[INFO 15:01:16] my_main run.py Using runner: parallel
+[INFO 15:01:18] my_main Initialized runner: ParallelRunner
+[INFO 15:01:32] my_main Beginning training for 10000000 timesteps
+[INFO 15:01:32] my_main t_env: 186 / 10000000
+[INFO 15:01:32] my_main Estimated time left: 5 minutes, 11 seconds. Time passed: 0 seconds
+[INFO 15:01:32] my_main Saving models to results/models/mappo_seed754660558_simcity_scale_up_koto_2025-09-09 15:01:16.652765/186
+[INFO 15:01:33] my_main Recent Stats | t_env:       1113 | Episode:       48
+P1_money_mean:           397.2650	P1_reputation_mean:      249.6350	P1_reward_mean:           95.6054	P2_money_mean:           298.7150
+P2_reputation_mean:      246.5150	P2_reward_mean:          122.1141	P3_money_mean:           333.2000	P3_reputation_mean:      231.9150
+P3_reward_mean:          197.5956	P4_money_mean:           359.3800	P4_reputation_mean:      226.1200	P4_reward_mean:           91.1747
+agent_0_return_mean:     1351.4850	agent_0_return_std:      126.4318	agent_1_return_mean:     1489.0324	agent_1_return_std:      114.4353
+agent_2_return_mean:     2137.2052	agent_2_return_std:      186.6798	agent_3_return_mean:     1231.1441	agent_3_return_std:       73.6392
+common_reward_value_mean:947.6375	env_score_mean:           66.5394	ep_length_mean:           23.2500	test_P1_money_mean:      750.2250
+test_P1_reputation_mean: 523.2100	test_P1_reward_mean:     158.3902	test_P2_money_mean:      645.5875	test_P2_reputation_mean: 517.4750
+test_P2_reward_mean:     228.0821	test_P3_money_mean:      830.7100	test_P3_reputation_mean: 429.9375	test_P3_reward_mean:     407.1779
+test_P4_money_mean:      749.4125	test_P4_reputation_mean: 448.8150	test_P4_reward_mean:     152.0353	test_agent_0_return_mean:2883.4988
+test_agent_0_return_std: 604.1812	test_agent_1_return_mean:3880.8714	test_agent_1_return_std: 1014.0677	test_agent_2_return_mean:6839.3349
+test_agent_2_return_std: 1938.8497	test_agent_3_return_mean:2720.6148	test_agent_3_return_std: 572.7861	test_common_reward_value_mean:1821.2165
+test_env_score_mean:      66.0380	test_ep_length_mean:      23.0000	test_total_return_mean:  16324.3199	test_total_return_std:   3910.0853
+total_return_mean:       6208.8666	total_return_std:        280.1976	
+[INFO 15:01:44] my_main Recent Stats | t_env:       2226 | Episode:       96
+P1_money_mean:           1155.3421	P1_reputation_mean:      759.2733	P1_reward_mean:          222.5658	P2_money_mean:           1037.7242
+P2_reputation_mean:      733.4717	P2_reward_mean:          331.2060	P3_money_mean:           1170.1896	P3_reputation_mean:      647.9183
+P3_reward_mean:          574.6078	P4_money_mean:           1089.8512	P4_reputation_mean:      656.5446	P4_reward_mean:          207.2581
+advantage_mean:            2.2527	agent_0_return_mean:     4424.0557	agent_0_return_std:      1171.9951	agent_1_return_mean:     6432.9904
+agent_1_return_std:      1795.7464	agent_2_return_mean:     11161.7240	agent_2_return_std:      3112.3857	agent_3_return_mean:     4040.8278
+agent_3_return_std:      1054.4151	agent_grad_norm:           2.0402	common_reward_value_mean:2601.8221	critic_grad_norm:        4697.5854
+critic_loss:              10.0740	env_score_mean:           66.5184	ep_length_mean:           23.2604	pg_loss:                  -2.1916
+pi_max:                    0.0213	q_taken_mean:             -3.8495	target_mean:              -1.5969	td_error_abs:              2.5330
+test_P1_money_mean:      750.2250	test_P1_reputation_mean: 523.2100	test_P1_reward_mean:     158.3902	test_P2_money_mean:      645.5875
+test_P2_reputation_mean: 517.4750	test_P2_reward_mean:     228.0821	test_P3_money_mean:      830.7100	test_P3_reputation_mean: 429.9375
+test_P3_reward_mean:     407.1779	test_P4_money_mean:      749.4125	test_P4_reputation_mean: 448.8150	test_P4_reward_mean:     152.0353
+test_agent_0_return_mean:2883.4988	test_agent_0_return_std: 604.1812	test_agent_1_return_mean:3880.8714	test_agent_1_return_std: 1014.0677
+test_agent_2_return_mean:6839.3349	test_agent_2_return_std: 1938.8497	test_agent_3_return_mean:2720.6148	test_agent_3_return_std: 572.7861
+test_common_reward_value_mean:1821.2165	test_env_score_mean:      66.0380	test_ep_length_mean:      23.0000	test_total_return_mean:  16324.3199
+test_total_return_std:   3910.0853	total_return_mean:       26059.5978	total_return_std:        6843.5877	
+[INFO 15:01:57] my_main Recent Stats | t_env:       3340 | Episode:      144
+P1_money_mean:           2009.2483	P1_reputation_mean:      1283.0547	P1_reward_mean:          360.2468	P2_money_mean:           1857.6203
+P2_reputation_mean:      1245.9186	P2_reward_mean:          557.8730	P3_money_mean:           1997.9961	P3_reputation_mean:      1124.0906
+P3_reward_mean:          965.6287	P4_money_mean:           1848.5072	P4_reputation_mean:      1131.5689	P4_reward_mean:          330.6072
+advantage_mean:           -0.2606	agent_0_return_mean:     7737.3749	agent_0_return_std:      1458.2081	agent_1_return_mean:     11828.1119
+agent_1_return_std:      2395.8411	agent_2_return_mean:     20541.6882	agent_2_return_std:      4153.4798	agent_3_return_mean:     6998.3373
+agent_3_return_std:      1421.3867	agent_grad_norm:           1.6453	common_reward_value_mean:4359.2645	critic_grad_norm:        5367.2429
+critic_loss:              12.1880	env_score_mean:           66.4519	ep_length_mean:           23.2014	pg_loss:                   0.2520
+pi_max:                    0.0222	q_taken_mean:              1.9476	target_mean:               1.6869	td_error_abs:              2.8063
+test_P1_money_mean:      750.2250	test_P1_reputation_mean: 523.2100	test_P1_reward_mean:     158.3902	test_P2_money_mean:      645.5875
+test_P2_reputation_mean: 517.4750	test_P2_reward_mean:     228.0821	test_P3_money_mean:      830.7100	test_P3_reputation_mean: 429.9375
+test_P3_reward_mean:     407.1779	test_P4_money_mean:      749.4125	test_P4_reputation_mean: 448.8150	test_P4_reward_mean:     152.0353
+test_agent_0_return_mean:2883.4988	test_agent_0_return_std: 604.1812	test_agent_1_return_mean:3880.8714	test_agent_1_return_std: 1014.0677
+test_agent_2_return_mean:6839.3349	test_agent_2_return_std: 1938.8497	test_agent_3_return_mean:2720.6148	test_agent_3_return_std: 572.7861
+test_common_reward_value_mean:1821.2165	test_env_score_mean:      66.0380	test_ep_length_mean:      23.0000	test_total_return_mean:  16324.3199
+test_total_return_std:   3910.0853	total_return_mean:       47105.5124	total_return_std:        8976.8662	
+[INFO 15:02:11] my_main Recent Stats | t_env:       4454 | Episode:      192
+P1_money_mean:           2862.6152	P1_reputation_mean:      1810.0727	P1_reward_mean:          498.3364	P2_money_mean:           2678.3550
+P2_reputation_mean:      1775.6219	P2_reward_mean:          787.5467	P3_money_mean:           2798.8679	P3_reputation_mean:      1618.1940
+P3_reward_mean:          1353.9464	P4_money_mean:           2582.2185	P4_reputation_mean:      1627.0042	P4_reward_mean:          453.4569
+advantage_mean:           -1.5989	agent_0_return_mean:     11087.5315	agent_0_return_std:      1731.5409	agent_1_return_mean:     17388.9422
+agent_1_return_std:      2669.9572	agent_2_return_mean:     29998.2121	agent_2_return_std:      4753.0689	agent_3_return_mean:     10000.9263
+agent_3_return_std:      1635.8235	agent_grad_norm:           1.9586	common_reward_value_mean:6117.5138	critic_grad_norm:        6502.3462
+critic_loss:              18.1187	env_score_mean:           66.5410	ep_length_mean:           23.2135	pg_loss:                   1.5781
+pi_max:                    0.0240	q_taken_mean:              5.4039	target_mean:               3.8050	td_error_abs:              3.4011
+test_P1_money_mean:      750.2250	test_P1_reputation_mean: 523.2100	test_P1_reward_mean:     158.3902	test_P2_money_mean:      645.5875
+test_P2_reputation_mean: 517.4750	test_P2_reward_mean:     228.0821	test_P3_money_mean:      830.7100	test_P3_reputation_mean: 429.9375
+test_P3_reward_mean:     407.1779	test_P4_money_mean:      749.4125	test_P4_reputation_mean: 448.8150	test_P4_reward_mean:     152.0353
+test_agent_0_return_mean:2883.4988	test_agent_0_return_std: 604.1812	test_agent_1_return_mean:3880.8714	test_agent_1_return_std: 1014.0677
+test_agent_2_return_mean:6839.3349	test_agent_2_return_std: 1938.8497	test_agent_3_return_mean:2720.6148	test_agent_3_return_std: 572.7861
+test_common_reward_value_mean:1821.2165	test_env_score_mean:      66.0380	test_ep_length_mean:      23.0000	test_total_return_mean:  16324.3199
+test_total_return_std:   3910.0853	total_return_mean:       68475.6120	total_return_std:        10195.9882	
+[INFO 15:02:20] my_main t_env: 5198 / 10000000
+[INFO 15:02:20] my_main Estimated time left: 1 days, 2 hours, 36 minutes, 8 seconds. Time passed: 48 seconds
+[INFO 15:02:25] my_main Recent Stats | t_env:       5568 | Episode:      240
+P1_money_mean:           3695.9288	P1_reputation_mean:      2354.6525	P1_reward_mean:          636.1192	P2_money_mean:           3513.5877
+P2_reputation_mean:      2309.0607	P2_reward_mean:          1020.2622	P3_money_mean:           3576.3985	P3_reputation_mean:      2113.2775
+P3_reward_mean:          1735.5411	P4_money_mean:           3339.8928	P4_reputation_mean:      2109.4343	P4_reward_mean:          577.4343
+advantage_mean:           -1.1892	agent_0_return_mean:     14425.4183	agent_0_return_std:      1901.3169	agent_1_return_mean:     23008.2700
+agent_1_return_std:      2939.3002	agent_2_return_mean:     39235.9167	agent_2_return_std:      5168.9758	agent_3_return_mean:     13001.5337
+agent_3_return_std:      1877.9615	agent_grad_norm:           1.7096	common_reward_value_mean:7869.9582	critic_grad_norm:        5002.7153
+critic_loss:              17.9162	env_score_mean:           66.5192	ep_length_mean:           23.2083	pg_loss:                   1.1508
+pi_max:                    0.0283	q_taken_mean:              6.7233	target_mean:               5.5341	td_error_abs:              3.3317
+test_P1_money_mean:      4761.6600	test_P1_reputation_mean: 3188.0175	test_P1_reward_mean:     825.7226	test_P2_money_mean:      4700.3425
+test_P2_reputation_mean: 3132.7575	test_P2_reward_mean:     1361.9925	test_P3_money_mean:      4720.2325	test_P3_reputation_mean: 2846.2013
+test_P3_reward_mean:     2299.0447	test_P4_money_mean:      4442.2088	test_P4_reputation_mean: 2816.2625	test_P4_reward_mean:     758.6423
+test_agent_0_return_mean:19062.0529	test_agent_0_return_std: 1242.2265	test_agent_1_return_mean:31249.6568	test_agent_1_return_std: 1481.4290
+test_agent_2_return_mean:52662.3964	test_agent_2_return_std: 2986.7930	test_agent_3_return_mean:17366.2982	test_agent_3_return_std: 1387.3732
+test_common_reward_value_mean:10420.5293	test_env_score_mean:      66.3251	test_ep_length_mean:      23.0938	test_total_return_mean:  120340.4044
+test_total_return_std:   5784.1735	total_return_mean:       89671.1387	total_return_std:        11122.7560	

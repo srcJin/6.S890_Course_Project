@@ -36,8 +36,8 @@ SRC_DIR = os.path.join(ROOT, "src")
 
 # Candidate model directories (training script cd's into src before running main.py)
 MODEL_DIR_CANDIDATES = [
-    os.path.join(ROOT, "results", "models"),            # root-level (older runs)
-    os.path.join(SRC_DIR, "results", "models"),          # src-level (current runs)
+    os.path.join(ROOT, "results", "models"),  # root-level (older runs)
+    os.path.join(SRC_DIR, "results", "models"),  # src-level (current runs)
 ]
 
 
@@ -72,13 +72,15 @@ def build_run_metadata(runs: List[Tuple[str, str]]) -> List[Dict[str, object]]:
         steps = find_steps(path)
         latest = steps[-1] if steps else None
         env_tag = detect_env_tag(path)
-        meta.append({
-            "path": path,
-            "origin": origin,
-            "env": env_tag,
-            "n_ckpts": len(steps),
-            "latest": latest,
-        })
+        meta.append(
+            {
+                "path": path,
+                "origin": origin,
+                "env": env_tag,
+                "n_ckpts": len(steps),
+                "latest": latest,
+            }
+        )
     return meta
 
 
@@ -92,7 +94,7 @@ def find_steps(run_dir: str) -> List[int]:
 
 
 def format_bytes(num: int) -> str:
-    for unit in ['','K','M','G','T']:
+    for unit in ["", "K", "M", "G", "T"]:
         if abs(num) < 1024.0:
             return f"{num:3.1f}{unit}B"
         num /= 1024.0
@@ -135,7 +137,9 @@ def validate_checkpoint(run_dir: str, step: int) -> Optional[str]:
     step_dir = os.path.join(run_dir, str(step))
     if not os.path.isdir(step_dir):
         return f"Checkpoint directory missing: {step_dir}"
-    missing = [f for f in EXPECTED_FILES if not os.path.isfile(os.path.join(step_dir, f))]
+    missing = [
+        f for f in EXPECTED_FILES if not os.path.isfile(os.path.join(step_dir, f))
+    ]
     if missing:
         return f"Checkpoint {step_dir} missing files: {', '.join(missing)}"
     return None
@@ -150,9 +154,13 @@ def interactive_select(runs: List[Tuple[str, str]], env_filter: Optional[str]) -
             sys.exit(1)
     print("Available runs:")
     print("Idx | Env  | Ckpts | Latest  | Origin   | Directory")
-    print("----+------+-------+---------+----------+----------------------------------------------")
+    print(
+        "----+------+-------+---------+----------+----------------------------------------------"
+    )
     for idx, m in enumerate(meta):
-        print(f"{idx:>3} | {m['env']:<4} | {m['n_ckpts']:>5} | {str(m['latest']):>7} | {m['origin']:<8} | {os.path.basename(m['path'])}")
+        print(
+            f"{idx:>3} | {m['env']:<4} | {m['n_ckpts']:>5} | {str(m['latest']):>7} | {m['origin']:<8} | {os.path.basename(m['path'])}"
+        )
     while True:
         raw = input("Select run index (q to quit): ").strip()
         if raw.lower() in {"q", "quit", "exit"}:
@@ -181,16 +189,49 @@ def interactive_step(steps: List[int]) -> int:
 
 
 def parse_args():
-    p = argparse.ArgumentParser(description="Resume MAPPO training (SimCity Scale-Up Koto)")
-    p.add_argument("--run-index", type=int, help="Index of run to resume (see list). If omitted, interactive.")
-    p.add_argument("--step", type=int, help="Specific checkpoint step to load (default: latest).")
-    p.add_argument("--t-max", type=int, default=10_000_000, help="New total t_max to train toward (default 10M).")
+    p = argparse.ArgumentParser(
+        description="Resume MAPPO training (SimCity Scale-Up Koto)"
+    )
+    p.add_argument(
+        "--run-index",
+        type=int,
+        help="Index of run to resume (see list). If omitted, interactive.",
+    )
+    p.add_argument(
+        "--step", type=int, help="Specific checkpoint step to load (default: latest)."
+    )
+    p.add_argument(
+        "--t-max",
+        type=int,
+        default=10_000_000,
+        help="New total t_max to train toward (default 10M).",
+    )
     p.add_argument("--label", type=str, help="Optional label for resumed run (sacred).")
-    p.add_argument("--dry-run", action="store_true", help="Print command and exit without executing.")
-    p.add_argument("--auto", action="store_true", help="Non-interactive: use provided --run-index and latest step if --step missing.")
-    p.add_argument("extra", nargs=argparse.REMAINDER, help="Additional sacred params appended after main ones.")
-    p.add_argument("--env-filter", choices=["koto", "base"], help="Filter listed runs by environment tag.")
-    p.add_argument("--no-reuse-tb", action="store_true", help="Disable automatic tensorboard log reuse when resuming.")
+    p.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Print command and exit without executing.",
+    )
+    p.add_argument(
+        "--auto",
+        action="store_true",
+        help="Non-interactive: use provided --run-index and latest step if --step missing.",
+    )
+    p.add_argument(
+        "extra",
+        nargs=argparse.REMAINDER,
+        help="Additional sacred params appended after main ones.",
+    )
+    p.add_argument(
+        "--env-filter",
+        choices=["koto", "base"],
+        help="Filter listed runs by environment tag.",
+    )
+    p.add_argument(
+        "--no-reuse-tb",
+        action="store_true",
+        help="Disable automatic tensorboard log reuse when resuming.",
+    )
     return p.parse_args()
 
 
@@ -250,7 +291,9 @@ def main():
         print(f"  Label         : {args.label}")
     print("  Command (argv list, spaces handled safely):")
     print(" ".join(cmd))
-    print("  For manual shell copy you MAY need to escape spaces in checkpoint_path value.")
+    print(
+        "  For manual shell copy you MAY need to escape spaces in checkpoint_path value."
+    )
 
     if args.dry_run:
         return 0

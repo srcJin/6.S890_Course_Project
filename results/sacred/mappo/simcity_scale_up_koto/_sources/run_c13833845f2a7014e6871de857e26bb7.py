@@ -91,7 +91,7 @@ def run(_run, _config, _log):
     logger.setup_sacred(_run)
 
     _log.info(f"Final parsed config: {_config}")
-
+    
     # Run and train
     run_sequential(args=args, logger=logger)
 
@@ -147,12 +147,13 @@ def run_sequential(args, logger):
         },
         "terminated": {"vshape": (1,), "dtype": th.uint8},
     }
-
+    
     # For individual rewards in gymmai reward is of shape (1, n_agents)
     if args.common_reward:
         scheme["reward"] = {"vshape": (1,)}
     else:
         scheme["reward"] = {"vshape": (args.n_agents,)}
+
 
     groups = {"agents": args.n_agents}
     preprocess = {"actions": ("actions_onehot", [OneHot(out_dim=args.n_actions)])}
@@ -214,9 +215,7 @@ def run_sequential(args, logger):
                 logger.console_logger.info("Finished Evaluation")
                 return
         else:
-            logger.console_logger.info(
-                "No checkpoints found in directory; starting fresh."
-            )
+            logger.console_logger.info("No checkpoints found in directory; starting fresh.")
 
     # start training
     episode = 0
