@@ -4,7 +4,7 @@ env_args:
   key: "simcity_scale_up_koto"
   map_name: "simcity_scale_up_koto"
   seed: null
-  time_limit: 150
+  time_limit: 135
   grid_x: 12
   grid_y: 12
 
@@ -21,7 +21,7 @@ use_tensorboard: True
 use_cuda: True
 save_model: True
 save_model_interval: 10000
-batch_size_run: 8
-batch_size: 64
-buffer_size: 10000
+batch_size_run: 24
+batch_size: 192
+buffer_size: 100000
 reuse_tb_logging: False  # will be overridden automatically by resume script

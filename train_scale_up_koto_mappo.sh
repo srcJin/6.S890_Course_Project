@@ -23,7 +23,7 @@ cd /Volumes/Mac_Working/GitHub/6.S890_Course_Project/src
 python main.py \
     --config=mappo \
     --env-config=simcity_scale_up_koto \
-    with env_args.time_limit=200 \
+    with env_args.time_limit=150 \
     t_max=10000000 \
     use_cuda=True \
     save_model=True \
@@ -33,9 +33,9 @@ python main.py \
     runner_log_interval=1000 \
     learner_log_interval=1000 \
     buffer_size=10000 \
-    batch_size=64 \
-    batch_size_run=8 \
-    epochs=10 \
+    batch_size=192 \
+    batch_size_run=24 \
+    epochs=3 \
     common_reward=False
 
 echo "Koto training completed!"

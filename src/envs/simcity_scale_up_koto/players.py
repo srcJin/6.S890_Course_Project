@@ -67,6 +67,11 @@ class InterestDrivenPlayer(BasePlayer):
     def __init__(self, name):
         # Interest-Driven: α=0.6, β=0.2, γ=0.2
         super().__init__(name, alpha=0.6, beta=0.2, gamma=0.2)
+        # Economic focus - higher money, balanced reputation
+        self.resources = {
+            "money": 100,
+            "reputation": 80,
+        }
 
     def update_state(self, reward, info, gvd_score=0, asf_score=0):
         super().update_state(reward, info, gvd_score, asf_score)
@@ -81,6 +86,11 @@ class AltruisticPlayer(BasePlayer):
     def __init__(self, name):
         # Altruistic: α=0.2, β=0.6, γ=0.2
         super().__init__(name, alpha=0.2, beta=0.6, gamma=0.2)
+        # Community focus - balanced with slight reputation advantage
+        self.resources = {
+            "money": 80,
+            "reputation": 100,
+        }
 
     def update_state(self, reward, info, gvd_score=0, asf_score=0):
         super().update_state(reward, info, gvd_score, asf_score)
@@ -95,6 +105,11 @@ class BalancedPlayer(BasePlayer):
     def __init__(self, name):
         # Balanced: α=0.34, β=0.33, γ=0.33
         super().__init__(name, alpha=0.34, beta=0.33, gamma=0.33)
+        # Balanced approach - equal resources
+        self.resources = {
+            "money": 90,
+            "reputation": 90,
+        }
 
     def update_state(self, reward, info, gvd_score=0, asf_score=0):
         super().update_state(reward, info, gvd_score, asf_score)
@@ -109,6 +124,11 @@ class EnvironmentalFocusedPlayer(BasePlayer):
     def __init__(self, name):
         # Environmental Focused: α=0.2, β=0.2, γ=0.6
         super().__init__(name, alpha=0.2, beta=0.2, gamma=0.6)
+        # Environmental focus - highest reputation, moderate money
+        self.resources = {
+            "money": 80,
+            "reputation": 100,
+        }
 
     def update_state(self, reward, info, gvd_score=0, asf_score=0):
         super().update_state(reward, info, gvd_score, asf_score)
