@@ -203,8 +203,8 @@ def parse_args():
     p.add_argument(
         "--t-max",
         type=int,
-        default=10_000_000,
-        help="New total t_max to train toward (default 10M).",
+        default=100_000_000,
+        help="New total t_max to train toward (default 100M).",
     )
     p.add_argument("--label", type=str, help="Optional label for resumed run (sacred).")
     p.add_argument(

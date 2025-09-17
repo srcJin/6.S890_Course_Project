@@ -205,6 +205,7 @@ def run_sequential(args, logger):
             learner.load_models(model_path)
             runner.t_env = timestep_to_load
             resumed_loaded_t = runner.t_env
+            logger.console_logger.info(f"Loaded model at t_env={resumed_loaded_t}")
 
             if args.evaluate or args.save_replay:
                 runner.log_train_stats_t = runner.t_env
@@ -222,6 +223,19 @@ def run_sequential(args, logger):
     episode = 0
     last_test_T = -args.test_interval - 1
     last_log_T = 0
+
+    # If resuming from checkpoint, restore episode and log counters
+    if resumed_loaded_t is not None and resumed_loaded_t > 0:
+        # Estimate completed episodes based on parallel runs
+        # episode counter increments by batch_size_run (number of parallel envs)
+        # Total episodes = t_env / episode_limit * batch_size_run
+        avg_episode_length = env_info["episode_limit"]
+        total_episodes_run = (resumed_loaded_t // avg_episode_length) * args.batch_size_run
+        episode = total_episodes_run
+        last_log_T = resumed_loaded_t
+        last_test_T = resumed_loaded_t - args.test_interval
+        logger.console_logger.info(f"Resuming from t_env={resumed_loaded_t}, estimated episode={episode}")
+
     # Avoid overwriting the just-loaded checkpoint by skipping immediate save
     model_save_time = resumed_loaded_t if resumed_loaded_t is not None else 0
 

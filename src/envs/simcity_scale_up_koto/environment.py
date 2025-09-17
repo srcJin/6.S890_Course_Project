@@ -150,6 +150,8 @@ class SimCityScaleUpEnv(AECEnv):
     def reset(self, seed=None, options=None):
         if seed is not None:
             np.random.seed(seed)
+            import random
+            random.seed(seed)
 
         # Initialize grid with baseline values for 6 parameters
         # These will be modified by terrain and project effects from INITIAL_GRID
@@ -183,10 +185,17 @@ class SimCityScaleUpEnv(AECEnv):
         self.terminations = {agent: False for agent in self.agents}
         self.truncations = {agent: False for agent in self.agents}
 
-        # Starting resources from config (already set in player init)
+        # Starting resources from config (reset to initial values)
         for player in self.players.values():
             player.self_score = 0
             player.integrated_score = 0
+            player.final_score = 0
+            player.environmental_impact_score = 0
+            # Reset resources to initial values for fair episode restart
+            player.resources = {
+                "money": 100,
+                "reputation": 70,
+            }
 
         self.env_score = self.calculate_environment_score()["env_score"]
         self._agent_selector.reset()
