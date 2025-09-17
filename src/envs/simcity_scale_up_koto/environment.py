@@ -13,7 +13,6 @@ from .players import (
 )
 from .config import (
     TERRAIN_AND_PROJECTS,
-    BUILDING_UTILITIES,
     INITIAL_GRID,
     INCOME_LIFECYCLE,
 )
@@ -69,7 +68,6 @@ class SimCityScaleUpEnv(AECEnv):
         super().__init__()
         self.TERRAIN_AND_PROJECTS = TERRAIN_AND_PROJECTS
         self.BUILDING_TYPES = BUILDING_TYPES
-        self.BUILDING_UTILITIES = BUILDING_UTILITIES
         self.common_reward = common_reward
         self.grid_x = grid_x
         self.grid_y = grid_y
