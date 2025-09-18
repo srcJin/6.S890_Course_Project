@@ -24,7 +24,7 @@ python main.py \
     --config=mappo \
     --env-config=simcity_scale_up_koto \
     with env_args.time_limit=150 \
-    t_max=10000000 \
+    t_max=100000000 \
     use_cuda=True \
     save_model=True \
     save_model_interval=10000 \

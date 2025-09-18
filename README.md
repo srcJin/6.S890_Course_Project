@@ -27,10 +27,12 @@ cd ~/Documents/Github/6.S890_Course_Project
 
 sudo apt update
 sudo apt install -y nvidia-cuda-toolkit
-pip instlal einops
+pip install einops
 pip install -r requirements.txt
 pip install -r env_requirements.txt
 pip install -r pac_requirements.txt
+
+sudo apt install btop nvtop
 
 chmod +x simcity_experiments_all.sh simcity_experiments_1.sh simcity_experiments_2.sh simcity_experiments_3.sh simcity_large_experiments_1.sh simcity_large_experiments_2.sh simcity_large_experiments_3.sh simcity_large_experiments_all.sh
 
