@@ -65,7 +65,7 @@ args = Namespace(
     batch_size=10,
     target_update_interval_or_tau=0.01,
     lr=0.0005,
-    hidden_dim=128,
+    hidden_dim=256,
     obs_agent_id=True,
     obs_last_action=False,
     obs_individual_obs=False,
@@ -225,16 +225,34 @@ def reset_environment():
         # Store initial observation
         current_episode["observations"].append(obs.tolist())
 
+        # Extract building information for frontend display
+        building_info = []
+        for x in range(env.env.grid_x):
+            for y in range(env.env.grid_y):
+                if env.env.buildings[x][y] is not None:
+                    building = env.env.buildings[x][y]
+                    building_info.append({
+                        "x": int(x),
+                        "y": int(y),
+                        "type": building["type"],
+                        "age": int(building["age"]),
+                        "is_replaceable": bool(building.get("is_replaceable", False)),
+                        "builder": int(env.env.builders[x][y])
+                    })
+
         response = {
             "status": "success",
             "episode_id": episode_counter,
             "observation": obs.tolist(),
             "avail_actions": avail_actions.tolist(),
+            "buildings": building_info,  # Add detailed building information
+            "grid_layout": env.env.grid_layout.tolist(),  # Add terrain layout
             "info": json_safe(info),
             "current_agent": (
                 env.env.agent_selection if hasattr(env.env, "agent_selection") else "P1"
             ),
         }
+
 
         logger.info(f"Environment reset successful, episode {episode_counter}")
         return jsonify(response)
@@ -325,6 +343,21 @@ def step_environment():
         # Get updated available actions
         next_avail_actions = env.get_avail_actions()
 
+        # Extract building information for frontend display
+        building_info = []
+        for x in range(env.env.grid_x):
+            for y in range(env.env.grid_y):
+                if env.env.buildings[x][y] is not None:
+                    building = env.env.buildings[x][y]
+                    building_info.append({
+                        "x": int(x),
+                        "y": int(y),
+                        "type": building["type"],
+                        "age": int(building["age"]),
+                        "is_replaceable": bool(building.get("is_replaceable", False)),
+                        "builder": int(env.env.builders[x][y])
+                    })
+
         # Prepare response
         response = {
             "status": "success",
@@ -337,6 +370,8 @@ def step_environment():
             "actions_taken": (
                 actions.tolist() if hasattr(actions, "tolist") else list(actions)
             ),
+            "buildings": building_info,  # Add detailed building information
+            "grid_layout": env.env.grid_layout.tolist(),  # Add terrain layout
             "info": {
                 "step_count": current_episode["step_count"],
                 "human_action": human_action,
@@ -346,6 +381,7 @@ def step_environment():
                 env.env.agent_selection if hasattr(env.env, "agent_selection") else "P1"
             ),
         }
+
 
         # If episode is done, store it
         if episode_done:
@@ -371,6 +407,7 @@ def simulate_full_episode():
         # Reset environment
         obs, info = env.reset()
         mac.init_hidden(batch_size=1)
+
 
         episode_records = []
         step_count = 0
@@ -417,8 +454,24 @@ def simulate_full_episode():
             next_obs, rewards, terminated, truncated, env_info = env.step(actions)
             episode_done = terminated or truncated
 
+            # Extract building information for episode records
+            building_info = []
+            for x in range(env.env.grid_x):
+                for y in range(env.env.grid_y):
+                    if env.env.buildings[x][y] is not None:
+                        building = env.env.buildings[x][y]
+                        building_info.append({
+                            "x": int(x),
+                            "y": int(y),
+                            "type": building["type"],
+                            "age": int(building["age"]),
+                            "is_replaceable": bool(building.get("is_replaceable", False)),
+                            "builder": int(env.env.builders[x][y])
+                        })
+
             step_data.update(
                 {
+                    "building_info": building_info,  # Add building info for tracking
                     "rewards": (
                         rewards.tolist()
                         if hasattr(rewards, "tolist")
@@ -427,6 +480,8 @@ def simulate_full_episode():
                     "terminated": bool(terminated),
                     "truncated": bool(truncated),
                     "info": json_safe(env_info),
+                    "buildings": building_info,  # Add building information to step data
+                    "grid_layout": env.env.grid_layout.tolist(),  # Add terrain layout
                 }
             )
 

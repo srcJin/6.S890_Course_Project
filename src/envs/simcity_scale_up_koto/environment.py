@@ -299,9 +299,7 @@ class SimCityScaleUpEnv(AECEnv):
                         # Start with random age to simulate existing city
                         import random
 
-                        random_age = random.randint(
-                            10, 40
-                        )  # Pre-built buildings have some age
+                        random_age = 10  # Pre-built buildings start young to avoid immediate replacement
 
                         self.buildings[x][y] = {
                             "type": name,
