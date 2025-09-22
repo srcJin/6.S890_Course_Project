@@ -1,6 +1,6 @@
 # server_scale_up_koto.py - Inference server for SimCity Scale-Up Koto Environment
 
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template_string, send_from_directory
 from flask_cors import CORS
 
 import torch
@@ -30,7 +30,7 @@ from envs.simcity_scale_up_koto_wrapper import SimCityScaleUpKotoWrapper
 # Import multi-agent controller
 from controllers.basic_controller import BasicMAC
 
-app = Flask(__name__)
+app = Flask(__name__, static_folder='static')
 CORS(app)  # Enable CORS for all routes
 
 # --------------------------
@@ -180,6 +180,12 @@ else:
 
 
 @app.route("/", methods=["GET"])
+def index():
+    """Serve the main HTML interface"""
+    return send_from_directory('static', 'index.html')
+
+
+@app.route("/health", methods=["GET"])
 def health_check():
     """Health check endpoint"""
     return jsonify(
@@ -590,6 +596,98 @@ def render_environment():
 
     except Exception as e:
         logger.error(f"Error in render: {e}")
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+
+@app.route("/realworld_grid", methods=["GET"])
+def get_realworld_grid():
+    """Get the REALWORLD_GRID configuration"""
+    try:
+        from envs.simcity_scale_up_koto.config import REALWORLD_GRID, TERRAIN_AND_PROJECTS
+
+        # Create a readable representation of the grid with building types
+        grid_info = []
+        for row_idx, row in enumerate(REALWORLD_GRID):
+            row_info = []
+            for col_idx, cell_id in enumerate(row):
+                # Find the building/terrain type for this ID
+                building_type = None
+                building_symbol = str(cell_id)
+                building_name = "Unknown"
+
+                for name, config in TERRAIN_AND_PROJECTS.items():
+                    if config["id"] == cell_id:
+                        building_type = config["type"]
+                        building_symbol = config["symbol"]
+                        building_name = name
+                        break
+
+                row_info.append({
+                    "id": int(cell_id),
+                    "type": building_type,
+                    "symbol": building_symbol,
+                    "name": building_name,
+                    "x": col_idx,
+                    "y": row_idx
+                })
+            grid_info.append(row_info)
+
+        return jsonify({
+            "status": "success",
+            "realworld_grid": REALWORLD_GRID,
+            "grid_info": grid_info,
+            "grid_size": {"width": len(REALWORLD_GRID[0]), "height": len(REALWORLD_GRID)},
+            "terrain_and_projects": TERRAIN_AND_PROJECTS
+        })
+
+    except Exception as e:
+        logger.error(f"Error in realworld_grid: {e}")
+        return jsonify({"status": "error", "message": str(e)}), 500
+
+
+@app.route("/initial_grid", methods=["GET"])
+def get_initial_grid():
+    """Get the INITIAL_GRID configuration"""
+    try:
+        from envs.simcity_scale_up_koto.config import INITIAL_GRID, TERRAIN_AND_PROJECTS
+
+        # Create a readable representation of the grid with building types
+        grid_info = []
+        for row_idx, row in enumerate(INITIAL_GRID):
+            row_info = []
+            for col_idx, cell_id in enumerate(row):
+                # Find the building/terrain type for this ID
+                building_type = None
+                building_symbol = str(cell_id)
+                building_name = "Unknown"
+
+                for name, config in TERRAIN_AND_PROJECTS.items():
+                    if config["id"] == cell_id:
+                        building_type = config["type"]
+                        building_symbol = config["symbol"]
+                        building_name = name
+                        break
+
+                row_info.append({
+                    "id": int(cell_id),
+                    "type": building_type,
+                    "symbol": building_symbol,
+                    "name": building_name,
+                    "x": col_idx,
+                    "y": row_idx
+                })
+            grid_info.append(row_info)
+
+        return jsonify({
+            "status": "success",
+            "initial_grid": INITIAL_GRID,
+            "grid_info": grid_info,
+            "grid_size": {"width": len(INITIAL_GRID[0]), "height": len(INITIAL_GRID)},
+            "terrain_and_projects": TERRAIN_AND_PROJECTS
+        })
+
+    except Exception as e:
+        logger.error(f"Error in initial_grid: {e}")
         return jsonify({"status": "error", "message": str(e)}), 500
 
 

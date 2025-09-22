@@ -27,7 +27,7 @@ cd ~/Documents/Github/6.S890_Course_Project
 
 sudo apt update
 sudo apt install -y nvidia-cuda-toolkit
-pip install einops
+pip install -y einops
 pip install -r requirements.txt
 pip install -r env_requirements.txt
 pip install -r pac_requirements.txt

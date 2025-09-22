@@ -1,0 +1,155 @@
+{
+  "artifacts": [],
+  "command": "my_main",
+  "experiment": {
+    "base_dir": "/home/user/Desktop/6.S890_Course_Project/src",
+    "dependencies": [
+      "numpy==1.24.4",
+      "PyYAML==5.3.1",
+      "sacred==0.8.7",
+      "torch==2.4.1"
+    ],
+    "mainfile": "main.py",
+    "name": "pymarl",
+    "repositories": [
+      {
+        "commit": "0cb6ce795fc3ad0296085c19d468aa9f44cfe248",
+        "dirty": true,
+        "url": "https://github.com/srcJin/6.S890_Course_Project.git"
+      },
+      {
+        "commit": "0cb6ce795fc3ad0296085c19d468aa9f44cfe248",
+        "dirty": true,
+        "url": "https://github.com/srcJin/6.S890_Course_Project.git"
+      },
+      {
+        "commit": "0cb6ce795fc3ad0296085c19d468aa9f44cfe248",
+        "dirty": true,
+        "url": "https://github.com/srcJin/6.S890_Course_Project.git"
+      }
+    ],
+    "sources": [
+      [
+        "main.py",
+        "_sources/main_10071cd35b239d4d9d6b06262697f6b3.py"
+      ],
+      [
+        "run.py",
+        "_sources/run_ebc0cd2f4b05b83ba37318a208c8b204.py"
+      ],
+      [
+        "utils/logging.py",
+        "_sources/logging_836123fa54ffb6ffe3010ba48531394a.py"
+      ]
+    ]
+  },
+  "fail_trace": [
+    "Traceback (most recent call last):\n",
+    "  File \"/home/user/miniconda3/envs/epymarl/lib/python3.8/site-packages/sacred/config/captured_function.py\", line 42, in captured_function\n    result = wrapped(*args, **kwargs)\n",
+    "  File \"main.py\", line 45, in my_main\n    run(_run, config, _log)\n",
+    "  File \"/home/user/Desktop/6.S890_Course_Project/src/run.py\", line 96, in run\n    run_sequential(args=args, logger=logger)\n",
+    "  File \"/home/user/Desktop/6.S890_Course_Project/src/run.py\", line 262, in run_sequential\n    learner.train(episode_sample, runner.t_env, episode)\n",
+    "  File \"/home/user/Desktop/6.S890_Course_Project/src/learners/ppo_learner.py\", line 82, in train\n    agent_outs = self.mac.forward(batch, t=t)\n",
+    "  File \"/home/user/Desktop/6.S890_Course_Project/src/controllers/basic_controller.py\", line 29, in forward\n    agent_outs, self.hidden_states = self.agent(agent_inputs, self.hidden_states)\n",
+    "  File \"/home/user/miniconda3/envs/epymarl/lib/python3.8/site-packages/torch/nn/modules/module.py\", line 1553, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n",
+    "  File \"/home/user/miniconda3/envs/epymarl/lib/python3.8/site-packages/torch/nn/modules/module.py\", line 1562, in _call_impl\n    return forward_call(*args, **kwargs)\n",
+    "  File \"/home/user/Desktop/6.S890_Course_Project/src/modules/agents/rnn_agent.py\", line 29, in forward\n    h = self.rnn(x, h_in)\n",
+    "  File \"/home/user/miniconda3/envs/epymarl/lib/python3.8/site-packages/torch/nn/modules/module.py\", line 1553, in _wrapped_call_impl\n    return self._call_impl(*args, **kwargs)\n",
+    "  File \"/home/user/miniconda3/envs/epymarl/lib/python3.8/site-packages/torch/nn/modules/module.py\", line 1562, in _call_impl\n    return forward_call(*args, **kwargs)\n",
+    "  File \"/home/user/miniconda3/envs/epymarl/lib/python3.8/site-packages/torch/nn/modules/rnn.py\", line 1477, in forward\n    ret = _VF.gru_cell(\n",
+    "torch.OutOfMemoryError: CUDA out of memory. Tried to allocate 640.00 MiB. GPU 0 has a total capacity of 139.83 GiB of which 50.88 MiB is free. Process 1085737 has 139.19 GiB memory in use. Of the allocated memory 136.34 GiB is allocated by PyTorch, and 2.19 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)\n"
+  ],
+  "heartbeat": "2025-09-18T02:11:18.698448",
+  "host": {
+    "ENV": {},
+    "cpu": "Intel(R) Xeon(R) 6747P",
+    "gpus": {
+      "driver_version": "560.35.03",
+      "gpus": [
+        {
+          "model": "NVIDIA H200 NVL",
+          "persistence_mode": true,
+          "total_memory": 143771
+        }
+      ]
+    },
+    "hostname": "aa3aec4cf334",
+    "os": [
+      "Linux",
+      "Linux-6.8.0-64-generic-x86_64-with-glibc2.17"
+    ],
+    "python_version": "3.8.20"
+  },
+  "meta": {
+    "command": "my_main",
+    "config_updates": {
+      "batch_size": 16384,
+      "batch_size_run": 1024,
+      "buffer_size": 20000,
+      "common_reward": false,
+      "env_args": {
+        "time_limit": 200
+      },
+      "epochs": 6,
+      "hidden_dim": 512,
+      "learner_log_interval": 1000,
+      "log_interval": 1000,
+      "lr": 0.0005,
+      "runner_log_interval": 1000,
+      "save_model": true,
+      "save_model_interval": 100000,
+      "t_max": 1000000000,
+      "test_interval": 10000,
+      "use_cuda": true
+    },
+    "named_configs": [],
+    "options": {
+      "--beat-interval": null,
+      "--capture": null,
+      "--comment": null,
+      "--debug": false,
+      "--enforce_clean": false,
+      "--file_storage": null,
+      "--force": false,
+      "--help": false,
+      "--id": null,
+      "--loglevel": null,
+      "--mongo_db": null,
+      "--name": null,
+      "--pdb": false,
+      "--print-config": false,
+      "--priority": null,
+      "--queue": false,
+      "--s3": null,
+      "--sql": null,
+      "--tiny_db": null,
+      "--unobserved": false,
+      "COMMAND": null,
+      "UPDATE": [
+        "env_args.time_limit=200",
+        "t_max=1000000000",
+        "use_cuda=True",
+        "save_model=True",
+        "save_model_interval=100000",
+        "test_interval=10000",
+        "log_interval=1000",
+        "runner_log_interval=1000",
+        "learner_log_interval=1000",
+        "buffer_size=20000",
+        "batch_size=16384",
+        "batch_size_run=1024",
+        "epochs=6",
+        "lr=0.0005",
+        "common_reward=False",
+        "hidden_dim=512"
+      ],
+      "help": false,
+      "with": true
+    }
+  },
+  "resources": [],
+  "result": null,
+  "start_time": "2025-09-18T02:04:39.360292",
+  "status": "FAILED",
+  "stop_time": "2025-09-18T02:11:18.753343"
+}

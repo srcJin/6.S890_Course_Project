@@ -1,0 +1,2506 @@
+{
+  "P1_money_mean": [
+    720.087859375001,
+    718.1997187499999,
+    717.8375625000015,
+    720.7560000000017,
+    720.5924531249996,
+    723.2678281249998,
+    718.3273906250013,
+    718.6906718749999,
+    716.5174687499991,
+    718.2701875000002
+  ],
+  "P1_money_mean_T": [
+    59400,
+    118824,
+    178214,
+    237780,
+    297231,
+    356609,
+    416043,
+    475491,
+    534969,
+    594428
+  ],
+  "P1_reputation_mean": [
+    890.5538593749998,
+    897.5946249999985,
+    897.6872656250001,
+    897.6600937499986,
+    893.1461562500006,
+    892.8239062500021,
+    897.4419999999998,
+    899.9981406250008,
+    899.9348281250002,
+    895.3829531249974
+  ],
+  "P1_reputation_mean_T": [
+    59400,
+    118824,
+    178214,
+    237780,
+    297231,
+    356609,
+    416043,
+    475491,
+    534969,
+    594428
+  ],
+  "P1_reward_mean": [
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 197.10154250940406
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 197.68712208116375
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 197.60582820457188
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 197.92889006799754
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 197.4813618959781
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 197.75611737919562
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 197.6857149884257
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 197.9718518012151
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 197.7634060329861
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 197.45725717230914
+    }
+  ],
+  "P1_reward_mean_T": [
+    59400,
+    118824,
+    178214,
+    237780,
+    297231,
+    356609,
+    416043,
+    475491,
+    534969,
+    594428
+  ],
+  "P2_money_mean": [
+    733.3373906250001,
+    734.0198125,
+    733.4762187499996,
+    738.4091718750003,
+    735.1114687500002,
+    731.7579531250004,
+    733.2840468749996,
+    734.0979999999985,
+    736.2133906249991,
+    736.3219531250006
+  ],
+  "P2_money_mean_T": [
+    59400,
+    118824,
+    178214,
+    237780,
+    297231,
+    356609,
+    416043,
+    475491,
+    534969,
+    594428
+  ],
+  "P2_reputation_mean": [
+    944.5404375000007,
+    940.8195312499993,
+    940.197296874999,
+    946.1714531250009,
+    945.530359375001,
+    945.3647343749988,
+    946.5854531250004,
+    944.4075625000003,
+    941.5084375000009,
+    943.6643281249987
+  ],
+  "P2_reputation_mean_T": [
+    59400,
+    118824,
+    178214,
+    237780,
+    297231,
+    356609,
+    416043,
+    475491,
+    534969,
+    594428
+  ],
+  "P2_reward_mean": [
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 326.222710847981
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 325.6737437999125
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 325.5292461756727
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 327.3541966948785
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 326.72447744683126
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 326.14286837402335
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 326.596550434028
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 326.3329756087243
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 326.20842849826397
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 326.5974512559681
+    }
+  ],
+  "P2_reward_mean_T": [
+    59400,
+    118824,
+    178214,
+    237780,
+    297231,
+    356609,
+    416043,
+    475491,
+    534969,
+    594428
+  ],
+  "P3_money_mean": [
+    701.7200468749998,
+    699.5305312500003,
+    702.2859999999991,
+    704.79528125,
+    702.1164999999994,
+    700.4972656250003,
+    701.2581249999995,
+    701.2549687500012,
+    704.0228749999999,
+    702.944375000001
+  ],
+  "P3_money_mean_T": [
+    59400,
+    118824,
+    178214,
+    237780,
+    297231,
+    356609,
+    416043,
+    475491,
+    534969,
+    594428
+  ],
+  "P3_reputation_mean": [
+    899.0467031249997,
+    903.7443124999993,
+    895.1424531250001,
+    903.1755312500012,
+    897.2137812499989,
+    900.0543125,
+    897.2635312500009,
+    900.0928437500003,
+    898.8345937500004,
+    901.0763281249983
+  ],
+  "P3_reputation_mean_T": [
+    59400,
+    118824,
+    178214,
+    237780,
+    297231,
+    356609,
+    416043,
+    475491,
+    534969,
+    594428
+  ],
+  "P3_reward_mean": [
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 528.5632050274871
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 529.488192180266
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 527.7041994574672
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 530.8756553638588
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 528.0854515986691
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 528.6140140805845
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 528.0663758933747
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 528.9109361762146
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 529.4878735857924
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 529.6983933919282
+    }
+  ],
+  "P3_reward_mean_T": [
+    59400,
+    118824,
+    178214,
+    237780,
+    297231,
+    356609,
+    416043,
+    475491,
+    534969,
+    594428
+  ],
+  "P4_money_mean": [
+    679.4122968749991,
+    681.2749687500009,
+    682.2134843750011,
+    683.8549999999994,
+    680.6410156249987,
+    679.7228437500007,
+    676.9514999999984,
+    682.0655937499994,
+    680.6369531250015,
+    681.5935625000001
+  ],
+  "P4_money_mean_T": [
+    59400,
+    118824,
+    178214,
+    237780,
+    297231,
+    356609,
+    416043,
+    475491,
+    534969,
+    594428
+  ],
+  "P4_reputation_mean": [
+    865.3391562500013,
+    863.5370781250006,
+    862.6386249999987,
+    867.5344843749997,
+    860.6460624999991,
+    861.0617343750004,
+    867.4230156249996,
+    863.4934687499999,
+    861.3339687500008,
+    863.7985156249982
+  ],
+  "P4_reputation_mean_T": [
+    59400,
+    118824,
+    178214,
+    237780,
+    297231,
+    356609,
+    416043,
+    475491,
+    534969,
+    594428
+  ],
+  "P4_reward_mean": [
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 189.54247062716985
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 189.5885049985536
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 189.5944409830729
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 190.25491229745393
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 189.21854134114557
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 189.21758748553245
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 189.515756745515
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 189.69925107421906
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 189.28972112991875
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 189.58630887225092
+    }
+  ],
+  "P4_reward_mean_T": [
+    59400,
+    118824,
+    178214,
+    237780,
+    297231,
+    356609,
+    416043,
+    475491,
+    534969,
+    594428
+  ],
+  "agent_0_return_mean": [
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2358.908238232136
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2367.463992662728
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2361.3839820325375
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2421.132573786378
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2361.4711407884956
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2360.921403236687
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2362.5161914631726
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2366.734606163204
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2366.7799472406505
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2361.767955863476
+    }
+  ],
+  "agent_0_return_mean_T": [
+    59400,
+    118824,
+    178214,
+    237780,
+    297231,
+    356609,
+    416043,
+    475491,
+    534969,
+    594428
+  ],
+  "agent_0_return_std": [
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 204.98940741713162
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 254.68951398965098
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 204.17543040482232
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 3095.8013358524813
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 204.14276852237353
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 205.46033985938993
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 204.22685584577346
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 205.97240655037373
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 201.3469813112329
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 205.29637917639255
+    }
+  ],
+  "agent_0_return_std_T": [
+    59400,
+    118824,
+    178214,
+    237780,
+    297231,
+    356609,
+    416043,
+    475491,
+    534969,
+    594428
+  ],
+  "agent_1_return_mean": [
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 3301.240468531847
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 3300.1522785559296
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 3291.829511794448
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 3449.703349041939
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 3306.4079363137485
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 3296.2568114995956
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 3303.900594443083
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 3302.029230567813
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 3301.536297482252
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 3305.9530191361905
+    }
+  ],
+  "agent_1_return_mean_T": [
+    59400,
+    118824,
+    178214,
+    237780,
+    297231,
+    356609,
+    416043,
+    475491,
+    534969,
+    594428
+  ],
+  "agent_1_return_std": [
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 334.1063752314896
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 483.2619558821587
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 313.413940899448
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 7744.269523762332
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 320.87764785891017
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 331.66666892384643
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 323.34369964737056
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 318.55917860236013
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 321.96248492824213
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 328.434524733698
+    }
+  ],
+  "agent_1_return_std_T": [
+    59400,
+    118824,
+    178214,
+    237780,
+    297231,
+    356609,
+    416043,
+    475491,
+    534969,
+    594428
+  ],
+  "agent_2_return_mean": [
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 5244.6675138190385
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 5261.949496947229
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 5231.861694596708
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 5464.263615562022
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 5252.794368126988
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 5242.134594993293
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 5238.7068416818975
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 5259.196636596322
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 5253.24405515045
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 5262.344796589017
+    }
+  ],
+  "agent_2_return_mean_T": [
+    59400,
+    118824,
+    178214,
+    237780,
+    297231,
+    356609,
+    416043,
+    475491,
+    534969,
+    594428
+  ],
+  "agent_2_return_std": [
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 547.3116476165545
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 811.7691808609878
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 538.3768272814292
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 11127.740265807724
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 561.1660984149987
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 541.2691808269773
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 546.2379053464315
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 539.3197149430498
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 546.7816784200708
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 560.2979206256153
+    }
+  ],
+  "agent_2_return_std_T": [
+    59400,
+    118824,
+    178214,
+    237780,
+    297231,
+    356609,
+    416043,
+    475491,
+    534969,
+    594428
+  ],
+  "agent_3_return_mean": [
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2136.8812405630947
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2141.517309410125
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2136.853678907454
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2209.735889814794
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2137.0347492560745
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2131.3480401806532
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2139.3791486620903
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2140.105849722028
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2137.8476922094824
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2140.211899600923
+    }
+  ],
+  "agent_3_return_mean_T": [
+    59400,
+    118824,
+    178214,
+    237780,
+    297231,
+    356609,
+    416043,
+    475491,
+    534969,
+    594428
+  ],
+  "agent_3_return_std": [
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 197.17158324019414
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 268.0358448304549
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 196.4970516893342
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 3691.912708056792
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 196.24210146953823
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 187.54362326877796
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 199.73446592358113
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 194.80873560597536
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 194.5776709033359
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 193.1228451776702
+    }
+  ],
+  "agent_3_return_std_T": [
+    59400,
+    118824,
+    178214,
+    237780,
+    297231,
+    356609,
+    416043,
+    475491,
+    534969,
+    594428
+  ],
+  "common_reward_value_mean": [
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2321.269078192999
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2322.9095143659574
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2318.9023156448916
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2330.812692744503
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2321.3056505338513
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2321.3335207450773
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2321.714295760633
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2323.7255216337503
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2323.230936084344
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2324.8268428624137
+    }
+  ],
+  "common_reward_value_mean_T": [
+    59400,
+    118824,
+    178214,
+    237780,
+    297231,
+    356609,
+    416043,
+    475491,
+    534969,
+    594428
+  ],
+  "env_score_mean": [
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 60.05353144892941
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 60.102687807436425
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 60.080754484953744
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 60.072165256076325
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 60.065831163194254
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 60.1070624457466
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 60.11091851128462
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 60.098442021122764
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 60.111009837963046
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 60.105881076388854
+    }
+  ],
+  "env_score_mean_T": [
+    59400,
+    118824,
+    178214,
+    237780,
+    297231,
+    356609,
+    416043,
+    475491,
+    534969,
+    594428
+  ],
+  "ep_length_mean": [
+    23.203125,
+    23.2125,
+    23.19921875,
+    23.26796875,
+    23.223046875,
+    23.19453125,
+    23.21640625,
+    23.221875,
+    23.23359375,
+    23.226171875
+  ],
+  "ep_length_mean_T": [
+    59400,
+    118824,
+    178214,
+    237780,
+    297231,
+    356609,
+    416043,
+    475491,
+    534969,
+    594428
+  ],
+  "episode": [
+    2560,
+    5120,
+    7680,
+    10240,
+    12800,
+    15360,
+    17920,
+    20480,
+    23040,
+    25600
+  ],
+  "episode_T": [
+    59400,
+    118824,
+    178214,
+    237780,
+    297231,
+    356609,
+    416043,
+    475491,
+    534969,
+    594428
+  ],
+  "test_P1_money_mean": [
+    720.0184062500003,
+    719.9926562500004,
+    718.6771562500004,
+    719.3172656249994,
+    718.7952656250003,
+    719.3297812499993,
+    718.9981875000008,
+    716.9323593749998,
+    719.9749843750002,
+    721.3254687499996
+  ],
+  "test_P1_money_mean_T": [
+    59400,
+    118824,
+    178214,
+    237780,
+    297231,
+    356609,
+    416043,
+    475491,
+    534969,
+    594428
+  ],
+  "test_P1_reputation_mean": [
+    896.320734374997,
+    896.1318437500001,
+    893.7401562499988,
+    897.0425000000001,
+    891.9511093749994,
+    896.0127656249975,
+    896.516562499999,
+    893.9474843749992,
+    890.8456249999994,
+    897.2896718749989
+  ],
+  "test_P1_reputation_mean_T": [
+    59400,
+    118824,
+    178214,
+    237780,
+    297231,
+    356609,
+    416043,
+    475491,
+    534969,
+    594428
+  ],
+  "test_P1_reward_mean": [
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 197.74652065248839
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 197.71900135633692
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 197.3422737666373
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 197.80286255425318
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 197.11932797670713
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 197.58765906032943
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 197.6615625361685
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 197.11426419994217
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 197.16222113715293
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 197.96281395037607
+    }
+  ],
+  "test_P1_reward_mean_T": [
+    59400,
+    118824,
+    178214,
+    237780,
+    297231,
+    356609,
+    416043,
+    475491,
+    534969,
+    594428
+  ],
+  "test_P2_money_mean": [
+    735.1019999999996,
+    733.0916875000017,
+    734.0253437500018,
+    733.0610781249991,
+    735.3964531250007,
+    733.8093749999997,
+    733.126296874999,
+    733.7384218749997,
+    734.6011093749989,
+    737.6718281249996
+  ],
+  "test_P2_money_mean_T": [
+    59400,
+    118824,
+    178214,
+    237780,
+    297231,
+    356609,
+    416043,
+    475491,
+    534969,
+    594428
+  ],
+  "test_P2_reputation_mean": [
+    942.7442656250035,
+    944.9733593750004,
+    938.7280312499997,
+    942.4727343749992,
+    943.6060156249976,
+    945.9852656249993,
+    940.3345625000011,
+    944.1125312500023,
+    944.2710624999975,
+    947.3873437499985
+  ],
+  "test_P2_reputation_mean_T": [
+    59400,
+    118824,
+    178214,
+    237780,
+    297231,
+    356609,
+    416043,
+    475491,
+    534969,
+    594428
+  ],
+  "test_P2_reward_mean": [
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 326.22113878797694
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 326.2635011062283
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 325.3152581819664
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 325.81806048231374
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 326.43982228732676
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 326.60055891601564
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 325.4274839463975
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 326.2014991601571
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 326.44810216796816
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 327.4483114724387
+    }
+  ],
+  "test_P2_reward_mean_T": [
+    59400,
+    118824,
+    178214,
+    237780,
+    297231,
+    356609,
+    416043,
+    475491,
+    534969,
+    594428
+  ],
+  "test_P3_money_mean": [
+    703.1549687500003,
+    701.9599999999991,
+    704.7711718750008,
+    703.0806249999994,
+    701.8970781249996,
+    701.9393125000012,
+    700.5100781250006,
+    702.9297812500001,
+    701.260453125,
+    702.079749999999
+  ],
+  "test_P3_money_mean_T": [
+    59400,
+    118824,
+    178214,
+    237780,
+    297231,
+    356609,
+    416043,
+    475491,
+    534969,
+    594428
+  ],
+  "test_P3_reputation_mean": [
+    896.4509687500024,
+    895.7291406249991,
+    896.0683437500022,
+    892.5883124999984,
+    896.3521093749999,
+    896.0975625000016,
+    900.3306093750001,
+    891.3906406249986,
+    900.4966874999989,
+    904.1273906249999
+  ],
+  "test_P3_reputation_mean_T": [
+    59400,
+    118824,
+    178214,
+    237780,
+    297231,
+    356609,
+    416043,
+    475491,
+    534969,
+    594428
+  ],
+  "test_P3_reward_mean": [
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 528.3296550564243
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 527.687385351563
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 528.7582358651619
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 527.2303558557574
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 527.7475755678516
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 527.8261874240447
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 528.7743474356204
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 526.7196555049188
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 529.0813010416668
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 530.3772692021113
+    }
+  ],
+  "test_P3_reward_mean_T": [
+    59400,
+    118824,
+    178214,
+    237780,
+    297231,
+    356609,
+    416043,
+    475491,
+    534969,
+    594428
+  ],
+  "test_P4_money_mean": [
+    678.8507187499994,
+    677.8812031249985,
+    679.9839843750002,
+    678.67678125,
+    679.8693124999993,
+    679.126703125,
+    678.3550468749997,
+    678.9502031249999,
+    678.8368593750008,
+    685.5279218750014
+  ],
+  "test_P4_money_mean_T": [
+    59400,
+    118824,
+    178214,
+    237780,
+    297231,
+    356609,
+    416043,
+    475491,
+    534969,
+    594428
+  ],
+  "test_P4_reputation_mean": [
+    858.8959687500017,
+    860.8140468750001,
+    861.3550000000007,
+    863.7684062499993,
+    863.4256874999998,
+    862.4547656249994,
+    860.4101562499985,
+    865.440484375001,
+    865.3592968749988,
+    862.0011562500024
+  ],
+  "test_P4_reputation_mean_T": [
+    59400,
+    118824,
+    178214,
+    237780,
+    297231,
+    356609,
+    416043,
+    475491,
+    534969,
+    594428
+  ],
+  "test_P4_reward_mean": [
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 188.7874274848088
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 188.91562445384855
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 189.2166438621239
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 189.38559977575213
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 189.37059458912069
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 189.22581084346024
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 188.94644019458914
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 189.52995754123262
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 189.48172458043936
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 189.87219097583946
+    }
+  ],
+  "test_P4_reward_mean_T": [
+    59400,
+    118824,
+    178214,
+    237780,
+    297231,
+    356609,
+    416043,
+    475491,
+    534969,
+    594428
+  ],
+  "test_agent_0_return_mean": [
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2363.8001675650476
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2360.1080950900914
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2356.2042201831937
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2362.322690615058
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2360.0667715936897
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2361.3967838332055
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2360.8968163833024
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2359.2808767959477
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2355.410133317113
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2415.848327335715
+    }
+  ],
+  "test_agent_0_return_mean_T": [
+    59400,
+    118824,
+    178214,
+    237780,
+    297231,
+    356609,
+    416043,
+    475491,
+    534969,
+    594428
+  ],
+  "test_agent_0_return_std": [
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 208.36902149146397
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 208.96109099454085
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 203.9096606948682
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 207.44005934248804
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 207.92404634062137
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 201.93631801314615
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 203.13573753171931
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 205.57908787094144
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 207.2925688324782
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2828.798462808966
+    }
+  ],
+  "test_agent_0_return_std_T": [
+    59400,
+    118824,
+    178214,
+    237780,
+    297231,
+    356609,
+    416043,
+    475491,
+    534969,
+    594428
+  ],
+  "test_agent_1_return_mean": [
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 3301.396349182725
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 3298.511233024299
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 3289.960622893274
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 3295.887582671642
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 3302.0072776347397
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 3302.0319016620515
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 3291.7029247939586
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 3300.319992373884
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 3298.2842709615825
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 3447.5821377694606
+    }
+  ],
+  "test_agent_1_return_mean_T": [
+    59400,
+    118824,
+    178214,
+    237780,
+    297231,
+    356609,
+    416043,
+    475491,
+    534969,
+    594428
+  ],
+  "test_agent_1_return_std": [
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 330.3639012989112
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 323.4094357837972
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 331.81937116254346
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 333.0129299729071
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 328.90094315492956
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 332.86307836935833
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 319.27292343116596
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 328.9674416491273
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 333.4496103630274
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 7589.9368593880445
+    }
+  ],
+  "test_agent_1_return_std_T": [
+    59400,
+    118824,
+    178214,
+    237780,
+    297231,
+    356609,
+    416043,
+    475491,
+    534969,
+    594428
+  ],
+  "test_agent_2_return_mean": [
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 5243.992530557513
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 5230.398552398384
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 5240.899583178759
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 5230.308936564625
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 5243.331060570478
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 5230.3833256334065
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 5251.199761782586
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 5231.3726477310065
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 5239.472806955874
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 5472.676353286207
+    }
+  ],
+  "test_agent_2_return_mean_T": [
+    59400,
+    118824,
+    178214,
+    237780,
+    297231,
+    356609,
+    416043,
+    475491,
+    534969,
+    594428
+  ],
+  "test_agent_2_return_std": [
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 554.491687729966
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 562.1759373603036
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 552.7966657367924
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 560.8126470101671
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 554.9628913842017
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 562.1734796168826
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 555.5648081763724
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 542.7303417699688
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 556.9381693839772
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 11607.722045789833
+    }
+  ],
+  "test_agent_2_return_std_T": [
+    59400,
+    118824,
+    178214,
+    237780,
+    297231,
+    356609,
+    416043,
+    475491,
+    534969,
+    594428
+  ],
+  "test_agent_3_return_mean": [
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2135.65187587291
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2131.205808351189
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2132.297120615095
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2132.839994626492
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2137.1550125680865
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2133.244443833083
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2130.8166096404193
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2139.1716763861477
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2136.5452544637023
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2199.3747597910465
+    }
+  ],
+  "test_agent_3_return_mean_T": [
+    59400,
+    118824,
+    178214,
+    237780,
+    297231,
+    356609,
+    416043,
+    475491,
+    534969,
+    594428
+  ],
+  "test_agent_3_return_std": [
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 194.43681385208907
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 198.25019236215024
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 198.5781052117299
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 197.8641075046987
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 199.0955447486072
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 193.6959148939881
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 195.51586892418007
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 200.12476689813607
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 199.30292452729407
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 3354.4817631995693
+    }
+  ],
+  "test_agent_3_return_std_T": [
+    59400,
+    118824,
+    178214,
+    237780,
+    297231,
+    356609,
+    416043,
+    475491,
+    534969,
+    594428
+  ],
+  "test_common_reward_value_mean": [
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2320.3030517173047
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2319.4243280269825
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2319.28939572772
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2318.309159930919
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2319.8501635955545
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2320.655802723885
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2319.7158194968893
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2317.396746416739
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2322.1865610738564
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 2329.2159967071784
+    }
+  ],
+  "test_common_reward_value_mean_T": [
+    59400,
+    118824,
+    178214,
+    237780,
+    297231,
+    356609,
+    416043,
+    475491,
+    534969,
+    594428
+  ],
+  "test_env_score_mean": [
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 60.05979320384851
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 60.07179090711789
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 60.06482973451979
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 60.12711724175348
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 60.037422236689906
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 60.07336697048605
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 60.09428846571184
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 60.067599826388985
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 60.0671834309896
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 60.08435103804972
+    }
+  ],
+  "test_env_score_mean_T": [
+    59400,
+    118824,
+    178214,
+    237780,
+    297231,
+    356609,
+    416043,
+    475491,
+    534969,
+    594428
+  ],
+  "test_ep_length_mean": [
+    23.22734375,
+    23.20078125,
+    23.2,
+    23.193359375,
+    23.214453125,
+    23.205859375,
+    23.193359375,
+    23.21796875,
+    23.197265625,
+    23.276171875
+  ],
+  "test_ep_length_mean_T": [
+    59400,
+    118824,
+    178214,
+    237780,
+    297231,
+    356609,
+    416043,
+    475491,
+    534969,
+    594428
+  ],
+  "test_total_return_mean": [
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 13044.840923178195
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 13020.223688863964
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 13019.361546870321
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 13021.359204477816
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 13042.560122366995
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 13027.056454961747
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 13034.616112600266
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 13030.145193286986
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 13029.712465698272
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 13535.481578182429
+    }
+  ],
+  "test_total_return_mean_T": [
+    59400,
+    118824,
+    178214,
+    237780,
+    297231,
+    356609,
+    416043,
+    475491,
+    534969,
+    594428
+  ],
+  "test_total_return_std": [
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 1021.8386740282104
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 1022.4437691313573
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 1016.7278561040823
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 1025.9934914149396
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 1020.831621503553
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 1015.3862126943446
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 1000.3447538791438
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 1000.384374842926
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 1018.7709351714989
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 25367.483583061312
+    }
+  ],
+  "test_total_return_std_T": [
+    59400,
+    118824,
+    178214,
+    237780,
+    297231,
+    356609,
+    416043,
+    475491,
+    534969,
+    594428
+  ],
+  "total_return_mean": [
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 13041.697461146116
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 13071.083077576011
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 13021.928867331148
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 13544.835428205133
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 13057.708194485307
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 13030.66084991023
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 13044.502776250243
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 13068.066323049366
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 13059.407992082834
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 13070.277671189606
+    }
+  ],
+  "total_return_mean_T": [
+    59400,
+    118824,
+    178214,
+    237780,
+    297231,
+    356609,
+    416043,
+    475491,
+    534969,
+    594428
+  ],
+  "total_return_std": [
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 1015.0912180449634
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 1634.2173408608523
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 975.4886584764836
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 25647.168278241053
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 1014.1088681030944
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 987.9794563758783
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 1005.9013216257292
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 988.5713656091397
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 985.0353000782899
+    },
+    {
+      "dtype": "float64",
+      "py/object": "numpy.float64",
+      "value": 1014.6102158256265
+    }
+  ],
+  "total_return_std_T": [
+    59400,
+    118824,
+    178214,
+    237780,
+    297231,
+    356609,
+    416043,
+    475491,
+    534969,
+    594428
+  ]
+}
