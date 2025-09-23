@@ -42,30 +42,30 @@ class InterestDrivenPlayer(BasePlayer):
     def update_state(self, reward, info):
         super().update_state(reward, info)
 
-        # Update integrated score using a player-specific formula
+        # Interest-driven: heavily weight money over reputation
         self.self_score = (
-            0.5 * self.resources["money"] + 0.5 * self.resources["reputation"]
+            0.8 * self.resources["money"] + 0.2 * self.resources["reputation"]
         )
-        logger.debug(f"players: Interest-Driven Player {self.name} self_score: {self.self_score}")
+        logger.debug(f"players: Interest-Driven Player {self.name} self_score: {self.self_score} (money-focused)")
 
 
 class AltruisticPlayer(BasePlayer):
     def update_state(self, reward, info):
         super().update_state(reward, info)
 
-        # Update integrated score using a player-specific formula
+        # Altruistic: heavily weight reputation over money
         self.self_score = (
-            0.5 * self.resources["money"] + 0.5 * self.resources["reputation"]
+            0.2 * self.resources["money"] + 0.8 * self.resources["reputation"]
         )
-        logger.debug(f"players: Altruistic Player {self.name} self_score: {self.self_score}")
+        logger.debug(f"players: Altruistic Player {self.name} self_score: {self.self_score} (reputation-focused)")
 
 
 class BalancedPlayer(BasePlayer):
     def update_state(self, reward, info):
         super().update_state(reward, info)
 
-        # Update integrated score using a player-specific formula
+        # Balanced: equal weight to both resources
         self.self_score = (
             0.5 * self.resources["money"] + 0.5 * self.resources["reputation"]
         )
-        logger.debug(f"players: Balanced Player {self.name} self_score: {self.self_score}")
+        logger.debug(f"players: Balanced Player {self.name} self_score: {self.self_score} (balanced)")

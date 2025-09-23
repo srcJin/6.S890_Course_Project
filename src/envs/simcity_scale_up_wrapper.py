@@ -234,7 +234,7 @@ class SimCityScaleUpWrapper(MultiAgentEnv):
         return avail_actions
 
     def get_avail_agent_actions(self, agent_id):
-        """Get available actions for specific agent"""
+        """Get available actions for specific agent using action masking"""
         logger.debug(
             f"simcity_scale_up_wrapper: Fetching available actions for agent {agent_id}."
         )
@@ -243,10 +243,11 @@ class SimCityScaleUpWrapper(MultiAgentEnv):
             avail_actions = np.zeros(self.n_actions, dtype=np.float32)
             avail_actions[0] = 1.0  # No-op action
         else:
-            avail_actions = np.ones(self.n_actions, dtype=np.float32)
+            # Use environment's action masking to get valid actions
+            avail_actions = self.env.get_available_actions(agent)
 
         logger.debug(
-            f"simcity_scale_up_wrapper: Available actions for agent {agent_id}: {avail_actions}"
+            f"simcity_scale_up_wrapper: Available actions for agent {agent_id}: {np.sum(avail_actions)} valid actions"
         )
         return avail_actions
 

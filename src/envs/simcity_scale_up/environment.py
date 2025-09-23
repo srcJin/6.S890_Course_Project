@@ -167,9 +167,12 @@ class SimCityScaleUpEnv(AECEnv):
         self.terminations = {agent: False for agent in self.agents}
         self.truncations = {agent: False for agent in self.agents}
 
-        # Higher starting resources for scaled environment
+        # Tight starting resources to create competition pressure
+        # 50 money + 50 reputation forces strategic choices:
+        # - Can build ~6 Houses OR 3 Factories OR 4 GreenParks initially
+        # - Must accumulate resources through utilities to access high-end buildings
         for player in self.players.values():
-            player.resources = {"money": 80, "reputation": 80}
+            player.resources = {"money": 50, "reputation": 50}
             player.self_score = 0
             player.integrated_score = 0
 
@@ -224,6 +227,25 @@ class SimCityScaleUpEnv(AECEnv):
         """Check if a cell is buildable (not terrain or pre-built projects)."""
         return self.grid_layout[x][y] == 0 and self.buildings[x][y] is None
 
+    def _can_afford(self, agent, building_type):
+        """Check if agent can afford to build this building type."""
+        building_cost = BUILDING_COSTS[building_type]
+        player_resources = self.players[agent].resources
+        return (player_resources["money"] >= building_cost["money"] and
+                player_resources["reputation"] >= building_cost["reputation"])
+
+    def get_available_actions(self, agent):
+        """Return a binary mask of available actions for the agent."""
+        avail_actions = np.zeros(self.total_actions, dtype=np.float32)
+        avail_actions[0] = 1.0  # No-op is always available
+
+        for action in range(1, self.total_actions):
+            building_type, x, y = self.decode_action(action)
+            if self._is_buildable(x, y) and self._can_afford(agent, building_type):
+                avail_actions[action] = 1.0
+
+        return avail_actions
+
     def step(self, action):
         logger.debug("Calling environment step")
         if not self.has_reset:
@@ -250,100 +272,82 @@ class SimCityScaleUpEnv(AECEnv):
         if action == NO_OP:
             logger.debug(f"environment: Agent {agent} performed No-op.")
         else:
-            # Check if location is buildable (not terrain or infrastructure)
+            # Validate action (should not happen if using action masking properly)
             if not self._is_buildable(x, y):
-                terrain_penalty = -999999999999999999
-                reward += terrain_penalty
-                logger.debug(
-                    f"environment: Agent {agent} tried to build on non-buildable terrain at ({x},{y}). Penalty: {terrain_penalty}."
+                invalid_penalty = -10.0
+                reward += invalid_penalty
+                logger.warning(
+                    f"environment: Agent {agent} tried invalid action: non-buildable at ({x},{y}). Penalty: {invalid_penalty}."
                 )
-            elif self.buildings[x][y] is not None:
-                build_on_occupied_penalty = -999999999999999999
-                reward += build_on_occupied_penalty
-                logger.debug(
-                    f"environment: Agent {agent} tried to build on an occupied cell ({x},{y}). Penalty: {build_on_occupied_penalty}."
+            elif not self._can_afford(agent, building_type):
+                invalid_penalty = -10.0
+                reward += invalid_penalty
+                logger.warning(
+                    f"environment: Agent {agent} tried invalid action: cannot afford {building_type}. Penalty: {invalid_penalty}."
                 )
             else:
+                # Deduct resources
                 building_cost = BUILDING_COSTS[building_type]
                 player_resources = self.players[agent].resources
-                if (
-                    player_resources["money"] < building_cost["money"]
-                    or player_resources["reputation"] < building_cost["reputation"]
-                ):
-                    # Penalty for not having enough resources
-                    not_enough_resource_penalty = -999999999999999999
-                    reward += not_enough_resource_penalty
-                    logger.debug(
-                        f"environment: Agent {agent} does not have enough resources to build {building_type} at ({x},{y}). Penalty: {not_enough_resource_penalty}."
-                    )
-                else:
-                    # Deduct resources
-                    player_resources["money"] -= building_cost["money"]
-                    player_resources["reputation"] -= building_cost["reputation"]
-                    logger.debug(
-                        f"environment: Agent {agent} resources after building: {player_resources}"
-                    )
+                player_resources["money"] -= building_cost["money"]
+                player_resources["reputation"] -= building_cost["reputation"]
+                logger.debug(
+                    f"environment: Agent {agent} resources after building: {player_resources}"
+                )
 
-                    # Update buildings and builders
-                    self.buildings[x][y] = {
-                        "type": building_type,
-                        "turn_built": self.num_moves,
-                    }
-                    self.builders[x][y] = self.agents.index(
-                        agent
-                    )  # 0 for P1, 1 for P2, 2 for P3, 3 for P4
-                    self.building_types[x][y] = BUILDING_TYPES.index(building_type)
+                # Update buildings and builders
+                self.buildings[x][y] = {
+                    "type": building_type,
+                    "turn_built": self.num_moves,
+                }
+                self.builders[x][y] = self.agents.index(
+                    agent
+                )  # 0 for P1, 1 for P2, 2 for P3, 3 for P4
+                self.building_types[x][y] = BUILDING_TYPES.index(building_type)
 
-                    # Update self grid score with new parameters (S, W, R, C)
-                    building_effect = BUILDING_EFFECTS[building_type]
-                    self.grid[x][y][0] += building_effect["S"]  # Sustainability
-                    self.grid[x][y][1] += building_effect["W"]  # Well-being
-                    self.grid[x][y][2] += building_effect["R"]  # Resilience
-                    self.grid[x][y][3] += building_effect["C"]  # Climate
+                # Update self grid score with new parameters (S, W, R, C)
+                building_effect = BUILDING_EFFECTS[building_type]
+                self.grid[x][y][0] += building_effect["S"]  # Sustainability
+                self.grid[x][y][1] += building_effect["W"]  # Well-being
+                self.grid[x][y][2] += building_effect["R"]  # Resilience
+                self.grid[x][y][3] += building_effect["C"]  # Climate
 
-                    # Update neighbors score
-                    for dx, dy in [
-                        (-1, 0),
-                        (1, 0),
-                        (0, -1),
-                        (0, 1),
-                        (1, 1),
-                        (-1, -1),
-                        (1, -1),
-                        (-1, 1),
-                    ]:
-                        nx, ny = x + dx, y + dy
-                        if 0 <= nx < self.grid_x and 0 <= ny < self.grid_y:
-                            self.grid[nx][ny][0] += building_effect["neighbors"]["S"]
-                            self.grid[nx][ny][1] += building_effect["neighbors"]["W"]
-                            self.grid[nx][ny][2] += building_effect["neighbors"]["R"]
-                            self.grid[nx][ny][3] += building_effect["neighbors"]["C"]
+                # Update neighbors score
+                for dx, dy in [
+                    (-1, 0),
+                    (1, 0),
+                    (0, -1),
+                    (0, 1),
+                    (1, 1),
+                    (-1, -1),
+                    (1, -1),
+                    (-1, 1),
+                ]:
+                    nx, ny = x + dx, y + dy
+                    if 0 <= nx < self.grid_x and 0 <= ny < self.grid_y:
+                        self.grid[nx][ny][0] += building_effect["neighbors"]["S"]
+                        self.grid[nx][ny][1] += building_effect["neighbors"]["W"]
+                        self.grid[nx][ny][2] += building_effect["neighbors"]["R"]
+                        self.grid[nx][ny][3] += building_effect["neighbors"]["C"]
 
-                    building_utility = BUILDING_UTILITIES[building_type]
-                    immediate_reward = (
-                        building_utility["money"] + building_utility["reputation"]
-                    )
-                    reward += immediate_reward
-                    logger.debug(
-                        f"environment: Agent {agent} built {building_type} at ({x},{y}) gaining immediate reward: {immediate_reward}"
-                    )
+                logger.debug(
+                    f"environment: Agent {agent} built {building_type} at ({x},{y})"
+                )
 
-                    info_resources = {
-                        "money": -building_cost["money"] + building_utility["money"],
-                        "reputation": -building_cost["reputation"]
-                        + building_utility["reputation"],
-                    }
+                info_resources = {
+                    "money": -building_cost["money"],
+                    "reputation": -building_cost["reputation"],
+                }
 
-        # Update utilities based on buildings
+        # Update utilities based on buildings owned by current agent
+        agent_index = self.agents.index(agent)
         for gx in range(self.grid_x):
             for gy in range(self.grid_y):
-                if self.buildings[gx][gy] is not None:
+                if self.buildings[gx][gy] is not None and self.builders[gx][gy] == agent_index:
                     b_type = self.buildings[gx][gy]["type"]
                     b_utility = BUILDING_UTILITIES[b_type]
                     self.players[agent].resources["money"] += b_utility["money"]
-                    self.players[agent].resources["reputation"] += b_utility[
-                        "reputation"
-                    ]
+                    self.players[agent].resources["reputation"] += b_utility["reputation"]
                     self.players[agent].self_score += (
                         b_utility["money"] + b_utility["reputation"]
                     )
@@ -452,18 +456,18 @@ class SimCityScaleUpEnv(AECEnv):
 
     def compute_individual_reward(self, agent, reward_alpha, reward_beta):
         """
-        Compute the reward for an agent based on the change in integrated_score and the current integrated_score.
-        Formula: reward = alpha * delta + beta * integrated_score
+        Compute the reward for an agent based on the change in integrated_score.
+        Formula: reward = delta_integrated_score (normalized by alpha/beta is already in integrated_score)
         """
         current_score = self.players[agent].integrated_score
         previous_score = self.previous_integrated_score[agent]
         delta = current_score - previous_score
         self.previous_integrated_score[agent] = current_score
 
-        reward = reward_alpha * delta + reward_beta * current_score
+        reward = delta
         logger.debug(
             f"environment: Compute individual reward for {agent} - Delta: {delta}, "
-            f"Integrated Score: {current_score}, Reward: {reward} (alpha={reward_alpha}, beta={reward_beta})"
+            f"Previous: {previous_score}, Current: {current_score}, Reward: {reward}"
         )
         return reward
 
